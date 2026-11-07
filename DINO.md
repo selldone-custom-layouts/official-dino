@@ -51,5 +51,6 @@ Dino needs no lifestyle photos: every picture is the shop's own packshots. `comp
 
 Release with `bash scripts/release.sh <version> home` (the tabbed account).
 
+- **1.0.2 (8 November 2026):** no grey band down the right edge of every page: the closed cart sheet waits just past the edge, and its shadow (80px of blur) reached into the page; the shadow now shows only while the sheet is open.
 - **1.0.1 (7 November 2026):** "cart", not "basket", in the footer; the violet promo card's packshots larger.
 - **1.0.0 (7 November 2026):** the first Dino: design C on every page.
