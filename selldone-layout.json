@@ -10,10 +10,12 @@
     "docs/screenshots/desktop-aisle.jpg",
     "docs/screenshots/desktop-product.jpg",
     "docs/screenshots/desktop-basket.jpg",
+    "docs/screenshots/desktop-seller.jpg",
     "docs/screenshots/phone-home.jpg",
     "docs/screenshots/phone-aisle.jpg",
     "docs/screenshots/phone-product.jpg",
-    "docs/screenshots/phone-basket.jpg"
+    "docs/screenshots/phone-basket.jpg",
+    "docs/screenshots/phone-seller.jpg"
   ],
   "tags": [
     "grocery",

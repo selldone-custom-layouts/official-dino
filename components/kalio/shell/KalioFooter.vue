@@ -34,7 +34,7 @@
           </div>
           <div>
             <dt>1</dt>
-            <dd>{{ sellerList.length > 1 ? "basket for all of them" : "basket, one checkout" }}</dd>
+            <dd>{{ sellerList.length > 1 ? "cart for all of them" : "cart, one checkout" }}</dd>
           </div>
         </dl>
         <router-link :to="catalogueRoute" class="k-btn k-btn--solid">
@@ -92,7 +92,7 @@
             <router-link :to="{ name: window.$storefront.routes.USER_FAVORITES_PAGE }">Saved</router-link>
           </template>
           <button v-else class="k-footer__textbtn" type="button" @click="signIn">Sign in</button>
-          <router-link :to="{ name: window.$storefront.routes.BASKET_PAGE, params: { type: 'PHYSICAL' } }">Basket</router-link>
+          <router-link :to="{ name: window.$storefront.routes.BASKET_PAGE, params: { type: 'PHYSICAL' } }">Cart</router-link>
         </nav>
       </div>
 
@@ -162,8 +162,8 @@ export default {
       if (!this.aisleList.length) return null;
       const sellers = this.sellerList.length;
       return sellers > 1
-        ? `${this.aisleList.length} aisles of groceries from ${sellers} independent sellers, in one basket.`
-        : `${this.aisleList.length} aisles of groceries, in one basket.`;
+        ? `${this.aisleList.length} aisles of groceries from ${sellers} independent sellers, in one cart.`
+        : `${this.aisleList.length} aisles of groceries, in one cart.`;
     },
     /* The merchant's footer menu (Selldone menus, type FOOTER), flattened,
        or the standard pages when the shop has none. */
