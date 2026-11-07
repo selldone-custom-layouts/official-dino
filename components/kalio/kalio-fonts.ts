@@ -1,7 +1,7 @@
 /*
  * Kalio — typefaces.
  *
- * Fraunces sets the headings, DM Sans everything else. They are requested
+ * Dino: Fredoka sets the headings and prices, Figtree everything else. They are requested
  * from the app at start-up rather than from index.html: in production the
  * Layout runs inside the HTML Selldone renders for the shop, and index.html
  * never reaches the visitor — Market Hall's fonts, linked there, only ever
@@ -11,7 +11,8 @@
 
 const FONTS_HREF =
   "https://fonts.googleapis.com/css2" +
-  "?family=Nunito+Sans:opsz,wght@6..12,400..900" +
+  "?family=Fredoka:wght@500;600;700" +
+  "&family=Figtree:wght@400..800" +
   "&display=swap";
 
 function addLink(attrs: Record<string, string>) {

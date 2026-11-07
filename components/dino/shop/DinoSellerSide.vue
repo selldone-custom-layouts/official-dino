@@ -1,30 +1,36 @@
 <!--
-  Walio — the seller's card in the side column (seller page design B,
-  "a shop in the shop", given to Walio on 7 November 2026).
+  Dino — the seller's banner (seller page design C, 7 November 2026:
+  kalio-design/cd-options/seller-c.html; first made for Walio as a side card).
 
-  The seller's mark, name and a line from their own aisles, three live
-  numbers (products, on sale, aisles), and their aisles as a menu with how
-  many products each holds, like a small shop's own menu: "Everything"
+  A violet banner across the page: the seller's mark in a yellow ring, a pill
+  saying they sell independently on the shop, their name, a line from their
+  own aisles, three live numbers as pills (products, on sale, aisles), and
+  their aisles as chips with how many products each holds: "Everything"
   shows all of the seller's products, an aisle opens that aisle with only
   this seller's products.
 -->
 <template>
-  <aside class="w-scard">
-    <span class="w-scard__mark">
-      <img v-if="mark" :src="mark" alt="" />
-      <v-icon v-else size="40">storefront</v-icon>
-    </span>
-    <h1>{{ vendor ? vendor.name : "" }}</h1>
-    <p>
-      An independent seller on {{ $shop.title }}<template v-if="sells_line">: {{ sells_line }}</template>, in the same cart as every
-      other seller.
-    </p>
-    <div class="w-scard__facts">
-      <div><b>{{ total !== null ? total.toLocaleString() : "–" }}</b><span>products</span></div>
-      <div><b>{{ on_sale !== null ? on_sale.toLocaleString() : "–" }}</b><span>on sale</span></div>
-      <div><b>{{ tiles.length }}</b><span>aisles</span></div>
+  <section class="d-scard">
+    <div class="d-scard__top">
+      <span class="d-scard__mark">
+        <img v-if="mark" :src="mark" alt="" />
+        <v-icon v-else size="44">storefront</v-icon>
+      </span>
+      <div class="d-scard__who">
+        <span class="d-scard__tag"><v-icon size="16">verified</v-icon>Independent seller on {{ $shop.title }}</span>
+        <h1>{{ vendor ? vendor.name : "" }}</h1>
+        <p>
+          <template v-if="sells_line">{{ sells_line.charAt(0).toUpperCase() + sells_line.slice(1) }}, in</template><template v-else>In</template>
+          the same cart as every other seller.
+        </p>
+        <div class="d-scard__facts">
+          <span><b>{{ total !== null ? total.toLocaleString() : "–" }}</b> products</span>
+          <span v-if="on_sale"><v-icon size="16">local_offer</v-icon><b>{{ on_sale.toLocaleString() }}</b> on sale</span>
+          <span><b>{{ tiles.length }}</b> aisles</span>
+        </div>
+      </div>
     </div>
-    <nav aria-label="The seller's aisles" class="w-scard__nav">
+    <nav aria-label="The seller's aisles" class="d-scard__nav">
       <router-link :class="{ '-on': !$route.params.category_name }" :to="sellerTo">Everything <span>{{ total ?? "" }}</span></router-link>
       <router-link
         v-for="a in tiles"
@@ -35,14 +41,14 @@
         {{ a.aisle.title || a.aisle.name }} <span>{{ a.count }}</span>
       </router-link>
     </nav>
-  </aside>
+  </section>
 </template>
 
 <script>
 import { aisleRoute, aisles, countProducts, featured, offers, sellerRoute, vendorImage } from "../../kalio/kalio-catalog";
 
 export default {
-  name: "WalioSellerSide",
+  name: "DinoSellerSide",
   inject: ["$shop"],
   emits: ["tab"],
 

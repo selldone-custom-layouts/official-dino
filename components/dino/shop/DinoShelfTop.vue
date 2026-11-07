@@ -17,6 +17,7 @@
     </nav>
 
     <section v-if="mode === 'aisle'" :style="{ background: tint }" class="w-banner">
+      <img v-if="aisle && aisle.icon" :src="aisleImage(aisle, 256)" alt="" class="w-banner__ic" />
       <div class="w-banner__tx">
         <small>Aisle</small>
         <h1>{{ aisle ? aisle.title || aisle.name : "" }}</h1>
@@ -64,7 +65,7 @@ import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin
 import { aisleImage, aisleIndex, dropSrcset, priceOf, productImage, productSrcset, tintFor } from "../../kalio/kalio-catalog";
 
 export default {
-  name: "WalioShelfTop",
+  name: "DinoShelfTop",
   mixins: [CurrencyMixin],
   inject: ["$shop"],
 
@@ -141,6 +142,7 @@ export default {
   },
 
   methods: {
+    aisleImage,
     dropSrcset,
     srcset(p) {
       return productSrcset(p);

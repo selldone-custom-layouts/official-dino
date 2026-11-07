@@ -1,0 +1,901 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Dino (design C): the remaining pages ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+   Product, seller, About, 404, journal, terms, cart and checkout, account,
+   orders, order, sign-in — as the Dino mockups
+   (kalio-design/cd-options/<page>-c.html). */
+
+$t-phone: 760px;
+$d-violet: #5b21b6;
+$d-violet-2: #7c3aed;
+$d-deep: #2e1065;
+$d-lav: #f3eeff;
+$d-lav-2: #e9dfff;
+$d-lav-3: #d9c9ff;
+$d-yellow: #ffd43b;
+$d-yellow-2: #f5c400;
+$d-ink: #1e1033;
+$d-ok: #12a150;
+
+@mixin d-card {
+  border: 0 !important;
+  border-radius: 28px !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 1.5px var(--k-line) !important;
+}
+
+@mixin d-yellow-btn {
+  border-radius: 999px !important;
+  background: $d-yellow !important;
+  color: $d-ink !important;
+  font-family: var(--k-display) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  box-shadow: 0 5px 0 -1px $d-yellow-2 !important;
+
+  .v-icon,
+  .v-btn__content,
+  .u--price,
+  .u--price * {
+    color: $d-ink !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Product ▆▆▆▆▆▆▆▆ */
+.k-pdp__media,
+.k-pdp__stage {
+  border-radius: 32px !important;
+}
+
+.w-pdp__brand {
+  display: inline-flex !important;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px !important;
+  border-radius: 999px;
+  background: $d-lav;
+  color: $d-violet !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+.k-pdp__title {
+  font-size: clamp(30px, 2.8vw, 40px) !important;
+  line-height: 1.08 !important;
+}
+
+.k-pdp__price {
+  .price-value,
+  .price-value * {
+    font-family: var(--k-display) !important;
+    font-weight: 600 !important;
+    color: $d-violet !important;
+  }
+
+  .discount-percent {
+    padding: 4px 12px !important;
+    border-radius: 999px !important;
+    background: $d-yellow !important;
+    color: $d-ink !important;
+    font-family: var(--k-display) !important;
+    font-weight: 600 !important;
+  }
+}
+
+.w-pdp__lbl,
+.k-offers__title {
+  font-family: var(--k-display) !important;
+  font-size: 19px !important;
+  font-weight: 600 !important;
+}
+
+.w-ful__it {
+  border: 0 !important;
+  border-radius: 20px !important;
+  background: #fff !important;
+  box-shadow: inset 0 0 0 2px var(--k-line) !important;
+
+  .v-icon {
+    color: $d-violet !important;
+  }
+
+  b {
+    font-family: var(--k-display);
+    font-weight: 600 !important;
+  }
+
+  &.-on {
+    background: $d-lav !important;
+    box-shadow: inset 0 0 0 2.5px $d-violet !important;
+  }
+}
+
+.k-offer {
+  border: 0 !important;
+  border-radius: 20px !important;
+  background: #fff !important;
+  box-shadow: inset 0 0 0 2px var(--k-line) !important;
+
+  &.-on {
+    background: $d-lav !important;
+    box-shadow: inset 0 0 0 2.5px $d-violet !important;
+  }
+
+  &__price,
+  &__price .u--price {
+    font-family: var(--k-display) !important;
+    font-weight: 600 !important;
+  }
+}
+
+.k-pdp__basket .v-btn,
+.sticky-buy-widget .v-btn {
+  @include d-yellow-btn;
+}
+
+.k-pdp__basket .v-btn {
+  height: 60px !important;
+  font-size: 18px !important;
+}
+
+.sticky-buy-widget {
+  border: 0 !important;
+  border-radius: 26px !important;
+  box-shadow: 0 18px 40px -16px rgba(46, 16, 101, 0.45), 0 0 0 1.5px var(--k-line) !important;
+}
+
+.w-tabs {
+  gap: 8px !important;
+  border-bottom: 0 !important;
+
+  button {
+    height: 44px !important;
+    padding: 0 18px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: $d-lav !important;
+    color: $d-violet !important;
+    font-family: var(--k-display);
+    font-size: 15.5px !important;
+    font-weight: 600 !important;
+
+    &::after {
+      display: none !important;
+    }
+
+    &.-on {
+      background: $d-violet !important;
+      color: #fff !important;
+    }
+  }
+}
+
+.w-hl .v-icon,
+.k-pdp__assurances .v-icon {
+  color: $d-violet !important;
+}
+
+.k-pdp__assurances,
+.w-pdp__perks {
+  border: 0 !important;
+  border-radius: 22px !important;
+  background: $d-lav !important;
+}
+
+.k-reviews .k-board__empty,
+.k-reviews > div:first-child {
+  border-radius: 26px !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ Seller: the violet banner ▆▆▆▆▆▆▆▆ */
+.w-shop__cols.-solo {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.d-scard {
+  position: relative;
+  margin-top: 18px;
+  padding: 30px 30px 22px;
+  border-radius: 32px;
+  background: $d-violet;
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: -90px;
+    bottom: -150px;
+    z-index: -1;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: $d-violet-2;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+  }
+
+  &__mark {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    border: 6px solid $d-yellow;
+    background: #fff;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .v-icon {
+      color: $d-violet !important;
+    }
+  }
+
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: $d-yellow;
+    color: $d-ink;
+    font-size: 13px;
+    font-weight: 700;
+
+    .v-icon {
+      color: $d-ink !important;
+    }
+  }
+
+  h1 {
+    margin: 10px 0 0;
+    color: #fff;
+    font-family: var(--k-display);
+    font-size: clamp(34px, 3.4vw, 46px);
+    font-weight: 600;
+    line-height: 1.05;
+  }
+
+  p {
+    max-width: 640px;
+    margin: 6px 0 0;
+    color: #e1d6ff;
+    font-size: 16px;
+  }
+
+  &__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 14px;
+
+      .v-icon {
+        color: $d-yellow !important;
+      }
+    }
+
+    b {
+      font-family: var(--k-display);
+      font-weight: 600;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex: none;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff !important;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      white-space: nowrap;
+
+      span {
+        opacity: 0.7;
+        font-weight: 600;
+      }
+
+      &.-on {
+        background: #fff;
+        color: $d-violet !important;
+      }
+    }
+  }
+
+  @media (max-width: $t-phone) {
+    padding: 22px 18px 18px;
+    border-radius: 26px;
+
+    &__top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    &__mark {
+      width: 92px;
+      height: 92px;
+      border-width: 5px;
+    }
+  }
+}
+
+/* The seller's own deals and rows inside their page. */
+.w-sdeal,
+.w-smain .w-sdeal {
+  border-radius: 30px !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ About ▆▆▆▆▆▆▆▆ */
+.w-mag__ed {
+  align-items: center !important;
+  padding: 36px !important;
+  border-radius: 36px;
+  background: $d-lav;
+}
+
+.w-mag__eyebrow {
+  display: inline-flex !important;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px !important;
+  border-radius: 999px;
+  background: $d-yellow;
+  color: $d-ink !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  font-weight: 700 !important;
+}
+
+.d-about {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 380px;
+
+  &__mark {
+    width: min(320px, 80%);
+    filter: drop-shadow(0 26px 30px rgba(46, 16, 101, 0.25));
+  }
+
+  &__fact {
+    position: absolute;
+    display: grid;
+    padding: 10px 16px;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: var(--k-shadow);
+    color: var(--k-muted);
+    font-size: 13px;
+    line-height: 1.1;
+
+    b {
+      color: $d-violet;
+      font-family: var(--k-display);
+      font-size: 30px;
+      font-weight: 600;
+    }
+
+    &.-a {
+      top: 6%;
+      left: 4%;
+    }
+
+    &.-b {
+      right: 2%;
+      top: 40%;
+    }
+
+    &.-c {
+      bottom: 4%;
+      left: 14%;
+    }
+  }
+
+  @media (max-width: $t-phone) {
+    min-height: 260px;
+  }
+}
+
+.w-mag__how li {
+  border: 0 !important;
+  border-radius: 26px !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 1.5px var(--k-line);
+
+  i {
+    border-radius: 14px !important;
+    background: $d-violet !important;
+    color: #fff !important;
+    font-family: var(--k-display);
+    font-style: normal;
+  }
+}
+
+.w-mag__vals > div {
+  border-radius: 26px !important;
+
+  &:nth-child(4n + 1) {
+    background: #fff3c7 !important;
+  }
+
+  &:nth-child(4n + 2) {
+    background: #e3f6e8 !important;
+  }
+
+  &:nth-child(4n + 3) {
+    background: #ffe3ea !important;
+  }
+
+  &:nth-child(4n + 4) {
+    background: #e6efff !important;
+  }
+
+  .v-icon {
+    color: $d-violet !important;
+  }
+}
+
+.w-about,
+.w-mag__contact {
+  border-radius: 32px !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ 404 ▆▆▆▆▆▆▆▆ */
+.d-404 {
+  padding-bottom: 8px;
+
+  &__panel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 36px;
+    margin-top: 26px;
+    padding: 40px !important;
+    border-radius: 36px;
+    background: $d-lav;
+  }
+
+  &__art {
+    position: relative;
+
+    img {
+      width: 220px;
+      transform: rotate(-12deg);
+      filter: drop-shadow(0 22px 26px rgba(46, 16, 101, 0.25));
+    }
+
+    span {
+      position: absolute;
+      top: -18px;
+      right: -24px;
+      color: $d-violet;
+      font-family: var(--k-display);
+      font-size: 72px;
+      font-weight: 600;
+    }
+  }
+
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: $d-yellow;
+    color: $d-ink;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  h1 {
+    margin: 12px 0 0;
+    font-family: var(--k-display);
+    font-size: clamp(34px, 3.8vw, 54px);
+    font-weight: 600;
+    line-height: 1.02;
+  }
+
+  p {
+    max-width: 560px;
+    margin: 10px 0 0;
+    color: var(--k-ink-2);
+    font-size: 18px;
+  }
+
+  &__acts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  &__aisles {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px !important;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 42px;
+      padding: 0 14px 0 8px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1.5px var(--k-line);
+      color: var(--k-ink) !important;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+
+      img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        mix-blend-mode: multiply;
+      }
+
+      &:hover {
+        background: $d-lav;
+      }
+    }
+  }
+
+  @media (max-width: $t-phone) {
+    &__panel {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      padding: 24px !important;
+      border-radius: 28px;
+    }
+
+    &__art img {
+      width: 130px;
+    }
+
+    &__art span {
+      font-size: 52px;
+      right: auto;
+      left: 140px;
+    }
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Journal and articles ▆▆▆▆▆▆▆▆ */
+.k-journal,
+.k-post {
+  h1 {
+    font-family: var(--k-display) !important;
+    font-weight: 600 !important;
+  }
+}
+
+.k-jentry,
+.k-jbox,
+.k-post__card,
+.k-journal__card {
+  border: 0 !important;
+  border-radius: 28px !important;
+  overflow: hidden;
+  background: #fff !important;
+  box-shadow: 0 0 0 1.5px var(--k-line) !important;
+
+  img {
+    border-radius: 0 !important;
+  }
+}
+
+.k-topic,
+.k-chip {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: $d-lav !important;
+  color: $d-violet !important;
+  font-weight: 700 !important;
+
+  &.-on,
+  &[aria-current],
+  &.router-link-exact-active {
+    background: $d-violet !important;
+    color: #fff !important;
+  }
+}
+
+.k-prose {
+  blockquote {
+    border: 0 !important;
+    border-radius: 22px;
+    background: $d-lav;
+    padding: 16px 20px !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Terms and privacy ▆▆▆▆▆▆▆▆ */
+.w-cards4 > * {
+  border: 0 !important;
+  border-radius: 26px !important;
+
+  &:nth-child(4n + 1) {
+    background: #ece4ff !important;
+  }
+
+  &:nth-child(4n + 2) {
+    background: #fff3c7 !important;
+  }
+
+  &:nth-child(4n + 3) {
+    background: #e3f6e8 !important;
+  }
+
+  &:nth-child(4n + 4) {
+    background: #ffe3ea !important;
+  }
+
+  .v-icon {
+    color: $d-violet !important;
+  }
+}
+
+.w-acc,
+.k-legal__doc,
+.k-legal__body {
+  border-radius: 28px !important;
+}
+
+.w-acc > * {
+  border-radius: 22px !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ Cart and checkout ▆▆▆▆▆▆▆▆ */
+.w-stepper {
+  &__s {
+    border-radius: 999px !important;
+    background: #fff !important;
+    box-shadow: inset 0 0 0 1.5px var(--k-line);
+    font-family: var(--k-display);
+    font-weight: 600 !important;
+
+    > i {
+      border-radius: 50% !important;
+      background: $d-lav !important;
+      color: $d-violet !important;
+      font-style: normal;
+    }
+
+    &.-done {
+      background: $d-yellow !important;
+      box-shadow: none;
+      color: $d-ink !important;
+
+      > i {
+        background: #fff !important;
+        color: $d-ink !important;
+      }
+    }
+
+    &.-now {
+      background: $d-violet !important;
+      box-shadow: none;
+      color: #fff !important;
+
+      > i {
+        background: #fff !important;
+        color: $d-violet !important;
+      }
+    }
+  }
+}
+
+.k-lines {
+  > * {
+    border-radius: 22px !important;
+  }
+}
+
+.k-cart {
+  &__title {
+    font-size: clamp(30px, 3vw, 40px) !important;
+  }
+
+  &__line,
+  &__group {
+    border-radius: 24px !important;
+  }
+
+  &__pic,
+  &__thumb {
+    border-radius: 18px !important;
+    background: $d-lav !important;
+  }
+}
+
+.k-ship,
+.k-addr,
+.k-opay,
+.k-often {
+  border-radius: 26px !important;
+}
+
+.k-sheet {
+  border-radius: 30px 30px 0 0 !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ Account (design B frame: a banner with tabs) ▆▆▆▆▆▆▆▆ */
+.k-acct__hero {
+  border-radius: 32px !important;
+  background: linear-gradient(120deg, $d-violet, $d-violet-2) !important;
+  color: #fff !important;
+
+  h1,
+  .k-acct__hi {
+    color: #fff !important;
+    font-family: var(--k-display) !important;
+  }
+
+  p,
+  .k-acct__words {
+    color: #e1d6ff !important;
+  }
+}
+
+.k-acct__ava {
+  background: $d-yellow !important;
+  color: $d-ink !important;
+  font-family: var(--k-display) !important;
+}
+
+.k-acct__tabs {
+  gap: 8px !important;
+
+  a,
+  button {
+    height: 40px !important;
+    padding: 0 16px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+
+    .v-icon {
+      color: inherit !important;
+    }
+
+    &.-on,
+    &.router-link-active {
+      background: $d-yellow !important;
+      color: $d-ink !important;
+    }
+  }
+}
+
+.k-tile {
+  border: 0 !important;
+  border-radius: 28px !important;
+
+  &:nth-child(8n + 1) {
+    background: #ece4ff !important;
+  }
+
+  &:nth-child(8n + 2) {
+    background: #ffe3ea !important;
+  }
+
+  &:nth-child(8n + 3) {
+    background: #ffe9d6 !important;
+  }
+
+  &:nth-child(8n + 4) {
+    background: #e3f6e8 !important;
+  }
+
+  &:nth-child(8n + 5) {
+    background: #fff3c7 !important;
+  }
+
+  &:nth-child(8n + 6) {
+    background: #e6efff !important;
+  }
+
+  &:nth-child(8n + 7) {
+    background: #dff4f7 !important;
+  }
+
+  &:nth-child(8n + 8) {
+    background: #ffe8f6 !important;
+  }
+
+  &__ico {
+    border-radius: 16px !important;
+    background: #fff !important;
+
+    .v-icon {
+      color: $d-violet !important;
+    }
+  }
+}
+
+.k-board,
+.k-ocardx,
+.k-ocard,
+.k-ahome__latest,
+.k-addrcard,
+.k-wallet {
+  @include d-card;
+}
+
+.k-board__row {
+  border-radius: 20px;
+}
+
+.k-ahome__steps,
+.k-ocardx__trail {
+  .-done,
+  .-on {
+    color: $d-violet !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Order page ▆▆▆▆▆▆▆▆ */
+.k-order {
+  &__receipt,
+  &__card,
+  &__box {
+    border-radius: 28px !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Sign-in ▆▆▆▆▆▆▆▆ */
+.k-signin {
+  background:
+    radial-gradient(circle at 12% 18%, #e9dfff 0 180px, transparent 181px),
+    radial-gradient(circle at 88% 82%, #fff3c7 0 220px, transparent 221px),
+    #fbf9ff !important;
+
+  &__card,
+  > div {
+    border-radius: 32px !important;
+  }
+
+  .v-btn {
+    border-radius: 999px !important;
+  }
+}

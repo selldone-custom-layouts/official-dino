@@ -12,41 +12,45 @@
   - Tread carefully, for you're treading on dreams.
   -->
 <template>
-  <!-- Walio 1.1.0 (404 design B): the home's split panel — a blue side with
-       a large 404 and the way back, a photo beside it — then today's deals. -->
-  <div class="w-404">
-    <section class="w-404__panel k-wrap">
-      <div class="w-404__l">
-        <span class="w-404__big">404</span>
-        <h1>We couldn't find that page</h1>
-        <p>It may have moved. Everything else is right where you left it — your cart included.</p>
-        <div class="w-404__acts">
-          <router-link :to="{ path: '/' }" class="w-404__btn -solid">Back to the home page</router-link>
-          <router-link :to="catalogue" class="w-404__btn -ghost">Browse every product</router-link>
+  <!-- Dino (404 design C, kalio-design/cd-options/notfound-c.html): the
+       mascot lost in an empty aisle, the way back, the aisles to jump to,
+       then today's deals. -->
+  <div class="d-404">
+    <section class="d-404__panel k-wrap">
+      <div aria-hidden="true" class="d-404__art">
+        <img :src="BRAND.mark" alt="" />
+        <span>?</span>
+      </div>
+      <div class="d-404__tx">
+        <span class="d-404__tag">Error 404</span>
+        <h1>Oops, this aisle is empty.</h1>
+        <p>The page moved or never existed. Everything else is right where you left it, your cart included.</p>
+        <div class="d-404__acts">
+          <router-link :to="{ path: '/' }" class="d-btn -yellow -big">Back to the home page</router-link>
+          <router-link :to="catalogue" class="d-btn -outline -big">Browse every product</router-link>
         </div>
       </div>
-      <div :style="pic ? { backgroundImage: `url(${pic})` } : null" aria-hidden="true" class="w-404__r"></div>
     </section>
-    <walio-row :filter="{ only_has_discount: true }" :limit="12" :more-to="deals" title="Today's top deals" />
+    <nav v-if="aisleList.length" aria-label="Aisles" class="d-404__aisles k-wrap">
+      <router-link v-for="a in aisleList.slice(0, 10)" :key="a.id" :to="aisleRoute(a)">
+        <img v-if="a.icon" :src="aisleImage(a, 64)" alt="" />{{ a.title || a.name }}
+      </router-link>
+    </nav>
+    <dino-row :filter="{ only_has_discount: true }" :limit="12" :more-to="deals" hot icon="local_fire_department" title="Today's deals" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import WalioRow from "../../../components/walio/WalioRow.vue";
-import { photo } from "../../../components/walio/walio-home";
-import { catalogueRoute, dealsRoute } from "../../../components/kalio/kalio-catalog";
+import DinoRow from "../../../components/dino/DinoRow.vue";
+import { BRAND } from "../../../components/kalio/kalio-brand";
+import { aisleImage, aisleRoute, aisles, catalogueRoute, dealsRoute } from "../../../components/kalio/kalio-catalog";
 
 export default defineComponent({
   name: "StorefrontPageError404",
-  components: { WalioRow },
+  components: { DinoRow },
+  data: () => ({ BRAND, aisleList: [] as any[] }),
   computed: {
-    shop() {
-      return this.getShop();
-    },
-    pic() {
-      return photo("walio-hero-2-new");
-    },
     deals() {
       return dealsRoute();
     },
@@ -54,6 +58,10 @@ export default defineComponent({
       return catalogueRoute();
     },
   },
+  mounted() {
+    aisles().then((list: any[]) => (this.aisleList = list || []));
+  },
+  methods: { aisleRoute, aisleImage },
 });
 </script>
 <style scoped lang="scss"></style>

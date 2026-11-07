@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>dino</title>
+  <circle cx="32" cy="32" r="32" fill="#ffd43b"/>
+  <path d="M24.5 17.5L19 9.5L29.5 13.5Z" fill="#8b5cf6"/>
+  <path d="M19.5 25.5L11.5 21.5L21 18.5Z" fill="#8b5cf6"/>
+  <path d="M17.5 34.5L9.5 32.5L18.5 27.5Z" fill="#8b5cf6"/>
+  <path d="M14 56C14 47 16 40 18 32C18 21 25 14 35 14H41C48 14 52.5 19 52.5 25C52.5 31 48 34.5 42 34.5H37C35 40 36.5 48 42 56Z" fill="#5b21b6"/>
+  <circle cx="39.5" cy="22.5" r="3.8" fill="#ffffff"/>
+  <circle cx="40.6" cy="23" r="1.9" fill="#1e1033"/>
+  <circle cx="49" cy="21.5" r="1.1" fill="#1e1033"/>
+  <path d="M41.5 29.2Q45.5 31.8 49.5 28.6" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="37.6" cy="28.4" r="1.9" fill="#c4b5fd"/>
+</svg>

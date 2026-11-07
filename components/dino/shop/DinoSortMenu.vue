@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import { SORTS, sortName } from "./walio-filters";
+import { SORTS, sortName } from "./dino-filters";
 
 export default {
-  name: "WalioSortMenu",
+  name: "DinoSortMenu",
   emits: ["update:modelValue"],
   props: {
     modelValue: { type: String, default: null },

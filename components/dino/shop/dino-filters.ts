@@ -12,7 +12,7 @@
        brands: [], selected_spec: { Key: [v] }, selected_variants: { volumes: [v] } }
    Pills in one group are OR, groups are AND (Selldone's own rule). */
 
-export interface WalioGroup {
+export interface DinoGroup {
   /** "spec" groups live in selected_spec, "variant" ones in selected_variants. */
   kind: "spec" | "variant" | "brand";
   key: string;
@@ -20,7 +20,7 @@ export interface WalioGroup {
   values: string[];
 }
 
-export interface WalioFilter {
+export interface DinoFilter {
   only_is_original?: boolean;
   only_has_discount?: boolean;
   prices?: Record<string, number[]> | null;
@@ -48,9 +48,9 @@ function list(value: any): string[] {
 /** Every group a shopper can narrow by, in the order Walio shows them:
  *  the sizes first (what a grocery shopper reaches for), then the
  *  merchant's spec keys in their own order, then the brands. */
-export function groupsOf(filters: any): WalioGroup[] {
+export function groupsOf(filters: any): DinoGroup[] {
   if (!filters) return [];
-  const out: WalioGroup[] = [];
+  const out: DinoGroup[] = [];
   for (const key of Object.keys(VARIANT_LABEL)) {
     const values = list(filters[key]);
     if (values.length) out.push({ kind: "variant", key, label: VARIANT_LABEL[key], values });
@@ -66,7 +66,7 @@ export function groupsOf(filters: any): WalioGroup[] {
 }
 
 /** The values picked in one group. */
-export function picked(filter: WalioFilter | null, group: WalioGroup): string[] {
+export function picked(filter: DinoFilter | null, group: DinoGroup): string[] {
   if (!filter) return [];
   if (group.kind === "brand") return filter.brands || [];
   if (group.kind === "variant") return filter.selected_variants?.[group.key] || [];
@@ -74,7 +74,7 @@ export function picked(filter: WalioFilter | null, group: WalioGroup): string[] 
 }
 
 /** A copy of the filter with one group's values replaced. */
-export function withGroup(filter: WalioFilter | null, group: WalioGroup, values: string[]): WalioFilter {
+export function withGroup(filter: DinoFilter | null, group: DinoGroup, values: string[]): DinoFilter {
   const next = clone(filter);
   if (group.kind === "brand") next.brands = [...values];
   else if (group.kind === "variant") next.selected_variants = { ...(next.selected_variants || {}), [group.key]: [...values] };
@@ -82,7 +82,7 @@ export function withGroup(filter: WalioFilter | null, group: WalioGroup, values:
   return next;
 }
 
-export function clone(filter: WalioFilter | null): WalioFilter {
+export function clone(filter: DinoFilter | null): DinoFilter {
   const f = filter || {};
   return {
     only_is_original: !!f.only_is_original,
@@ -95,7 +95,7 @@ export function clone(filter: WalioFilter | null): WalioFilter {
 }
 
 /** How many narrowing choices are on (each picked value and each switch). */
-export function countOn(filter: WalioFilter | null): number {
+export function countOn(filter: DinoFilter | null): number {
   if (!filter) return 0;
   let n = 0;
   if (filter.only_has_discount) n++;
@@ -107,7 +107,7 @@ export function countOn(filter: WalioFilter | null): number {
 }
 
 /** The filter the address carries (?filter=…), if any. */
-export function fromRoute(query: any): WalioFilter | null {
+export function fromRoute(query: any): DinoFilter | null {
   try {
     return query?.filter ? JSON.parse(query.filter) : null;
   } catch {

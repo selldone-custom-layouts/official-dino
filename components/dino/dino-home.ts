@@ -7,7 +7,7 @@
  * promo tiles per aisle, "Ways to get it", editorial tiles, more rows and
  * the sellers. This module holds what several of those sections share:
  *
- *  - the lifestyle photos, bundled from assets/walio/ (the owner has them
+ *  - the lifestyle photos, bundled from assets/dino/ (the owner has them
  *    made from kalio-design/walio-options/image-prompts-A.md). A photo that
  *    is not there yet is simply absent, and the section draws a collage of
  *    the aisle's own packshots instead, so the page is finished either way;
@@ -24,7 +24,7 @@ declare const window: any;
 /* ━━━━━━━━━━━━ Photos ━━━━━━━━━━━━
    import.meta.glob lists only the files that exist when the Layout is
    built, so a missing photo costs nothing and breaks nothing. */
-const FILES = import.meta.glob("../../assets/walio/*.{jpg,jpeg,png,webp}", {
+const FILES = import.meta.glob("../../assets/dino/*.{jpg,jpeg,png,webp}", {
   eager: true,
   query: "?url",
   import: "default",
@@ -52,18 +52,18 @@ export function findAisle(list: any[], pattern: RegExp, used: Set<number> = new 
    `deal` is the caption when the aisle has products on offer, `plain` when
    it has none. "{off}" is the best saving, "{from}" the lowest price. */
 export const TILES = [
-  { pattern: /breakfast|cereal/i, photo: "walio-tile-breakfast", deal: "Up to {off}% off breakfast favourites", plain: "Breakfast, sorted" },
-  { pattern: /snack|sweet|candy/i, photo: "walio-tile-snacks", deal: "Snack-time savings", plain: "The snack drawer" },
-  { pattern: /bread|bakery/i, photo: "walio-tile-bakery", deal: "Fresh-baked, up to {off}% off", plain: "Fresh-baked, from {from}" },
-  { pattern: /household|clean|laundry/i, photo: "walio-tile-household", deal: "Stock up the home for less", plain: "Stock up the home" },
-  { pattern: /meat|seafood|fish|poultry/i, photo: "walio-tile-meat", deal: "Dinner, sorted — up to {off}% off", plain: "Dinner, sorted" },
+  { pattern: /breakfast|cereal/i, photo: "dino-tile-breakfast", deal: "Up to {off}% off breakfast favourites", plain: "Breakfast, sorted" },
+  { pattern: /snack|sweet|candy/i, photo: "dino-tile-snacks", deal: "Snack-time savings", plain: "The snack drawer" },
+  { pattern: /bread|bakery/i, photo: "dino-tile-bakery", deal: "Fresh-baked, up to {off}% off", plain: "Fresh-baked, from {from}" },
+  { pattern: /household|clean|laundry/i, photo: "dino-tile-household", deal: "Stock up the home for less", plain: "Stock up the home" },
+  { pattern: /meat|seafood|fish|poultry/i, photo: "dino-tile-meat", deal: "Dinner, sorted — up to {off}% off", plain: "Dinner, sorted" },
 ];
 
 /* "Fresh finds": three tall editorial tiles. */
 export const FINDS = [
-  { pattern: /produce|fruit|veg/i, photo: "walio-finds-produce", title: "Picked this week" },
-  { pattern: /beverage|drink|coffee|tea/i, photo: "walio-finds-coffee", title: "Your morning, brewed" },
-  { pattern: /meat|seafood|fish|poultry|deli|prepared/i, photo: "walio-finds-dinner", title: "Weeknight dinners" },
+  { pattern: /produce|fruit|veg/i, photo: "dino-finds-produce", title: "Picked this week" },
+  { pattern: /beverage|drink|coffee|tea/i, photo: "dino-finds-coffee", title: "Your morning, brewed" },
+  { pattern: /meat|seafood|fish|poultry|deli|prepared/i, photo: "dino-finds-dinner", title: "Weeknight dinners" },
 ];
 
 /* A headline for an aisle that has no tile of its own. */

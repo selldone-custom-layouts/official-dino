@@ -17,7 +17,7 @@
         <img v-for="p in deals.slice(0, 3)" :key="p.id" :src="full(p)" :srcset="srcset(p)" alt="" sizes="170px" @error="dropSrcset" />
       </span>
     </router-link>
-    <walio-row
+    <dino-row
       v-for="a in rows"
       :key="a.id"
       :dir="a.name"
@@ -33,13 +33,13 @@
 </template>
 
 <script>
-import WalioRow from "../WalioRow.vue";
-import { DEALS_FILTER, listProducts } from "../walio-home";
+import DinoRow from "../DinoRow.vue";
+import { DEALS_FILTER, listProducts } from "../dino-home";
 import { aisleRoute, aisles, countProducts, dropSrcset, featured, offers, percentOff, productImage, productSrcset } from "../../kalio/kalio-catalog";
 
 export default {
-  name: "WalioSellerMain",
-  components: { WalioRow },
+  name: "DinoSellerMain",
+  components: { DinoRow },
   inject: ["$shop"],
 
   props: {

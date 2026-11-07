@@ -1,5 +1,5 @@
 <!--
-  Walio — a row of product cards (design A): "Top deals", "New arrivals",
+  Dino — a row of product cards (design C; first made for Walio): "Top deals", "New arrivals",
   "Trending in Produce".
 
   One products.list call, as Kalio's rail makes it: the caller passes the
@@ -20,7 +20,11 @@
     class="t-sec t-row k-wrap"
   >
     <header class="t-sec__head">
-      <h2 :id="headingId" class="t-sec__title">{{ title }}</h2>
+      <h2 :id="headingId" class="t-sec__title">
+        <span v-if="icon" :class="{ '-hot': hot }" aria-hidden="true" class="d-sec__ic"><v-icon size="22">{{ icon }}</v-icon></span>
+        {{ title }}
+        <slot name="badge"></slot>
+      </h2>
       <div class="t-sec__tools">
         <router-link v-if="moreTo" :to="moreTo" class="t-sec__more">
           {{ moreLabel }}<v-icon class="k-flip" size="20">chevron_right</v-icon>
@@ -41,7 +45,7 @@
         </div>
       </template>
       <div v-for="product in products" v-else :key="product.id" class="t-row__cell">
-        <walio-card :product="product" :sellers="sellersOf.get(product.id) || []" @quick-buy="quickBuy" />
+        <dino-card :product="product" :sellers="sellersOf.get(product.id) || []" @quick-buy="quickBuy" />
       </div>
     </div>
 
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-import WalioCard from "./WalioCard.vue";
+import DinoCard from "./DinoCard.vue";
 import KalioQuickBuy from "../kalio/KalioQuickBuy.vue";
 import { offers } from "../kalio/kalio-catalog";
 import { quickAdd } from "../kalio/kalio-basket";
@@ -72,8 +76,8 @@ function spreadByAisle(products) {
 }
 
 export default {
-  name: "WalioRow",
-  components: { WalioCard, KalioQuickBuy },
+  name: "DinoRow",
+  components: { DinoCard, KalioQuickBuy },
 
   props: {
     title: { type: String, required: true },
@@ -96,6 +100,9 @@ export default {
         saving): shown as given, nothing is fetched. null while the caller
         is still reading them; leave it out to have the row fetch. */
     items: { type: Array, default: undefined },
+    /** Dino: the heading's icon tile (a Material icon name), and "hot" for a yellow tile. */
+    icon: { type: String, default: null },
+    hot: Boolean,
   },
 
   emits: ["loaded"],

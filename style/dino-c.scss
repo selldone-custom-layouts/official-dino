@@ -1,0 +1,419 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Dino (design C) over every page ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+   dino-pages.scss keeps the structure of each page (first made for Walio);
+   the rules here dress every page as the Dino mockups
+   (kalio-design/cd-options/<page>-c.html): rounded white cards on the
+   lavender-white floor, violet actions, the yellow press-me, Fredoka
+   headings, the round "+" on every product picture. */
+
+$t-phone: 760px;
+$d-violet: #5b21b6;
+$d-violet-2: #7c3aed;
+$d-deep: #2e1065;
+$d-lav: #f3eeff;
+$d-lav-2: #e9dfff;
+$d-lav-3: #d9c9ff;
+$d-yellow: #ffd43b;
+$d-yellow-2: #f5c400;
+$d-ink: #1e1033;
+
+/* ▆▆▆▆▆▆▆▆ Selldone's product card as Dino's app card ▆▆▆▆▆▆▆▆
+   (catalogue, aisles, a seller's shelf, related rows) */
+.s--product-card,
+.s--storefront-products-listing .s--product-card,
+.k-seller-shelf .s--product-card {
+  .card__img--hover {
+    border-radius: 22px !important;
+    background: $d-lav !important;
+  }
+
+  .discount-percent {
+    top: 10px !important;
+    inset-inline-start: 10px !important;
+    padding: 4px 10px !important;
+    border-radius: 999px !important;
+    background: $d-yellow !important;
+    color: $d-ink !important;
+    font-family: var(--k-display) !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+  }
+
+  .-price-value,
+  .-price-value * {
+    font-family: var(--k-display) !important;
+    font-size: 21px !important;
+    font-weight: 600 !important;
+    color: var(--k-ink) !important;
+  }
+
+  .main-price-label:has(.discount-percent) .-price-value,
+  .main-price-label:has(.discount-percent) .-price-value * {
+    color: $d-violet !important;
+  }
+
+  .card__info .font-weight-bold {
+    font-weight: 600 !important;
+  }
+
+  /* The add on the picture's corner: the picture is the card-wide square
+     (100cqw tall) at the top of the card. */
+  .k-card-step-host {
+    position: absolute !important;
+    top: calc(100cqw - 56px) !important;
+    right: 10px !important;
+    left: 10px !important;
+    z-index: 4 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none;
+
+    > * {
+      pointer-events: auto;
+    }
+  }
+
+  .k-card-foot {
+    display: flex !important;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .k-card-add {
+    display: inline-grid !important;
+    place-items: center;
+    width: 46px !important;
+    min-width: 0 !important;
+    height: 46px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: $d-yellow !important;
+    color: $d-ink !important;
+    box-shadow: 0 4px 0 -1px $d-yellow-2, 0 10px 20px -10px rgba(46, 16, 101, 0.55) !important;
+    font-size: 0 !important;
+
+    .v-icon {
+      font-size: 30px !important;
+      color: $d-ink !important;
+    }
+
+    span {
+      display: none !important;
+    }
+
+    &.-options {
+      width: auto !important;
+      padding: 0 14px !important;
+      border-radius: 999px !important;
+      background: #fff !important;
+      color: $d-violet !important;
+      font-family: var(--k-display) !important;
+      font-size: 14.5px !important;
+      box-shadow: 0 10px 20px -10px rgba(46, 16, 101, 0.55) !important;
+
+      .-short {
+        display: inline !important;
+      }
+    }
+
+    &.-none {
+      width: auto !important;
+      padding: 0 12px !important;
+      border-radius: 999px !important;
+      background: #fff !important;
+      color: var(--k-muted) !important;
+      font-size: 12.5px !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .k-card-step.-card {
+    width: 100% !important;
+    height: 46px !important;
+    padding: 0 5px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: $d-violet !important;
+    box-shadow: 0 10px 20px -10px rgba(46, 16, 101, 0.6) !important;
+
+    button {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 50% !important;
+      background: rgba(255, 255, 255, 0.16) !important;
+
+      .v-icon {
+        color: #fff !important;
+      }
+    }
+
+    .k-card-step__count {
+      color: #fff !important;
+      font-family: var(--k-display) !important;
+      font-size: 17px !important;
+
+      small {
+        display: none !important;
+      }
+    }
+  }
+
+  .k-compare-toggle {
+    color: var(--k-muted) !important;
+  }
+}
+
+/* ▆▆▆▆▆▆▆▆ Aisle and catalogue ▆▆▆▆▆▆▆▆
+   The aisles (with their icons) and the filters in a rounded column, the
+   aisle's banner as a lavender-to-sun card with its icon. */
+.w-shop__cols {
+  gap: 28px !important;
+}
+
+.d-side {
+  position: sticky;
+  top: 160px;
+  display: grid;
+  gap: 16px;
+  align-self: start;
+  min-width: 0;
+}
+
+.d-aisles {
+  display: grid;
+  gap: 2px;
+  padding: 10px;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 0 0 1.5px var(--k-line);
+
+  &__h {
+    margin: 6px 10px;
+    color: var(--k-muted);
+    font-family: var(--k-display);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  &__a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 16px;
+    color: var(--k-ink) !important;
+    font-size: 14.5px;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      background: $d-lav;
+    }
+
+    &.-on {
+      background: $d-violet;
+      color: #fff !important;
+
+      .d-aisles__ic {
+        background: #fff;
+      }
+    }
+
+    &.-deals .d-aisles__ic {
+      background: #fff4cc;
+
+      .v-icon {
+        color: #e0a100 !important;
+      }
+    }
+  }
+
+  &__ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    background: $d-lav;
+
+    img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+  }
+}
+
+.d-side > :not(.d-aisles) {
+  padding: 16px 18px;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 0 0 1.5px var(--k-line);
+}
+
+.w-banner {
+  display: flex !important;
+  align-items: center;
+  gap: 18px;
+  min-height: 0 !important;
+  padding: 24px 28px !important;
+  border-radius: 30px !important;
+  background: linear-gradient(115deg, #efe7ff 0%, #f6f1ff 55%, #fff4d1 100%) !important;
+
+  &__ic {
+    flex: none;
+    width: 96px;
+    height: 96px;
+    padding: 8px;
+    border-radius: 28px;
+    background: #fff;
+    object-fit: contain;
+  }
+
+  &__tx {
+    flex: 1;
+    min-width: 0;
+
+    small {
+      color: $d-violet !important;
+      font-family: var(--k-display);
+    }
+
+    h1 {
+      font-size: clamp(32px, 3vw, 42px) !important;
+    }
+  }
+
+  &__facts > span {
+    height: 34px !important;
+    border-radius: 999px !important;
+    background: #fff !important;
+    font-weight: 700 !important;
+
+    &.-hot {
+      background: $d-yellow !important;
+      color: $d-ink !important;
+
+      .v-icon {
+        color: $d-ink !important;
+      }
+    }
+  }
+}
+
+.t-crumbs a {
+  color: $d-violet !important;
+}
+
+.t-keep__list a,
+.t-inaisles__a {
+  border-radius: 999px !important;
+  background: #fff !important;
+  box-shadow: inset 0 0 0 1.5px var(--k-line);
+  font-weight: 700 !important;
+
+  &:hover {
+    background: $d-lav !important;
+    color: $d-violet !important;
+  }
+}
+
+.t-top__h1 {
+  font-family: var(--k-display) !important;
+  font-weight: 600 !important;
+}
+
+.w-match {
+  border: 0 !important;
+  border-radius: 30px !important;
+  background: $d-lav !important;
+
+  &__im {
+    border-radius: 24px !important;
+    background: #fff !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .d-side {
+    position: static;
+    gap: 12px;
+  }
+
+  /* A phone: the aisles as a row of icon tiles you swipe. */
+  .d-aisles {
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    overflow-x: auto;
+    background: none;
+    box-shadow: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &__h {
+      display: none;
+    }
+
+    &__a {
+      flex: 0 0 74px;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1.2;
+      text-align: center;
+
+      &:hover {
+        background: none;
+      }
+
+      &.-on {
+        background: none;
+        color: $d-violet !important;
+
+        .d-aisles__ic {
+          box-shadow: 0 0 0 3px $d-violet;
+        }
+      }
+    }
+
+    &__ic {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+
+      img {
+        width: 46px;
+        height: 46px;
+      }
+    }
+  }
+
+  .d-side > :not(.d-aisles) {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .w-banner {
+    padding: 18px !important;
+    gap: 14px;
+
+    &__ic {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+    }
+
+    &__packs {
+      display: none !important;
+    }
+  }
+}

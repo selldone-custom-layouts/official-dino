@@ -215,10 +215,10 @@
 
 <script>
 import KalioProductOverview from "../../kalio/product/KalioProductOverview.vue";
-import { waysOf } from "../walio-home";
+import { waysOf } from "../dino-home";
 
 export default {
-  name: "WalioProductOverview",
+  name: "DinoProductOverview",
   extends: KalioProductOverview,
 
   data() {

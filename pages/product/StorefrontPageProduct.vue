@@ -53,7 +53,7 @@
           </span>
         </nav>
 
-        <walio-product-overview v-if="product" can-buy show-cover />
+        <dino-product-overview v-if="product" can-buy show-cover />
         <s-product-overview-loading v-else />
         <u-loading-progress v-if="busy"></u-loading-progress>
       </div>
@@ -148,7 +148,7 @@
 
       <!-- ⬬⬬⬬⬬ More from this aisle, as Walio cards ⬬⬬⬬⬬ -->
       <div :style="{ order: getOrder('related-products') }">
-        <walio-row
+        <dino-row
           v-if="product.category"
           :key="'aisle-' + product.category.id"
           :dir="product.category.name"
@@ -169,9 +169,9 @@
 <script lang="ts">
 import NotificationService from "@selldone/components-vue/plugins/notification/NotificationService.ts";
 
-import WalioProductOverview from "../../components/walio/product/WalioProductOverview.vue";
-import WalioRow from "../../components/walio/WalioRow.vue";
-import { waysOf } from "../../components/walio/walio-home";
+import DinoProductOverview from "../../components/dino/product/DinoProductOverview.vue";
+import DinoRow from "../../components/dino/DinoRow.vue";
+import { waysOf } from "../../components/dino/dino-home";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
 import SProductOverviewLoading from "@selldone/components-vue/storefront/product/overview/loading/SProductOverviewLoading.vue";
 
@@ -221,8 +221,8 @@ export default {
     SProductIncludes,
 
     SProductOverviewLoading,
-    WalioProductOverview,
-    WalioRow,
+    DinoProductOverview,
+    DinoRow,
 
   },
 

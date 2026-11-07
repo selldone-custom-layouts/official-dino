@@ -24,8 +24,7 @@
   timeline (marked as examples) and a signature.
 -->
 <template>
-  <!-- Walio 1.1.0 (About design B, "the magazine"): the story beside three
-       photos, how an order works in four steps, what the shop stands for,
+  <!-- Dino (About design C): the story beside the mascot and the shop's numbers, how an order works in four steps, what the shop stands for,
        and how to reach it. The text is the shop's own About profile
        (Selldone dashboard › Shop › Profile) when it has one; until then a
        sample, marked as such. The steps are read from the shop: its
@@ -34,7 +33,7 @@
     <section class="w-mag__ed">
       <div>
         <p class="w-mag__eyebrow">About {{ shopTitle }}</p>
-        <h1>{{ missing || busy ? (sellers.length > 1 ? "Small grocers, one cart." : "One shop, one cart.") : `About ${shopTitle}` }}</h1>
+        <h1>{{ missing || busy ? `Hi, we're ${shopTitle}. We bring the groceries.` : `About ${shopTitle}` }}</h1>
         <div v-if="busy" aria-hidden="true" class="k-legal__loading"><span></span><span></span><span></span></div>
         <template v-else-if="missing">
           <kalio-sample-note>This text is general copy written to show the page. It is not {{ shopTitle }}'s real story.</kalio-sample-note>
@@ -44,8 +43,12 @@
         </template>
         <div v-else class="k-prose" v-html="profile.body"></div>
       </div>
-      <div aria-hidden="true" class="w-mag__photos">
-        <span v-for="ph in photos" :key="ph" :style="{ backgroundImage: `url(${ph})` }"></span>
+      <!-- Dino: the mascot on a lavender disc, with the shop's numbers. -->
+      <div aria-hidden="true" class="d-about">
+        <img :src="BRAND.mark" alt="" class="d-about__mark" />
+        <span v-if="aisleList.length" class="d-about__fact -a"><b>{{ aisleList.length }}</b>aisles</span>
+        <span v-if="productCount" class="d-about__fact -b"><b>{{ productCount }}</b>groceries</span>
+        <span v-if="sellers.length" class="d-about__fact -c"><b>{{ sellers.length }}</b>{{ sellers.length === 1 ? "seller" : "sellers" }}</span>
       </div>
     </section>
 
@@ -91,7 +94,8 @@
 import KalioSampleNote from "@app-storefront/components/kalio/pages/KalioSampleNote.vue";
 import { aboutSample, plainText } from "@app-storefront/components/kalio/pages/kalio-sample-pages";
 import { aisles, catalogueRoute, countProducts, productImage, vendors } from "@app-storefront/components/kalio/kalio-catalog";
-import { photo, waysOf } from "@app-storefront/components/walio/walio-home";
+import { waysOf } from "@app-storefront/components/dino/dino-home";
+import { BRAND } from "@app-storefront/components/kalio/kalio-brand";
 
 export default {
   name: "StorefrontPageOfficialAboutUs",
@@ -106,15 +110,13 @@ export default {
     sellers: [],
     aisleList: [],
     productCount: null,
+    BRAND,
     ICONS: ["sell", "storefront", "eco", "chat_bubble_outline"],
   }),
 
   computed: {
     shopTitle() {
       return this.$shop?.title || "This shop";
-    },
-    photos() {
-      return ["walio-finds-produce", "walio-tile-bakery", "walio-finds-coffee"].map(photo).filter(Boolean);
     },
     /* The four steps, in the shop's own terms. */
     how() {

@@ -1,0 +1,659 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Dino — the quick-delivery app dress ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   Dino (design C, 7 November 2026) is the molino storefront as a grocery
+   app on the web: a violet bar with the dinosaur, a pill that says how the
+   order can reach you, a big rounded search and a yellow cart pill with the
+   count and the total; a white strip of aisles with their icons; the cart
+   as a rounded sheet from the right with a free-shipping bar; a deep violet
+   footer with rounded corners. Every behaviour stays the storefront's (Add
+   to cart turning into − n + in place, no pop-ups, the checkout steps).
+   Loaded after Kalio's sheets (storefront.scss), so it only overrides. */
+
+$d-violet: #5b21b6;
+$d-violet-2: #7c3aed;
+$d-deep: #2e1065;
+$d-lav: #f3eeff;
+$d-lav-2: #e9dfff;
+$d-lav-3: #d9c9ff;
+$d-yellow: #ffd43b;
+$d-yellow-2: #f5c400;
+$d-ink: #1e1033;
+
+/* Headings and prices in Fredoka's friendly round weight. */
+.v-application h1,
+.v-application h2,
+.v-application h3,
+.k-pdp__title,
+.k-cart__title {
+  font-family: var(--k-display) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.u--price {
+  font-family: var(--k-display);
+}
+
+/* ── Buttons: violet pills, the press-me in yellow ── */
+.k-btn {
+  border-radius: var(--k-pill) !important;
+  font-family: var(--k-display) !important;
+  font-weight: 600 !important;
+}
+
+.k-btn--solid {
+  background: $d-violet !important;
+  color: #fff !important;
+
+  &:hover {
+    background: $d-violet-2 !important;
+  }
+}
+
+.k-btn--line {
+  background: #fff !important;
+  color: $d-violet !important;
+  box-shadow: inset 0 0 0 2px $d-lav-2 !important;
+  border-color: transparent !important;
+}
+
+/* ── Header: the violet bar ── */
+.k-header {
+  background: $d-violet !important;
+  box-shadow: none !important;
+
+  &__bar {
+    border-bottom: 0 !important;
+  }
+
+  &__row {
+    gap: 16px !important;
+    height: 84px !important;
+  }
+
+  &__brand {
+    align-items: center !important;
+    gap: 10px !important;
+    color: #fff !important;
+    font-family: var(--k-display) !important;
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+
+    .k-brand-mark {
+      width: 48px !important;
+      height: 48px !important;
+    }
+  }
+
+  &__eta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    flex: none;
+    height: 48px;
+    padding: 0 16px 0 9px;
+    border-radius: var(--k-pill);
+    background: rgba(255, 255, 255, 0.12);
+    color: #e6dcff;
+    font-size: 12.5px;
+    line-height: 1.15;
+    white-space: nowrap;
+
+    > .v-icon {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: $d-yellow;
+      color: $d-ink !important;
+    }
+
+    b {
+      display: block;
+      color: #fff;
+      font-family: var(--k-display);
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+
+  &__icon {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.22) !important;
+    }
+
+    .v-icon {
+      color: #fff !important;
+    }
+  }
+
+  &__search {
+    .v-field {
+      min-height: 54px !important;
+      border-radius: var(--k-pill) !important;
+      background: #fff !important;
+      box-shadow: none;
+    }
+
+    .v-field__outline {
+      display: none;
+    }
+
+    input {
+      font-size: 15.5px !important;
+    }
+  }
+
+  &__search-pill {
+    height: 48px !important;
+    border-radius: var(--k-pill) !important;
+    background: #fff !important;
+    color: var(--k-muted) !important;
+  }
+
+  &__link {
+    width: 48px;
+    height: 48px;
+    padding: 0 !important;
+    justify-content: center;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    overflow: hidden;
+
+    .v-icon {
+      color: #fff !important;
+      font-size: 22px !important;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.22) !important;
+    }
+
+    /* Sign in keeps its word: it is a step, not an icon. */
+    &.-signin {
+      width: auto;
+      gap: 6px;
+      padding: 0 18px 0 14px !important;
+      border-radius: var(--k-pill) !important;
+      color: #fff !important;
+      font-size: 15px !important;
+      font-weight: 700;
+    }
+  }
+
+  &__lang {
+    color: #fff !important;
+  }
+
+  .v-btn--variant-outlined {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #fff !important;
+  }
+
+  /* The cart pill: the count on ink, the total beside it. */
+  &__basket {
+    height: 54px !important;
+    gap: 10px !important;
+    margin-inline-start: 6px !important;
+    padding: 0 20px 0 8px !important;
+    background: $d-yellow !important;
+    color: $d-ink !important;
+    font-family: var(--k-display) !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 0 -1px $d-yellow-2;
+
+    &:hover {
+      background: #ffdc5c !important;
+    }
+
+    em {
+      min-width: 38px !important;
+      height: 38px !important;
+      border-radius: 50% !important;
+      background: $d-ink !important;
+      color: $d-yellow !important;
+      font-family: var(--k-display);
+      font-size: 15px !important;
+      font-weight: 600 !important;
+    }
+
+    span,
+    .u--price,
+    .u--price * {
+      color: $d-ink !important;
+    }
+  }
+
+  @media (max-width: 960px) {
+    &__row {
+      height: 68px !important;
+      gap: 8px !important;
+    }
+
+    &__brand {
+      font-size: 28px !important;
+
+      .k-brand-mark {
+        width: 40px !important;
+        height: 40px !important;
+      }
+    }
+
+    &__basket {
+      height: 46px !important;
+      padding: 0 6px !important;
+
+      em {
+        min-width: 34px !important;
+        height: 34px !important;
+      }
+    }
+
+    &__search.-below {
+      padding-bottom: 12px;
+    }
+  }
+}
+
+/* The aisle strip: white, each aisle a pill with its icon. */
+.k-strip {
+  background: #fff !important;
+  box-shadow: 0 1px 0 var(--k-line);
+
+  &__row {
+    gap: 4px !important;
+  }
+
+  &__link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    margin: 8px 0;
+    padding: 0 14px 0 8px !important;
+    border-radius: var(--k-pill);
+    color: var(--k-ink-2) !important;
+    font-weight: 700 !important;
+
+    &::after {
+      display: none !important;
+    }
+
+    &:hover {
+      background: $d-lav;
+      color: $d-violet !important;
+    }
+
+    &.-on {
+      background: $d-violet;
+      color: #fff !important;
+
+      .k-strip__ic {
+        background: #fff;
+        border-radius: 50%;
+      }
+    }
+
+    &.-deals {
+      padding: 0 14px !important;
+      background: #fff4cc;
+      color: #7a5600 !important;
+
+      .v-icon {
+        color: #e0a100 !important;
+      }
+    }
+  }
+
+  &__ic {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  &__nudge {
+    background: $d-lav !important;
+    color: $d-violet !important;
+  }
+}
+
+/* ── The cart sheet: rounded, from the right ── */
+.k-drawer.-basket {
+  top: 10px !important;
+  bottom: 10px !important;
+  height: calc(100% - 20px) !important;
+  border-radius: 30px 0 0 30px !important;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -20px rgba(30, 16, 51, 0.6) !important;
+
+  .k-drawer__head {
+    flex-wrap: wrap;
+    padding: 20px 22px 18px !important;
+    background: $d-violet !important;
+    color: #fff !important;
+    border-bottom: 0 !important;
+  }
+
+  .k-drawer__title {
+    color: #fff !important;
+    font-family: var(--k-display) !important;
+    font-size: 26px !important;
+    font-weight: 600 !important;
+
+    small {
+      color: #d9ccff !important;
+    }
+  }
+
+  .k-header__icon {
+    background: rgba(255, 255, 255, 0.16) !important;
+    color: #fff !important;
+
+    .v-icon {
+      color: #fff !important;
+    }
+  }
+}
+
+.k-drawer__free {
+  flex: 0 0 100%;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 14px;
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .u--price,
+  .u--price * {
+    color: $d-yellow !important;
+    font-weight: 700;
+  }
+}
+
+.k-drawer__bar {
+  display: block;
+  height: 10px;
+  margin-top: 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+
+  i {
+    display: block;
+    height: 100%;
+    border-radius: 6px;
+    background: $d-yellow;
+    transition: width 300ms ease;
+  }
+}
+
+.k-bdrawer {
+  &__row {
+    padding: 10px !important;
+    border-radius: 20px;
+    background: #fbf9ff;
+    margin-bottom: 8px;
+    border: 0 !important;
+  }
+
+  &__pic {
+    border-radius: 18px !important;
+    background: $d-lav !important;
+    overflow: hidden;
+
+    img {
+      transform: scale(1.2);
+    }
+  }
+
+  &__price,
+  &__price .u--price {
+    color: $d-violet !important;
+    font-family: var(--k-display);
+  }
+
+  &__go {
+    height: 58px !important;
+    border-radius: var(--k-pill) !important;
+    background: $d-yellow !important;
+    color: $d-ink !important;
+    font-family: var(--k-display) !important;
+    font-size: 18px !important;
+    box-shadow: 0 5px 0 -1px $d-yellow-2;
+
+    .v-icon,
+    .u--price,
+    .u--price * {
+      color: $d-ink !important;
+    }
+  }
+}
+
+.k-drawer__empty-mark {
+  background: $d-lav !important;
+  color: $d-violet !important;
+}
+
+/* The phone menu */
+.k-drawer.-menu {
+  border-radius: 0 28px 28px 0 !important;
+
+  .k-drawer__head {
+    background: $d-violet !important;
+
+    .k-header__brand {
+      color: #fff !important;
+    }
+  }
+
+  .k-drawer__link {
+    border-radius: 16px !important;
+
+    &.-deals {
+      background: #fff4cc !important;
+      color: #7a5600 !important;
+    }
+  }
+
+  .k-drawer__ring {
+    border-radius: 12px !important;
+    background: $d-lav !important;
+  }
+}
+
+/* ── Product pictures: one lavender ground ── */
+.k-rail__cell,
+.k-seller-cards li,
+[style*="--k-tint"]:has(.s--product-card) {
+  --k-tint: var(--k-well) !important;
+}
+
+.k-pdp,
+.k-pdp [style*="--k-tint"] {
+  --k-tint: var(--k-well) !important;
+}
+
+/* ── Footer: a deep violet block with rounded top corners ── */
+.k-footer__band {
+  background: $d-lav !important;
+  border-top: 0 !important;
+}
+
+.k-footer__main {
+  margin-top: 28px;
+  border-radius: 36px 36px 0 0;
+  background: $d-deep !important;
+  color: #cfc3ee !important;
+}
+
+.k-footer__head {
+  color: #fff !important;
+  font-family: var(--k-display) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.k-footer__col a {
+  color: #cfc3ee !important;
+}
+
+.k-footer__col a:hover,
+.k-footer__col .-on {
+  color: $d-yellow !important;
+}
+
+.k-footer__mark {
+  align-items: center !important;
+  gap: 10px !important;
+  color: #fff !important;
+  font-family: var(--k-display) !important;
+  font-weight: 700 !important;
+}
+
+.k-footer__lede {
+  color: #cfc3ee !important;
+}
+
+.k-footer__base {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+  color: #a99bd0 !important;
+
+  a {
+    color: #cfc3ee !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .k-footer__main {
+    border-radius: 26px 26px 0 0;
+  }
+}
+
+/* ── Checkout: step headings with violet number tiles ── */
+.t-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 14px;
+  font-family: var(--k-display);
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--k-ink);
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  > span {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: $d-violet;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  small {
+    font-family: var(--k-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--k-muted);
+  }
+
+  &.-summary {
+    margin: 0 0 12px;
+    font-size: 21px;
+
+    > span {
+      background: $d-yellow;
+      color: $d-ink;
+    }
+  }
+}
+
+.k-cart__receipt {
+  background: $d-lav !important;
+  border: 0 !important;
+  border-radius: 28px !important;
+  box-shadow: none !important;
+}
+
+.k-cart__detail {
+  border: 0 !important;
+  border-radius: 26px !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 1.5px var(--k-line) !important;
+}
+
+.k-cart__go {
+  height: 58px !important;
+  border-radius: var(--k-pill) !important;
+  background: $d-yellow !important;
+  color: $d-ink !important;
+  font-family: var(--k-display) !important;
+  font-size: 18px !important;
+  box-shadow: 0 5px 0 -1px $d-yellow-2;
+
+  .v-icon,
+  .u--price,
+  .u--price * {
+    color: $d-ink !important;
+  }
+
+  &:hover {
+    background: #ffdc5c !important;
+  }
+
+  &.-off {
+    background: #ebe5f5 !important;
+    color: #5b5170 !important;
+    box-shadow: none;
+
+    .v-icon,
+    .u--price {
+      color: #5b5170 !important;
+    }
+  }
+}
+
+/* What is still missing before paying reads as a caution. */
+.k-cart__need,
+.k-cart__need .v-icon {
+  color: #a35a00 !important;
+}
+
+/* Vuetify fields and dialogs: rounder. */
+.v-application .v-field--variant-outlined,
+.v-application .v-field--variant-solo,
+.v-application .v-field--variant-filled {
+  border-radius: 16px !important;
+}
+
+.v-overlay .v-card,
+.v-dialog .v-card {
+  border-radius: 28px !important;
+}

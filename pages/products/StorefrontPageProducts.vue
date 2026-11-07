@@ -64,15 +64,15 @@
       <!-- Shown on the bare shop page only. Every narrowing action the
            listing performs travels as a query parameter, so the home page
            gets out of the way the moment a shopper searches or filters. -->
-      <walio-home v-if="show_home" />
+      <dino-home v-if="show_home" />
 
       <!-- ▆▆▆▆▆▆▆▆ Aisle, search, Deals, All products, seller (design B) ▆▆▆▆▆▆▆▆ -->
       <!-- A banner on top (the aisle with its numbers and packshots; a
            search's top match), then a column beside the grid: the filters
-           (WalioFilterRail), or on a seller's page the seller's card. On a
+           (DinoFilterRail), or on a seller's page the seller's card. On a
            phone the column folds into a "Filters | Sort" bar over the grid. -->
       <div v-if="!show_home" class="w-shop k-wrap">
-        <walio-shelf-top
+        <dino-shelf-top
           v-if="!vendor_id"
           :aisle="listing_parent"
           :category-name="category_name"
@@ -83,25 +83,29 @@
           :sellers="sold_by_list"
           :total="catalogue_total"
         />
-        <div class="w-shop__cols">
-          <walio-seller-side v-if="vendor_id" :tab="seller_tab" :vendor-id="vendor_id" @tab="sellerTab" />
-          <walio-filter-rail
-            v-else
-            :filters="filters_def"
-            :model-value="t_filter"
-            :sort="t_sort"
-            :sort-fallback="category_name ? 'Featured' : 'Best match'"
-            @update:model-value="setFilter"
-            @update:sort="setSort"
-          />
+        <!-- Dino: the seller's violet banner across the page. -->
+        <dino-seller-side v-if="vendor_id" :tab="seller_tab" :vendor-id="vendor_id" @tab="sellerTab" />
+        <div :class="{ '-solo': vendor_id }" class="w-shop__cols">
+          <!-- Dino: the aisles head the column, the filters follow. -->
+          <aside v-if="!vendor_id" class="d-side">
+            <dino-aisle-column :current="category_name" :deals="!!(t_filter && t_filter.only_has_discount) && !category_name" />
+            <dino-filter-rail
+              :filters="filters_def"
+              :model-value="t_filter"
+              :sort="t_sort"
+              :sort-fallback="category_name ? 'Featured' : 'Best match'"
+              @update:model-value="setFilter"
+              @update:sort="setSort"
+            />
+          </aside>
           <div class="w-shop__main">
-            <walio-seller-main v-if="vendor_id" :key="'sm' + vendor_id" :vendor-id="vendor_id" />
+            <dino-seller-main v-if="vendor_id" :key="'sm' + vendor_id" :vendor-id="vendor_id" />
             <div class="w-tools">
               <span v-if="catalogue_total !== null">
                 <b>{{ catalogue_total.toLocaleString() }} {{ catalogue_total === 1 ? "product" : "products" }}</b>
                 <span class="w-tools__in">{{ where_line }}</span>
               </span>
-              <walio-filter-rail
+              <dino-filter-rail
                 v-if="vendor_id"
                 :filters="filters_def"
                 :model-value="t_filter"
@@ -111,7 +115,7 @@
                 @update:model-value="setFilter"
                 @update:sort="setSort"
               />
-              <walio-sort-menu v-else :model-value="t_sort" :fallback="category_name ? 'Featured' : 'Best match'" @update:model-value="setSort" />
+              <dino-sort-menu v-else :model-value="t_sort" :fallback="category_name ? 'Featured' : 'Best match'" @update:model-value="setSort" />
             </div>
             <s-products-listing
               ref="listing"
@@ -131,7 +135,7 @@
 
         <!-- ▆▆▆▆▆▆▆▆ Under the grid ▆▆▆▆▆▆▆▆ -->
         <template v-if="!vendor_id">
-          <walio-row v-if="catalogue && search_query" :limit="12" lazy sort="bestselling" title="Popular right now" />
+          <dino-row v-if="catalogue && search_query" :limit="12" lazy sort="bestselling" title="Popular right now" />
           <section v-if="more_aisles.length" class="t-keep">
             <h2 class="t-keep__h">Keep shopping</h2>
             <div class="t-keep__list">
@@ -150,15 +154,16 @@
 <script lang="ts">
 import SProductsListing from "@selldone/components-vue/storefront/products/listing/SProductsListing.vue";
 import TemplateMixin from "@selldone/components-vue/mixin/template/TemplateMixin.ts";
-import WalioHome from "../../components/walio/WalioHome.vue";
-import WalioShelfTop from "../../components/walio/shop/WalioShelfTop.vue";
-import WalioFilterRail from "../../components/walio/shop/WalioFilterRail.vue";
-import WalioRow from "../../components/walio/WalioRow.vue";
-import { fromRoute } from "../../components/walio/shop/walio-filters";
+import DinoHome from "../../components/dino/DinoHome.vue";
+import DinoShelfTop from "../../components/dino/shop/DinoShelfTop.vue";
+import DinoFilterRail from "../../components/dino/shop/DinoFilterRail.vue";
+import DinoRow from "../../components/dino/DinoRow.vue";
+import { fromRoute } from "../../components/dino/shop/dino-filters";
 import { aisleRoute, aisles, countProducts, offers, vendors } from "../../components/kalio/kalio-catalog";
-import WalioSellerSide from "../../components/walio/shop/WalioSellerSide.vue";
-import WalioSellerMain from "../../components/walio/shop/WalioSellerMain.vue";
-import WalioSortMenu from "../../components/walio/shop/WalioSortMenu.vue";
+import DinoSellerSide from "../../components/dino/shop/DinoSellerSide.vue";
+import DinoSellerMain from "../../components/dino/shop/DinoSellerMain.vue";
+import DinoSortMenu from "../../components/dino/shop/DinoSortMenu.vue";
+import DinoAisleColumn from "../../components/dino/shop/DinoAisleColumn.vue";
 import {StorefrontSeo} from "../../helpers/StorefrontSeo";
 import KalioQuickBuy from "../../components/kalio/KalioQuickBuy.vue";
 import { hostQuickBuy } from "../../components/kalio/kalio-listing-quick-buy";
@@ -169,14 +174,15 @@ export default {
   name: "StorefrontPageProducts",
   components: {
     SProductsListing,
-    WalioHome,
-    WalioShelfTop,
-    WalioFilterRail,
-    WalioRow,
+    DinoHome,
+    DinoShelfTop,
+    DinoFilterRail,
+    DinoRow,
     KalioQuickBuy,
-    WalioSellerSide,
-    WalioSellerMain,
-    WalioSortMenu,
+    DinoSellerSide,
+    DinoSellerMain,
+    DinoSortMenu,
+    DinoAisleColumn,
   },
   mixins: [TemplateMixin],
 

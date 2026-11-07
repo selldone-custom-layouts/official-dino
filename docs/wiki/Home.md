@@ -1,8 +1,8 @@
-# Walio Market
+# Dino Market
 
-![Walio Market on desktop and phone](https://raw.githubusercontent.com/selldone-custom-layouts/official-walio/main/docs/screenshots/cover.jpg)
+![Dino Market on desktop and phone](https://raw.githubusercontent.com/selldone-custom-layouts/official-dino/main/docs/screenshots/cover.jpg)
 
-**Walio Market** is a custom storefront **Layout** for Selldone shops: a multi-vendor grocery marketplace dressed as a blue superstore: a blue header with a yellow cart that opens a small cart window, a split hero with deal tiles, best savings, category tiles and shop-the-idea lists, aisles with a banner and a filter column, a classic product page, a stepped checkout and seller pages as a shop in the shop. It runs on **[walio.selldone.shop](https://walio.selldone.shop)**, a second address of the shop molino, whose main address carries [Molino Market Hall](https://github.com/selldone-custom-layouts/official-molino): one shop, one Layout per domain (see [Go Live](Go-Live)). It is built on the official [selldone/storefront](https://github.com/selldone/storefront), so Selldone's basket, checkout, payments, vendor offers and orders keep working underneath a completely new design.
+**Dino Market** is a custom storefront **Layout** for Selldone shops: a multi-vendor grocery marketplace dressed as a purple quick-delivery app: a violet bar with a delivery pill and a yellow cart pill showing the total, swipeable promo cards, the aisles as a tile grid, app cards with a round yellow + on the picture, an aisle column beside every listing, a rounded cart sheet with a free-shipping bar, a violet seller banner and a friendly dinosaur on About, sign-in and the 404. It runs on **[dino.selldone.shop](https://dino.selldone.shop)**, a second address of the shop molino, whose main address carries [Molino Market Hall](https://github.com/selldone-custom-layouts/official-molino): one shop, one Layout per domain (see [Go Live](Go-Live)). It is built on the official [selldone/storefront](https://github.com/selldone/storefront), so Selldone's basket, checkout, payments, vendor offers and orders keep working underneath a completely new design.
 
 ## Start here
 
@@ -25,20 +25,20 @@
 
 ## What you get
 
-- **Home:** a deals banner, two rows of aisles, a row of best sellers for every aisle, an aisle mosaic, seller cards and a market shelf.
-- **Cards:** "Add to cart" turns into "− n in cart +" in place, "Choose options" for products with sizes, savings in green, and the seller is named on every card.
-- **Shop pages:** a compact aisle head, quiet filters built from product specs, one sort menu.
-- **Product page:** gallery, details and a sticky buy box with every seller's offer.
-- **Seller storefronts.**
-- **Cart and checkout:** a cart window under the cart button (a drawer on phones), a checkout with Cart ✓ — Delivery — Contact — Review & pay over numbered steps, a map-first address sheet and delivery choices.
+- **Home:** rounded promo cards (the shop's promise on violet, this week's savings on yellow, the fresh aisle on lavender), the aisles as a tile grid, today's deals with a countdown to midnight, the fresh aisle, the sellers as round avatars, top picks, and how the order reaches you.
+- **Cards:** a lavender square with the packshot large, a yellow saving pill, and a round yellow "+" on the picture that turns into "− n +" in place; "Options" for products with sizes; the seller is named on every card.
+- **Shop pages:** a sticky column with every aisle and its icon, then the filters built from product specs; the aisle's banner with its icon; on a phone the aisles become a row of icon tiles.
+- **Product page:** a rounded picture stage, the delivery methods and the sellers as rounded choice cards, a big yellow "Add to cart", pill tabs for the details.
+- **Seller storefronts:** a violet banner with the seller's mark, live numbers and their aisles as chips.
+- **Cart and checkout:** the cart as a rounded sheet from the right on every screen with a free-shipping progress bar, a checkout with step chips, a map-first address sheet and delivery choices.
 - **Orders:** the receipt, delivery, the trip and chat.
-- **Buyer account:** in two designs.
-- **Content pages:** journal, article, About, Terms and Privacy.
+- **Buyer account:** a violet banner with the sections as pills, pastel tiles.
+- **Content pages:** journal, article, About (with the dinosaur and the shop's live numbers), Terms and Privacy, a friendly 404.
 
 ## Links
 
-- Live shop: <https://walio.selldone.shop>
-- Repository: <https://github.com/selldone-custom-layouts/official-walio>
-- Design notes and release log: [`KALIO.md`](https://github.com/selldone-custom-layouts/official-walio/blob/main/KALIO.md)
+- Live shop: <https://dino.selldone.shop>
+- Repository: <https://github.com/selldone-custom-layouts/official-dino>
+- Design notes and release log: [`KALIO.md`](https://github.com/selldone-custom-layouts/official-dino/blob/main/KALIO.md)
 - All official custom Layouts: <https://github.com/selldone-custom-layouts>
 - Selldone: <https://selldone.com>

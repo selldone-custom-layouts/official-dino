@@ -33,41 +33,12 @@
           <img :src="BRAND.mark" alt="" class="k-brand-mark" height="34" width="34" />{{ shopTitle }}
         </router-link>
 
-        <v-menu
-          v-if="!compact && aisleList.length"
-          v-model="aisles_open"
-          :close-on-content-click="true"
-          location="bottom start"
-          offset="12"
-        >
-          <template v-slot:activator="{ props }">
-            <button class="k-header__aisles" type="button" v-bind="props">
-              <v-icon size="20">grid_view</v-icon>
-              Aisles
-              <v-icon :class="{ 'rotate-180': aisles_open }" class="t-all-400" size="18">expand_more</v-icon>
-            </button>
-          </template>
-          <div class="k-mega">
-            <p class="k-eyebrow">Shop by aisle</p>
-            <div class="k-mega__grid">
-              <router-link
-                v-for="aisle in aisleList"
-                :key="aisle.id"
-                :to="aisleRoute(aisle)"
-                class="k-mega__item"
-              >
-                <span :style="{ '--k-tint': tint(aisle) }" class="k-mega__ring">
-                  <img v-if="aisle.icon" :src="aisleImage(aisle, 64)" alt="" height="40" width="40" loading="lazy" />
-                </span>
-                {{ aisle.title || aisle.name }}
-              </router-link>
-            </div>
-            <div class="k-mega__foot">
-              <router-link :to="dealsRoute" class="k-more">Today’s deals <v-icon class="k-flip" size="18">chevron_right</v-icon></router-link>
-              <router-link :to="catalogueRoute" class="k-more">Every product <v-icon class="k-flip" size="18">chevron_right</v-icon></router-link>
-            </div>
-          </div>
-        </v-menu>
+        <!-- Dino: how the order can reach you, from the shop's own delivery
+             methods (the aisles are in the strip below and on the home). -->
+        <span v-if="!compact && wayNames.length" class="k-header__eta">
+          <v-icon size="18">bolt</v-icon>
+          <span><b>Get it your way</b>{{ wayNames.join(" · ") }}</span>
+        </span>
 
         <div v-if="showSearch && !compact" class="k-header__search">
           <s-storefront-search-box
@@ -139,27 +110,18 @@
             </button>
           </template>
 
-          <!-- Walio 1.1.0 (drawer design B): on a computer the cart opens as a
-               small window under the button; a phone keeps the side drawer. -->
-          <v-menu v-if="!compact" v-model="mini" :close-on-content-click="false" location="bottom end" offset="10">
-            <template v-slot:activator="{ props }">
-              <button :aria-label="`Cart, ${itemsCount} items`" class="k-header__basket" type="button" v-bind="props">
-                <v-icon size="20">shopping_cart</v-icon>
-                <span>Cart</span>
-                <em v-if="itemsCount">{{ itemsCount }}</em>
-              </button>
-            </template>
-            <walio-mini-cart @close="mini = false" />
-          </v-menu>
+          <!-- Dino: the cart pill (count and total) opens the cart sheet from
+               the right, on a computer as on a phone. -->
           <button
-            v-else
-            :aria-label="`Cart, ${itemsCount} items`"
+            :aria-label="'Cart, ' + itemsCount + ' items'"
+            :class="{ '-full': itemsCount }"
             class="k-header__basket"
             type="button"
             @click="basket = true"
           >
-            <v-icon size="20">shopping_cart</v-icon>
-            <em v-if="itemsCount">{{ itemsCount }}</em>
+            <em>{{ itemsCount }}</em>
+            <u-price v-if="itemsCount && cartTotal != null && !compact" :amount="cartTotal" :currency="cartCurrency" />
+            <span v-else-if="!compact">Cart</span>
           </button>
         </nav>
       </div>
@@ -211,6 +173,7 @@
           :to="aisleRoute(aisle)"
           class="k-strip__link"
         >
+          <img v-if="aisle.icon" :src="aisleImage(aisle, 64)" alt="" class="k-strip__ic" height="26" width="26" loading="lazy" />
           {{ aisle.title || aisle.name }}
         </router-link>
       </div>
@@ -236,6 +199,15 @@
           <button aria-label="Close" class="k-header__icon" type="button" @click="basket = false">
             <v-icon>close</v-icon>
           </button>
+          <!-- Dino: how far free shipping is, from the shop's own rule. -->
+          <div v-if="freeRule && itemsCount" class="k-drawer__free">
+            <p v-if="freeLeft > 0">
+              <v-icon size="18">local_shipping</v-icon>
+              <u-price :amount="freeLeft" :currency="freeRule.currency" />&nbsp;more for free shipping
+            </p>
+            <p v-else><v-icon size="18">celebration</v-icon> Free shipping unlocked</p>
+            <span class="k-drawer__bar"><i :style="{ width: freePct + '%' }"></i></span>
+          </div>
         </div>
         <!-- Empty: Selldone's line "Your cart is empty." left the shopper
              nowhere to go; Kalio's offers the way back to the shelves. -->
@@ -330,12 +302,11 @@ import KalioBasketDrawer from "./KalioBasketDrawer.vue";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
 import { aisleImage, aisleRoute, aisles, catalogueRoute, dealsRoute, tintFor } from "../kalio-catalog";
 import { basketView } from "../kalio-basket";
-import WalioMiniCart from "../../walio/WalioMiniCart.vue";
+import { freeShippingFrom, waysOf } from "../../dino/dino-home";
 
 export default {
   name: "KalioHeader",
   components: {
-    WalioMiniCart,
     SStorefrontSearchBox,
     SLanguageSelector,
     UCurrencySelector,
@@ -359,7 +330,6 @@ export default {
       aisleList: [],
       aisles_open: false,
       basket: false,
-      mini: false,
       menu: false,
       phone_search: false,
       windowWidth: window.innerWidth,
@@ -414,6 +384,35 @@ export default {
     profileRoute() {
       return { name: "KalioAccountHome" };
     },
+    /** The shop's delivery methods, as the header's pill says them. */
+    wayNames() {
+      return waysOf(this.$shop).map((w) => w.key);
+    },
+    /** The groceries basket (the physical one). */
+    cartBasket() {
+      const all = this.getBaskets();
+      return all.find((b) => b?.items?.length && b.type === "PHYSICAL") || all.find((b) => b?.items?.length) || null;
+    },
+    cartTotal() {
+      const b = this.cartBasket;
+      if (!b) return null;
+      const bill = b.bill || {};
+      return typeof bill.price === "number" ? bill.price : typeof b.price === "number" ? b.price : null;
+    },
+    cartCurrency() {
+      const b = this.cartBasket;
+      return (b && ((b.bill && b.bill.currency) || b.currency)) || this.$shop?.currency;
+    },
+    freeRule() {
+      return freeShippingFrom(this.$shop);
+    },
+    freeLeft() {
+      return this.freeRule && this.cartTotal != null ? Math.max(0, this.freeRule.amount - this.cartTotal) : 0;
+    },
+    freePct() {
+      if (!this.freeRule || this.cartTotal == null) return 0;
+      return Math.max(4, Math.min(100, Math.round((this.cartTotal / this.freeRule.amount) * 100)));
+    },
     drawerOpen() {
       return this.basket || this.menu;
     },
@@ -430,7 +429,6 @@ export default {
     $route() {
       this.menu = false;
       this.basket = false;
-      this.mini = false;
       this.phone_search = false;
     },
   },

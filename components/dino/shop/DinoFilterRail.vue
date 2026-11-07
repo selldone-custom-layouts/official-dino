@@ -11,7 +11,7 @@
 
   `compact` draws only the bar (the seller page, whose column is the
   seller's card). The groups are the listing's live Selldone filter record
-  (walio-filters.ts); the page hands every change to the listing.
+  (dino-filters.ts); the page hands every change to the listing.
 -->
 <template>
   <aside v-if="!compact" aria-label="Filters" class="w-rail">
@@ -153,10 +153,10 @@
 import UPrice from "@selldone/components-vue/ui/price/UPrice.vue";
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
 import { PriceHelper } from "@selldone/core-js/helper";
-import { SORTS, clone, countOn, groupsOf, picked, sortName, valueLabel, withGroup } from "./walio-filters";
+import { SORTS, clone, countOn, groupsOf, picked, sortName, valueLabel, withGroup } from "./dino-filters";
 
 export default {
-  name: "WalioFilterRail",
+  name: "DinoFilterRail",
   components: { UPrice },
   mixins: [CurrencyMixin],
   inject: ["$shop"],

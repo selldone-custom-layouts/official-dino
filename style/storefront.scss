@@ -25,9 +25,11 @@
 @use "kalio-checkout"; // Kalio: basket page, its sheets, payment, order page
 @use "kalio-account"; // Kalio: the shopper's account (orders, overview, rail)
 @use "kalio-pages"; // Kalio: the journal, About us, Terms and Privacy
-@use "walio-skin"; // Walio: the blue superstore dress over all of the above
-@use "walio-home"; // Walio 1.1.0: the home (design B), with the shared rows and cards
-@use "walio-pages"; // Walio 1.1.0: every page after the home (the B mockups, product A)
+@use "dino-home"; // Dino: the home, the rows and the app card (design C)
+@use "dino-pages"; // Dino: the structure of every page after the home
+@use "dino-c"; // Dino: the design C dress over the listings
+@use "dino-c-pages"; // Dino: the design C dress over every other page
+@use "dino-skin"; // Dino: the violet app dress over all of the above (last, so it wins)
 
 // --------------------------------------------------------
 .add-marginal-side-menu-open {

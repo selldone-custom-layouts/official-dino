@@ -24,13 +24,15 @@ Change the tokens and the whole site follows: buttons, badges, the compare badge
 | Buyer account | `components/kalio/account/`, `pages/user/`, `style/kalio-account.scss` |
 | Content pages | `components/kalio/pages/`, `style/kalio-pages.scss` |
 | Skin for Selldone's own components | `style/kalio-platform.scss` |
-| Home (design B) | `components/walio/WalioHome.vue`, `WalioRow.vue`, `WalioCard.vue`, `WalioPhoto.vue`, `walio-home.ts`; styles in `style/walio-home.scss` |
-| Aisle, search, seller pages (filter column, banner, seller card) | `pages/products/StorefrontPageProducts.vue`, `components/walio/shop/`; styles in `style/walio-pages.scss` |
-| Product page (design A) | `components/walio/product/WalioProductOverview.vue`, `pages/product/StorefrontPageProduct.vue` |
-| Cart window under the cart button | `components/walio/WalioMiniCart.vue`, `components/kalio/shell/KalioHeader.vue` |
-| Lifestyle photos | `assets/walio/` |
+| Home (design C) | `components/dino/DinoHome.vue`, `DinoRow.vue`, `DinoCard.vue`, `dino-home.ts`; styles in `style/dino-home.scss` |
+| Aisle, search, seller pages (aisle column, filters, banner, seller banner) | `pages/products/StorefrontPageProducts.vue`, `components/dino/shop/`; styles in `style/dino-pages.scss` and `style/dino-c.scss` |
+| Product page | `components/dino/product/DinoProductOverview.vue`, `pages/product/StorefrontPageProduct.vue`; styles in `style/dino-c-pages.scss` |
+| Header, aisle strip, cart sheet, footer | `components/kalio/shell/KalioHeader.vue`; styles in `style/dino-skin.scss` |
+| Colours, fonts, radii | `style/kalio-tokens.scss`, `components/kalio/kalio-fonts.ts` |
+| Name and mark | `components/kalio/kalio-brand.ts`, `assets/brand/dino-mark.svg` |
+| Optional lifestyle photos | `assets/dino/` (prompts in DINO.md) |
 
-[`KALIO.md`](https://github.com/selldone-custom-layouts/official-walio/blob/main/KALIO.md) explains every part, the reason behind each decision, and each workaround.
+[`KALIO.md`](https://github.com/selldone-custom-layouts/official-dino/blob/main/KALIO.md) explains every part, the reason behind each decision, and each workaround.
 
 ## Rules that keep it working
 
