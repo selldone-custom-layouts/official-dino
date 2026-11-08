@@ -88,7 +88,9 @@
       <s-storefront-master-payment-dialog />
 
       <!-- ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Products Comparison ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ -->
-      <s-comparison-button v-if="has_comparison" />
+      <!-- Dino: the pill opens Dino's compare page (DinoCompare), not
+           Selldone's full-screen table (8 November 2026). -->
+      <dino-compare-button v-if="has_comparison" />
 
       <!-- ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Need Login ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ -->
       <!-- Kalio's sign-in sheet in place of SStorefrontNeedLoginDialog:
@@ -191,11 +193,8 @@ export default {
         ),
     ),
 
-    SComparisonButton: defineAsyncComponent(
-      () =>
-        import(
-          "@selldone/components-vue/storefront/comparison/button/SComparisonButton.vue"
-        ),
+    DinoCompareButton: defineAsyncComponent(
+      () => import("./components/dino/compare/DinoCompareButton.vue"),
     ),
 
     SDebugger: defineAsyncComponent(
