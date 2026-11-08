@@ -72,33 +72,49 @@ $d-ink: #1e1033;
     }
   }
 
+  /* The host is placed for the 46px stepper; the smaller "+" sits at its foot,
+     10px above the picture's bottom edge. */
   .k-card-foot {
     display: flex !important;
+    align-items: flex-end;
     justify-content: flex-end;
     width: 100%;
+    min-height: 46px;
   }
 
+  /* 32px (46 until 1.0.4, the owner: "30% smaller"), flat, never underlined:
+     the whole card is a link and its hover underline reached the "+". */
   .k-card-add {
     display: inline-grid !important;
     place-items: center;
-    width: 46px !important;
+    width: 32px !important;
     min-width: 0 !important;
-    height: 46px !important;
+    height: 32px !important;
+    text-decoration: none !important;
+
+    &:hover,
+    &:focus,
+    *,
+    *::before,
+    *::after {
+      text-decoration: none !important;
+    }
+
     padding: 0 !important;
     border: 0 !important;
     border-radius: 50% !important;
     background: $d-yellow !important;
     color: $d-ink !important;
-    box-shadow: 0 4px 0 -1px $d-yellow-2, 0 10px 20px -10px rgba(46, 16, 101, 0.55) !important;
+    box-shadow: none !important; /* flat, no 3D lip or drop shadow (owner, 8 Nov 2026) */
     font-size: 0 !important;
 
     /* Selldone sizes the icon box at 18px high and Kalio gives it a margin;
        the 30px glyph hung 6px low and 2px left. A real 30px box, centred. */
     .v-icon {
-      width: 30px !important;
-      height: 30px !important;
+      width: 21px !important;
+      height: 21px !important;
       margin: 0 !important;
-      font-size: 30px !important;
+      font-size: 21px !important;
       line-height: 1 !important;
       color: $d-ink !important;
     }

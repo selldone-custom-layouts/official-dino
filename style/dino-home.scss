@@ -66,7 +66,7 @@ $d-ink: #1e1033;
   &.-main {
     background: $d-yellow;
     color: $d-ink !important;
-    box-shadow: 0 5px 0 -1px $d-yellow-2;
+    box-shadow: none; /* flat, no 3D lip (owner, 8 Nov 2026) */
   }
 
   &.-violet {
@@ -370,26 +370,37 @@ $d-ink: #1e1033;
       pointer-events: auto;
     }
 
+    /* 32px (46 until 1.0.4, the owner: "30% smaller"), flat, never underlined. */
     .k-card-add {
       display: inline-grid !important;
       place-items: center;
-      width: 46px !important;
+      width: 32px !important;
       min-width: 0 !important;
-      height: 46px !important;
+      height: 32px !important;
+      text-decoration: none !important;
+
+      &:hover,
+      &:focus,
+      *,
+      *::before,
+      *::after {
+        text-decoration: none !important;
+      }
+
       padding: 0 !important;
       border: 0 !important;
       border-radius: 50% !important;
       background: $d-yellow !important;
       color: $d-ink !important;
-      box-shadow: 0 4px 0 -1px $d-yellow-2, 0 10px 20px -10px rgba(46, 16, 101, 0.55) !important;
+      box-shadow: none !important; /* flat, no 3D lip or drop shadow (owner, 8 Nov 2026) */
       font-size: 0 !important;
 
       /* A real 30px box with no margin: the glyph sat 6px low, 2px left. */
       .v-icon {
-        width: 30px !important;
-        height: 30px !important;
+        width: 21px !important;
+        height: 21px !important;
         margin: 0 !important;
-        font-size: 30px !important;
+        font-size: 21px !important;
         line-height: 1 !important;
         color: $d-ink !important;
       }
@@ -532,8 +543,8 @@ $d-ink: #1e1033;
     }
 
     &__act .k-card-add {
-      width: 42px !important;
-      height: 42px !important;
+      width: 30px !important;
+      height: 30px !important;
     }
 
     &__now {

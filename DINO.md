@@ -51,6 +51,7 @@ Dino needs no lifestyle photos: every picture is the shop's own packshots. `comp
 
 Release with `bash scripts/release.sh <version> home` (the tabbed account).
 
+- **1.0.4 (8 November 2026):** flat buttons: no darker 3D lip under any yellow button (the cards' "+", the cart pill, Start shopping, Add to cart, Checkout) and no drop shadow on the "+" (the owner: "why are the buttons 3D?"). The "+" circle is 30% smaller (46px to 32px; 42 to 30 on the home's phone cards) and never underlined: an aisle card is one link, and its hover underline drew a dark line under the "+".
 - **1.0.3 (8 November 2026):** the "+" sits in the middle of its yellow circle, on every card (the home's and the aisles'): Selldone sized the icon's box 18px high and Kalio gave it a margin, so the 30px glyph hung 6px low and 2px left (the owner: "why isn't the plus in the middle of the circles?").
 - **1.0.2 (8 November 2026):** no grey band down the right edge of every page: the closed cart sheet waits just past the edge, and its shadow (80px of blur) reached into the page; the shadow now shows only while the sheet is open.
 - **1.0.1 (7 November 2026):** "cart", not "basket", in the footer; the violet promo card's packshots larger.

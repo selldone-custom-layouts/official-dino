@@ -30,7 +30,7 @@ $d-ok: #12a150;
   font-weight: 600 !important;
   letter-spacing: 0 !important;
   text-transform: none !important;
-  box-shadow: 0 5px 0 -1px $d-yellow-2 !important;
+  box-shadow: none !important; /* flat, no 3D lip (owner, 8 Nov 2026) */
 
   .v-icon,
   .v-btn__content,

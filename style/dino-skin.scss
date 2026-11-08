@@ -209,7 +209,7 @@ $d-ink: #1e1033;
     font-family: var(--k-display) !important;
     font-size: 17px !important;
     font-weight: 600 !important;
-    box-shadow: 0 4px 0 -1px $d-yellow-2;
+    box-shadow: none; /* flat, no 3D lip (owner, 8 Nov 2026) */
 
     &:hover {
       background: #ffdc5c !important;
@@ -443,7 +443,7 @@ $d-ink: #1e1033;
     color: $d-ink !important;
     font-family: var(--k-display) !important;
     font-size: 18px !important;
-    box-shadow: 0 5px 0 -1px $d-yellow-2;
+    box-shadow: none; /* flat, no 3D lip (owner, 8 Nov 2026) */
 
     .v-icon,
     .u--price,
@@ -622,7 +622,7 @@ $d-ink: #1e1033;
   color: $d-ink !important;
   font-family: var(--k-display) !important;
   font-size: 18px !important;
-  box-shadow: 0 5px 0 -1px $d-yellow-2;
+  box-shadow: none; /* flat, no 3D lip (owner, 8 Nov 2026) */
 
   .v-icon,
   .u--price,
