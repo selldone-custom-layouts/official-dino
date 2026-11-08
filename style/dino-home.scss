@@ -678,54 +678,110 @@ $d-ink: #1e1033;
     background: $d-violet-2;
   }
 
+  /* The packshots at twice their old size (the owner, 8 November 2026: "the
+     photos in these banners are too small", and of two mockups he picked
+     2x; kalio-design/cd-options/banners-2x.html). Every product photo is a
+     1000x1000 frame with the product from 16% to 84% of its height, centred,
+     so a photo is placed by its frame: --s the frame, --r its right edge
+     from the card's, --lift how far the product's foot sits above the
+     card's bottom (negative: it runs off the edge). Checked against the
+     heading, text and button at 1440, 1180, 820 and 390px. */
   &__packs {
     position: absolute;
-    right: 8px;
-    bottom: 0;
+    inset: 0;
     z-index: 1;
-    width: 54%;
-    height: 82%;
     pointer-events: none;
 
     img {
       position: absolute;
-      width: 46%;
+      right: var(--r);
+      bottom: calc(var(--lift, 0px) - 0.16 * var(--s));
+      width: var(--s);
       object-fit: contain;
       mix-blend-mode: multiply;
       transition: transform 300ms ease;
 
+      /* The yellow and lavender cards: two, side by side at the corner. */
       &:nth-child(1) {
-        right: 0;
-        bottom: 6%;
-        width: 52%;
+        z-index: 1;
+        --s: 278px;
+        --r: -95px;
+        --lift: -6px;
       }
 
       &:nth-child(2) {
-        right: 40%;
-        bottom: -2%;
+        z-index: 2;
+        --s: 240px;
+        --r: -11px;
+        --lift: -10px;
       }
     }
 
+    /* The violet card: a cluster of three, the third behind and higher. */
     &.-three img {
       mix-blend-mode: normal;
       filter: drop-shadow(0 16px 18px rgba(20, 0, 60, 0.35));
 
       &:nth-child(1) {
-        right: 0;
-        bottom: 8%;
-        width: 58%;
+        --s: 346px;
+        --r: -102px;
+        --lift: 8px;
       }
 
       &:nth-child(2) {
-        right: 36%;
-        bottom: -4%;
-        width: 52%;
+        --s: 310px;
+        --r: 36px;
+        --lift: -6px;
       }
 
       &:nth-child(3) {
-        right: 20%;
-        bottom: 40%;
-        width: 42%;
+        z-index: 0;
+        --s: 250px;
+        --r: 6px;
+        --lift: 141px;
+      }
+    }
+
+    /* 1101 to 1279px: the cards narrow but the buttons do not; the bottle
+       moves right off the violet card's text, and the small cards' photos
+       get a little smaller and move right off their button. */
+    @media (min-width: 1101px) and (max-width: 1279px) {
+      img:nth-child(1) {
+        --s: 240px;
+        --r: -80px;
+      }
+
+      img:nth-child(2) {
+        --s: 206px;
+        --r: -23px;
+      }
+
+      &.-three img:nth-child(1) {
+        --s: 346px;
+        --r: -102px;
+      }
+
+      &.-three img:nth-child(2) {
+        --s: 310px;
+        --r: 12px;
+      }
+    }
+
+    /* A tablet: the violet card spans the row and is shorter. */
+    @media (max-width: $t-tablet) {
+      &.-three img {
+        &:nth-child(1) {
+          --r: -83px;
+        }
+
+        &:nth-child(2) {
+          --r: 65px;
+        }
+
+        &:nth-child(3) {
+          --r: 25px;
+          --lift: 120px;
+        }
       }
     }
   }
@@ -740,23 +796,6 @@ $d-ink: #1e1033;
 
     p {
       color: #e1d6ff;
-    }
-  }
-
-  &.-yellow,
-  &.-lav {
-    .d-promo__packs {
-      width: 74%;
-      height: 66%;
-
-      img:nth-child(1) {
-        width: 58%;
-      }
-
-      img:nth-child(2) {
-        right: 44%;
-        width: 50%;
-      }
     }
   }
 
@@ -796,24 +835,37 @@ $d-ink: #1e1033;
     }
 
     &__packs {
-      width: 50%;
-      height: 66%;
-    }
+      img {
+        &:nth-child(1) {
+          --s: 264px;
+          --r: -82px;
+          --lift: 6px;
+        }
 
-    &__packs.-three img {
-      &:nth-child(1) {
-        width: 62%;
+        &:nth-child(2) {
+          --s: 228px;
+          --r: -9px;
+          --lift: -10px;
+        }
       }
 
-      &:nth-child(2) {
-        right: 30%;
-        width: 56%;
-      }
+      &.-three img {
+        &:nth-child(1) {
+          --s: 190px;
+          --r: -65px;
+          --lift: 6px;
+        }
 
-      &:nth-child(3) {
-        right: 18%;
-        bottom: 46%;
-        width: 44%;
+        /* No room beside the button on a phone: the bottle stays out. */
+        &:nth-child(2) {
+          display: none;
+        }
+
+        &:nth-child(3) {
+          --s: 136px;
+          --r: -18px;
+          --lift: 135px;
+        }
       }
     }
   }

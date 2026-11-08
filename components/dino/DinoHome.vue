@@ -25,7 +25,7 @@
         <span class="d-btn -yellow -big">Start shopping<v-icon size="20">arrow_forward</v-icon></span>
         <span aria-hidden="true" class="d-promo__blob"></span>
         <span aria-hidden="true" class="d-promo__packs -three">
-          <img v-for="p in heroPacks" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="220px" @error="dropSrcset" />
+          <img v-for="p in heroPacks" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="(max-width: 760px) 270px, 350px" @error="dropSrcset" />
         </span>
       </router-link>
       <router-link v-if="dealList.length" :to="deals" class="d-promo -yellow">
@@ -33,7 +33,7 @@
         <p>Savings on {{ dealList.length }}{{ dealList.length >= 12 ? "+" : "" }} groceries.</p>
         <span class="d-btn -violet">See deals</span>
         <span aria-hidden="true" class="d-promo__packs">
-          <img v-for="p in dealList.slice(3, 5)" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="220px" @error="dropSrcset" />
+          <img v-for="p in dealList.slice(3, 5)" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="(max-width: 760px) 270px, 350px" @error="dropSrcset" />
         </span>
       </router-link>
       <router-link v-if="fresh" :to="aisleRoute(fresh)" class="d-promo -lav">
@@ -41,7 +41,7 @@
         <p>Picked for this week.</p>
         <span class="d-btn -white">Shop {{ (fresh.title || fresh.name).toLowerCase() }}</span>
         <span aria-hidden="true" class="d-promo__packs">
-          <img v-for="p in freshList.slice(0, 2)" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="220px" @error="dropSrcset" />
+          <img v-for="p in freshList.slice(0, 2)" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="(max-width: 760px) 270px, 350px" @error="dropSrcset" />
         </span>
       </router-link>
     </section>
