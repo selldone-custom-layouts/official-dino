@@ -7,7 +7,8 @@
   savings on yellow, one fresh aisle on lavender); then the aisles as a big
   tile grid, the main way in; today's deals with a countdown to midnight;
   the fresh aisle, the sellers as round avatars with four of their
-  groceries, the top picks, and how the order reaches you. Everything is
+  groceries, the top picks, how the order reaches you, and last the shop's
+  four newest journal posts as pastel cards. Everything is
   read from the shop: products, prices, savings, aisles, sellers and the
   delivery methods. A section with nothing to show is not drawn.
 -->
@@ -112,6 +113,10 @@
 
     <dino-row :limit="12" icon="favorite" lazy sort="bestselling" spread title="Top picks for you" />
 
+    <div class="d-home__end k-wrap">
+      <router-link :to="catalogue" class="d-btn -violet -big">Browse every product<v-icon size="20">arrow_forward</v-icon></router-link>
+    </div>
+
     <!-- ▆▆▆▆ How it reaches you ▆▆▆▆ -->
     <section v-if="ways.length" class="d-sec k-wrap">
       <header class="d-sec__head">
@@ -130,9 +135,25 @@
       </div>
     </section>
 
-    <div class="d-home__end k-wrap">
-      <router-link :to="catalogue" class="d-btn -violet -big">Browse every product<v-icon size="20">arrow_forward</v-icon></router-link>
-    </div>
+    <!-- ▆▆▆▆ From the journal: the shop's own articles, the page's last
+         section (owner, 8 November 2026) ▆▆▆▆ -->
+    <section v-if="posts.length" class="d-sec d-blog k-wrap">
+      <header class="d-sec__head">
+        <h2><span class="d-sec__ic"><v-icon size="22">menu_book</v-icon></span>From the journal</h2>
+        <router-link :to="journal" class="d-sec__more">All articles<v-icon size="20">chevron_right</v-icon></router-link>
+      </header>
+      <div class="d-blog__track">
+        <router-link v-for="(a, i) in posts" :key="a.id" :style="{ background: POST_TINTS[i % POST_TINTS.length] }" :to="postRoute(a)" class="d-post">
+          <span class="d-post__pic"><img v-if="a.image" :src="postImage(a)" :srcset="postSrcset(a)" alt="" loading="lazy" sizes="(max-width: 760px) 78vw, (max-width: 1100px) 46vw, 330px" @error="dropSrcset" /></span>
+          <span class="d-post__tx">
+            <small v-if="dateParts(a.created_at).full" class="d-post__date"><v-icon size="15">event</v-icon>{{ dateParts(a.created_at).full }}</small>
+            <b class="d-post__title">{{ a.title }}</b>
+            <span v-if="a.description" class="d-post__desc">{{ a.description }}</span>
+            <em class="d-post__go">Read<v-icon size="18">arrow_forward</v-icon></em>
+          </span>
+        </router-link>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -148,6 +169,7 @@ import {
   featured,
   offers,
   percentOff,
+  photoSrcset,
   productImage,
   productSrcset,
   dropSrcset,
@@ -155,9 +177,12 @@ import {
   vendorImage,
   vendors,
 } from "../kalio/kalio-catalog";
+import { dateParts, journalPage, journalRoute, postRoute } from "../kalio/pages/kalio-journal";
 
 /** Pastel grounds for the aisle tiles, in turn. */
 const TINTS = ["#ffe9d6", "#e3f6e8", "#e6efff", "#ffe3ea", "#fff3c7", "#ece4ff", "#dff4f7", "#ffe8f6"];
+/** The journal's cards: lavender, butter, mint and blush, in turn. */
+const POST_TINTS = ["#f3eeff", "#fff3c7", "#e3f6e8", "#ffe3ea"];
 
 function untilMidnight() {
   const now = new Date();
@@ -176,6 +201,8 @@ export default {
   data() {
     return {
       TINTS,
+      POST_TINTS,
+      posts: [],
       aisleList: [],
       sellerList: [],
       dealList: [],
@@ -193,6 +220,9 @@ export default {
     },
     deals() {
       return dealsRoute();
+    },
+    journal() {
+      return journalRoute();
     },
     ways() {
       return waysOf(this.$shop);
@@ -237,6 +267,10 @@ export default {
       .finally(() => (this.deals_ready = true));
     listProducts(null, 6, { sort: "newest" }).then((list) => (this.newList = list.filter((p) => p.icon)));
     this.timer = setInterval(() => (this.countdown = untilMidnight()), 1000);
+    /* The four newest posts; no posts, no section. */
+    journalPage({ limit: 4 })
+      .then(({ articles }) => (this.posts = articles || []))
+      .catch(() => (this.posts = []));
   },
 
   beforeUnmount() {
@@ -247,6 +281,15 @@ export default {
     aisleRoute,
     aisleImage,
     sellerRoute,
+    postRoute,
+    dateParts,
+    postImage(a) {
+      return /^https?:/.test(a.image) ? a.image : window.CDN.GET_SHOP_IMAGE_PATH(a.image);
+    },
+    /** The post's photo from the shop's resizer, at the size it is shown. */
+    postSrcset(a) {
+      return photoSrcset(this.postImage(a));
+    },
     image(p) {
       return productImage(p);
     },

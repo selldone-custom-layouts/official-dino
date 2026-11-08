@@ -1058,3 +1058,172 @@ $d-ink: #1e1033;
     font-weight: 700;
   }
 }
+
+/* ▆▆▆▆▆▆▆▆ From the journal: the home's last section ▆▆▆▆▆▆▆▆
+   The shop's four newest posts as pastel app cards: the photo in a rounded
+   well, the date as a small violet line, the title, two lines of the
+   summary and a white "Read" pill. Four across on a computer, two on a
+   tablet, a row you swipe on a phone (owner, 8 November 2026). */
+
+.d-blog {
+  margin-bottom: 40px;
+
+  &__track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  @media (max-width: $t-tablet) {
+    &__track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: $t-phone) {
+    margin-bottom: 28px;
+
+    &__track {
+      display: flex;
+      gap: 12px;
+      margin: 0 -16px;
+      padding: 0 16px 6px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 16px;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}
+
+.d-post {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 28px;
+  color: $d-ink !important;
+  transition: transform 160ms ease;
+
+  &,
+  &:hover,
+  &:focus,
+  * {
+    text-decoration: none !important;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid $d-violet;
+    outline-offset: 3px;
+  }
+
+  &__pic {
+    display: block;
+    aspect-ratio: 4 / 3;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 300ms ease;
+    }
+  }
+
+  &:hover &__pic img {
+    transform: scale(1.05);
+  }
+
+  &__tx {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 8px 6px;
+  }
+
+  &__date {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $d-violet;
+    font-size: 13px;
+    font-weight: 700;
+
+    .v-icon {
+      color: $d-violet !important;
+    }
+  }
+
+  &__title {
+    display: -webkit-box;
+    overflow: hidden;
+    font-family: var(--k-display);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.25;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  &__desc {
+    display: -webkit-box;
+    overflow: hidden;
+    color: rgba(30, 16, 51, 0.68);
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  &__go {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 4px;
+    height: 36px;
+    margin-top: auto;
+    padding: 0 10px 0 16px;
+    border-radius: 999px;
+    background: #fff;
+    color: $d-violet;
+    font-family: var(--k-display);
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 600;
+
+    .v-icon {
+      color: $d-violet !important;
+      transition: transform 160ms ease;
+    }
+  }
+
+  &:hover &__go .v-icon {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: $t-phone) {
+    flex: none;
+    width: 78%;
+    scroll-snap-align: start;
+    border-radius: 24px;
+
+    &__pic {
+      border-radius: 16px;
+    }
+
+    &__title {
+      font-size: 17px;
+    }
+  }
+}

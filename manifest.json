@@ -3,7 +3,7 @@
   "deploy_path": "",
   "package": "dino-grocery-app",
   "name": "Dino Market",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "storefront": true,
   "backoffice": false,
   "description": "A purple quick-delivery grocery app on the web for a marketplace: a violet bar with a delivery pill and a cart pill showing the total, swipeable promo cards, the aisles as a tile grid, app cards with a round yellow + on the picture, an aisle column beside the grid, a rounded cart sheet with a free-shipping bar, and a violet seller banner."
