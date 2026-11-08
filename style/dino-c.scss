@@ -268,6 +268,30 @@ $d-ink: #1e1033;
   }
 }
 
+/* Ten aisles, then "N more aisles" (DinoAisleColumn). */
+.d-aisles__a.-more {
+  display: none;
+}
+
+.d-aisles__more {
+  width: 100%;
+  border: 0;
+  background: none;
+  color: $d-violet !important;
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+
+  .d-aisles__ic .v-icon {
+    color: $d-violet !important;
+  }
+}
+
+/* Opened, the column is taller than the window: it scrolls with the page. */
+.d-side:has(.d-aisles.-open) {
+  position: static;
+}
+
 .d-side > :not(.d-aisles) {
   padding: 16px 18px;
   border-radius: 28px;
@@ -364,7 +388,15 @@ $d-ink: #1e1033;
     gap: 12px;
   }
 
-  /* A phone: the aisles as a row of icon tiles you swipe. */
+  /* A phone: the aisles as a row of icon tiles you swipe, all of them. */
+  .d-aisles__a.-more {
+    display: flex;
+  }
+
+  .d-aisles__more {
+    display: none !important;
+  }
+
   .d-aisles {
     display: flex;
     gap: 10px;
