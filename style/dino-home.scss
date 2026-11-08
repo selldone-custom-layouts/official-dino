@@ -384,8 +384,13 @@ $d-ink: #1e1033;
       box-shadow: 0 4px 0 -1px $d-yellow-2, 0 10px 20px -10px rgba(46, 16, 101, 0.55) !important;
       font-size: 0 !important;
 
+      /* A real 30px box with no margin: the glyph sat 6px low, 2px left. */
       .v-icon {
+        width: 30px !important;
+        height: 30px !important;
+        margin: 0 !important;
         font-size: 30px !important;
+        line-height: 1 !important;
         color: $d-ink !important;
       }
 
