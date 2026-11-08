@@ -685,41 +685,111 @@ $d-ok: #12a150;
   border-radius: 22px !important;
 }
 
-/* ▆▆▆▆▆▆▆▆ Cart and checkout ▆▆▆▆▆▆▆▆ */
+/* ▆▆▆▆▆▆▆▆ Cart and checkout ▆▆▆▆▆▆▆▆
+
+   The four steps (Cart, Delivery, Contact, Review & pay): each step is a
+   pill of its own (the number in a white disc, then the word) and a line
+   joins it to the one before. Until 1.0.10 the pill was painted on the
+   whole step, the joining line included, so the current step's violet ran
+   over "Cart" and cut "Delivery" off at its end (the owner's buyer test,
+   8 November 2026). On a phone only the current step keeps its word. */
 .w-stepper {
   &__s {
-    border-radius: 999px !important;
-    background: #fff !important;
-    box-shadow: inset 0 0 0 1.5px var(--k-line);
+    gap: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
     font-family: var(--k-display);
     font-weight: 600 !important;
 
     > i {
+      position: relative;
+      z-index: 1;
+      margin-inline-start: 4px;
       border-radius: 50% !important;
       background: $d-lav !important;
       color: $d-violet !important;
       font-style: normal;
     }
 
+    /* The word, with the pill drawn behind the disc and the word. */
+    > span:last-child {
+      display: inline-flex;
+      align-items: center;
+      height: 36px;
+      margin-inline-start: -32px;
+      padding: 0 16px 0 40px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1.5px var(--k-line);
+      white-space: nowrap;
+    }
+
     &.-done {
-      background: $d-yellow !important;
-      box-shadow: none;
       color: $d-ink !important;
 
       > i {
         background: #fff !important;
         color: $d-ink !important;
       }
+
+      > span:last-child {
+        background: $d-yellow;
+        box-shadow: none;
+      }
     }
 
     &.-now {
-      background: $d-violet !important;
-      box-shadow: none;
       color: #fff !important;
 
       > i {
         background: #fff !important;
         color: $d-violet !important;
+      }
+
+      > span:last-child {
+        background: $d-violet;
+        box-shadow: none;
+      }
+    }
+  }
+
+  &__ln {
+    height: 2px !important;
+    margin: 0 10px !important;
+    border-radius: 2px;
+    background: var(--k-line) !important;
+  }
+
+  .-done &__ln,
+  .-now &__ln {
+    background: $d-violet !important;
+  }
+
+  @media (max-width: 760px) {
+    &__s {
+      > i {
+        margin-inline-start: 0;
+        box-shadow: inset 0 0 0 1.5px var(--k-line);
+      }
+
+      > span:last-child {
+        display: none;
+      }
+
+      &.-done > i {
+        background: $d-yellow !important;
+        box-shadow: none;
+      }
+
+      &.-now > span:last-child {
+        display: inline-flex;
+        padding: 0 14px 0 38px;
+        font-size: 13.5px;
+      }
+
+      &.-now > i {
+        margin-inline-start: 4px;
+        box-shadow: none;
       }
     }
   }

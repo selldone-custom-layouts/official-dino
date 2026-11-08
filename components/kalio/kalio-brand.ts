@@ -24,6 +24,19 @@ export function applyBrand(shop: any): void {
     shop.title = BRAND.name;
   }
   brandIcon();
+  cartWords();
+}
+
+/** Dino says "cart" everywhere; Selldone's product page said "others have
+    this in their basket!" (the owner's buyer test, 8 November 2026).
+    English only: other languages keep Selldone's. */
+function cartWords(): void {
+  const i18n = (window as any).$i18n_global;
+  const locale = i18n?.locale?.value ?? i18n?.locale;
+  if (!i18n?.mergeLocaleMessage || !String(locale).startsWith("en")) return;
+  i18n.mergeLocaleMessage(locale, {
+    product_section_incentivise: { have_in_their_bag: "<b>{in_carts}</b> others have this in their carts!" },
+  });
 }
 
 /** The first page keeps the head the server wrote ("… | molino"); later pages
