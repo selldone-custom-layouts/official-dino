@@ -35,6 +35,8 @@
       <u-price :amount="now" :currency="currency" class="d-card__now" />
       <s v-if="was" class="d-card__was"><u-price :amount="was" :currency="currency" /></s>
     </div>
+    <!-- A real deal clock: only when Selldone gives the deal an end date (dis_end). -->
+    <p v-if="ends" class="d-card__ends"><v-icon size="14">timer</v-icon>Ends in {{ left }}</p>
 
     <router-link :to="to" class="d-card__name">{{ product.title }}</router-link>
     <p v-if="product.unit" class="d-card__unit">per {{ product.unit }}</p>
@@ -47,6 +49,7 @@ import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin
 import KalioCardStep from "../kalio/KalioCardStep.vue";
 import KalioSellerLine from "../kalio/KalioSellerLine.vue";
 import { percentOff, priceOf, productImage, productSrcset, dropSrcset } from "../kalio/kalio-catalog";
+import { clock, dealEnd, leftText, releaseClock, useClock } from "../kalio/kalio-clock";
 
 export default {
   name: "DinoCard",
@@ -80,12 +83,30 @@ export default {
     off() {
       return percentOff(this.shop, this.product);
     },
+    /** When the deal ends (Selldone's dis_end); null: no clock. */
+    ends() {
+      return dealEnd(this.product);
+    },
+    left() {
+      return leftText(this.ends, clock.now);
+    },
     picture() {
       return productImage(this.product);
     },
     to() {
       return { name: window.$storefront.routes.PRODUCT_PAGE, params: { product_id: this.product.id } };
     },
+  },
+
+  mounted() {
+    if (this.ends) {
+      this.ticking = true;
+      useClock();
+    }
+  },
+
+  beforeUnmount() {
+    if (this.ticking) releaseClock();
   },
 
   methods: {

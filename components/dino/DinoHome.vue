@@ -5,7 +5,7 @@
   A grocery app's front: three rounded promo cards you swipe (the shop's
   promise on violet with a still life of its own packshots, this week's
   savings on yellow, one fresh aisle on lavender); then the aisles as a big
-  tile grid, the main way in; today's deals with a countdown to midnight;
+  tile grid, the main way in; today's deals (a clock only when Selldone gives the deals an end date);
   the fresh aisle, the sellers as round avatars with four of their
   groceries, the top picks, how the order reaches you, and last the shop's
   four newest journal posts as pastel cards. Everything is
@@ -66,7 +66,7 @@
       </div>
     </section>
 
-    <!-- ▆▆▆▆ Today's deals, with a countdown to midnight ▆▆▆▆ -->
+    <!-- ▆▆▆▆ Today's deals: "Ends in" counts to the soonest real end date (dis_end); no date, no clock ▆▆▆▆ -->
     <dino-row
       v-if="dealList.length || !deals_ready"
       :items="deals_ready ? dealList : null"
@@ -75,8 +75,8 @@
       title="Today's deals"
       hot
     >
-      <template #badge>
-        <span class="d-count"><v-icon size="16">timer</v-icon>Ends in {{ countdown }}</span>
+      <template v-if="dealEndsAt" #badge>
+        <span class="d-count"><v-icon size="16">timer</v-icon>Ends in {{ dealLeft }}</span>
       </template>
     </dino-row>
 
@@ -178,20 +178,12 @@ import {
   vendors,
 } from "../kalio/kalio-catalog";
 import { dateParts, journalPage, journalRoute, postRoute } from "../kalio/pages/kalio-journal";
+import { clock, leftText, releaseClock, soonestEnd, useClock } from "../kalio/kalio-clock";
 
 /** Pastel grounds for the aisle tiles, in turn. */
 const TINTS = ["#ffe9d6", "#e3f6e8", "#e6efff", "#ffe3ea", "#fff3c7", "#ece4ff", "#dff4f7", "#ffe8f6"];
 /** The journal's cards: lavender, butter, mint and blush, in turn. */
 const POST_TINTS = ["#f3eeff", "#fff3c7", "#e3f6e8", "#ffe3ea"];
-
-function untilMidnight() {
-  const now = new Date();
-  const end = new Date(now);
-  end.setHours(24, 0, 0, 0);
-  const s = Math.max(0, Math.floor((end - now) / 1000));
-  const two = (n) => String(n).padStart(2, "0");
-  return `${two(Math.floor(s / 3600))}:${two(Math.floor((s % 3600) / 60))}:${two(s % 60)}`;
-}
 
 export default {
   name: "DinoHome",
@@ -210,13 +202,19 @@ export default {
       newList: [],
       freshList: [],
       shelfOf: new Map(),
-      countdown: untilMidnight(),
     };
   },
 
   computed: {
     catalogue() {
       return catalogueRoute();
+    },
+    /** The soonest real end among the deals shown (Selldone's dis_end); null: no clock. */
+    dealEndsAt() {
+      return soonestEnd(this.dealList);
+    },
+    dealLeft() {
+      return leftText(this.dealEndsAt, clock.now);
     },
     deals() {
       return dealsRoute();
@@ -266,7 +264,7 @@ export default {
       .catch(() => (this.dealList = []))
       .finally(() => (this.deals_ready = true));
     listProducts(null, 6, { sort: "newest" }).then((list) => (this.newList = list.filter((p) => p.icon)));
-    this.timer = setInterval(() => (this.countdown = untilMidnight()), 1000);
+    useClock();
     /* The four newest posts; no posts, no section. */
     journalPage({ limit: 4 })
       .then(({ articles }) => (this.posts = articles || []))
@@ -274,7 +272,7 @@ export default {
   },
 
   beforeUnmount() {
-    clearInterval(this.timer);
+    releaseClock();
   },
 
   methods: {

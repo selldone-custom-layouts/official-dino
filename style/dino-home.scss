@@ -8,12 +8,12 @@
 
 $t-phone: 760px;
 $t-tablet: 1100px;
-$d-violet: #5b21b6;
-$d-violet-2: #7c3aed;
-$d-deep: #2e1065;
-$d-lav: #f3eeff;
-$d-lav-2: #e9dfff;
-$d-lav-3: #d9c9ff;
+$d-violet: var(--d-violet);
+$d-violet-2: var(--d-violet-2);
+$d-deep: var(--d-deep);
+$d-lav: var(--d-lav);
+$d-lav-2: var(--d-lav-2);
+$d-lav-3: var(--d-lav-3);
 $d-yellow: #ffd43b;
 $d-yellow-2: #f5c400;
 $d-ink: #1e1033;
@@ -65,23 +65,23 @@ $d-ink: #1e1033;
   &.-yellow,
   &.-main {
     background: $d-yellow;
-    color: $d-ink !important;
+    color: var(--d-on-yellow) !important;
     box-shadow: none; /* flat, no 3D lip (owner, 8 Nov 2026) */
   }
 
   &.-violet {
     background: $d-violet;
-    color: #fff !important;
+    color: var(--d-on-brand) !important;
   }
 
   &.-white {
     background: #fff;
-    color: $d-violet !important;
+    color: var(--d-link) !important;
   }
 
   &.-outline {
     background: #fff;
-    color: $d-violet !important;
+    color: var(--d-link) !important;
     box-shadow: inset 0 0 0 2px $d-lav-2;
   }
 }
@@ -133,17 +133,17 @@ $d-ink: #1e1033;
     height: 42px;
     border-radius: 14px;
     background: $d-lav;
-    color: $d-violet;
+    color: var(--d-link);
 
     .v-icon {
-      color: $d-violet !important;
+      color: var(--d-link) !important;
     }
 
     &.-hot {
       background: $d-yellow;
 
       .v-icon {
-        color: $d-ink !important;
+        color: var(--d-on-yellow) !important;
       }
     }
   }
@@ -158,7 +158,7 @@ $d-ink: #1e1033;
   &__more {
     display: inline-flex;
     align-items: center;
-    color: $d-violet !important;
+    color: var(--d-link) !important;
     font-family: var(--k-display);
     font-size: 16px;
     font-weight: 600;
@@ -214,7 +214,7 @@ $d-ink: #1e1033;
   border: 0;
   border-radius: 50%;
   background: $d-lav;
-  color: $d-violet !important;
+  color: var(--d-link) !important;
   cursor: pointer;
 
   &.-small {
@@ -312,7 +312,7 @@ $d-ink: #1e1033;
     position: relative;
     aspect-ratio: 1;
     border-radius: 22px;
-    background: $d-lav;
+    background: var(--k-well);
     overflow: hidden;
   }
 
@@ -349,7 +349,7 @@ $d-ink: #1e1033;
     padding: 0 10px;
     border-radius: 999px;
     background: $d-yellow;
-    color: $d-ink;
+    color: var(--d-on-yellow);
     font-family: var(--k-display);
     font-size: 13.5px;
     font-weight: 600;
@@ -391,7 +391,7 @@ $d-ink: #1e1033;
       border: 0 !important;
       border-radius: 50% !important;
       background: $d-yellow !important;
-      color: $d-ink !important;
+      color: var(--d-on-yellow) !important;
       box-shadow: none !important; /* flat, no 3D lip or drop shadow (owner, 8 Nov 2026) */
       font-size: 0 !important;
 
@@ -402,7 +402,7 @@ $d-ink: #1e1033;
         margin: 0 !important;
         font-size: 21px !important;
         line-height: 1 !important;
-        color: $d-ink !important;
+        color: var(--d-on-yellow) !important;
       }
 
       span {
@@ -419,7 +419,7 @@ $d-ink: #1e1033;
         padding: 0 14px !important;
         border-radius: 999px !important;
         background: #fff !important;
-        color: $d-violet !important;
+        color: var(--d-link) !important;
         font-family: var(--k-display);
         font-size: 14.5px !important;
         font-weight: 600;
@@ -455,7 +455,7 @@ $d-ink: #1e1033;
       border: 0 !important;
       border-radius: 999px !important;
       background: $d-violet !important;
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
       box-shadow: 0 10px 20px -10px rgba(46, 16, 101, 0.6);
 
       button {
@@ -471,7 +471,7 @@ $d-ink: #1e1033;
       }
 
       .k-card-step__count {
-        color: #fff !important;
+        color: var(--d-on-brand) !important;
         font-family: var(--k-display);
         font-size: 17px !important;
         font-weight: 600;
@@ -499,7 +499,7 @@ $d-ink: #1e1033;
   }
 
   &.-sale &__now {
-    color: $d-violet !important;
+    color: var(--d-link) !important;
   }
 
   &__was {
@@ -791,8 +791,8 @@ $d-ink: #1e1033;
   }
 
   &.-violet {
-    background: $d-violet;
-    color: #fff !important;
+    background: var(--d-head);
+    color: var(--d-on-brand) !important;
 
     p {
       color: #e1d6ff;
@@ -808,7 +808,7 @@ $d-ink: #1e1033;
   }
 
   &.-lav {
-    background: $d-lav;
+    background: var(--k-well);
 
     p {
       color: var(--k-muted);
@@ -971,7 +971,7 @@ $d-ink: #1e1033;
     b {
       font-family: var(--k-display);
       font-size: 34px;
-      color: $d-violet;
+      color: var(--d-link);
     }
   }
 
@@ -1000,13 +1000,13 @@ $d-ink: #1e1033;
       padding: 0 8px 0 14px;
       border-radius: 999px;
       background: $d-lav;
-      color: $d-violet;
+      color: var(--d-link);
       font-style: normal;
       font-size: 13.5px;
       font-weight: 700;
 
       .v-icon {
-        color: $d-violet !important;
+        color: var(--d-link) !important;
       }
     }
   }
@@ -1021,7 +1021,7 @@ $d-ink: #1e1033;
       width: 64px;
       height: 64px;
       border-radius: 18px;
-      background: $d-lav;
+      background: var(--k-well);
       overflow: hidden;
     }
 
@@ -1079,7 +1079,7 @@ $d-ink: #1e1033;
     background: #fff;
 
     .v-icon {
-      color: $d-violet !important;
+      color: var(--d-link) !important;
     }
   }
 
@@ -1157,7 +1157,7 @@ $d-ink: #1e1033;
   flex-direction: column;
   padding: 10px;
   border-radius: 28px;
-  color: $d-ink !important;
+  color: var(--d-on-yellow) !important;
   transition: transform 160ms ease;
 
   &,
@@ -1208,12 +1208,12 @@ $d-ink: #1e1033;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: $d-violet;
+    color: var(--d-link);
     font-size: 13px;
     font-weight: 700;
 
     .v-icon {
-      color: $d-violet !important;
+      color: var(--d-link) !important;
     }
   }
 
@@ -1248,14 +1248,14 @@ $d-ink: #1e1033;
     padding: 0 10px 0 16px;
     border-radius: 999px;
     background: #fff;
-    color: $d-violet;
+    color: var(--d-link);
     font-family: var(--k-display);
     font-style: normal;
     font-size: 14px;
     font-weight: 600;
 
     .v-icon {
-      color: $d-violet !important;
+      color: var(--d-link) !important;
       transition: transform 160ms ease;
     }
   }
@@ -1277,5 +1277,20 @@ $d-ink: #1e1033;
     &__title {
       font-size: 17px;
     }
+  }
+}
+
+/* A real deal clock under the price (only with Selldone's dis_end). */
+.d-card__ends {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0 0;
+  color: var(--k-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+
+  .v-icon {
+    color: var(--d-link);
   }
 }

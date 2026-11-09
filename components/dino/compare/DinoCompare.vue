@@ -28,7 +28,7 @@
     </nav>
 
     <div v-if="busy && !items.length" class="d-cmp__wait">
-      <v-progress-circular color="#5b21b6" indeterminate size="26" width="3" />
+      <v-progress-circular color="primary" indeterminate size="26" width="3" />
       Getting your picks…
     </div>
 

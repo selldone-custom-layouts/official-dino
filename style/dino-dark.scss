@@ -1,0 +1,96 @@
+/* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Dino — dark mode, and the theme switcher's loose ends ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
+
+   The theme switcher (components/dino/dino-theme.ts, the header's Theme
+   button) turns the page dark by tokens and by the build step that gives
+   every fixed colour a dark value (postcss-dark-tokens). What it cannot know
+   is which grounds Dino keeps light on purpose. Those are the "light
+   islands" below: the yellow press-me, the promo posters, the pastel aisle
+   tiles and journal cards. Inside one, the dark tokens
+   are put back to their light values, so the words on it stay dark and
+   readable in every palette.
+
+   Loaded last (storefront.scss). The build step leaves rules that name
+   html.dn-dark alone. */
+
+/* The footer's Selldone credit and GDPR link are "plain" buttons at 62%
+   opacity: 3.99:1 on the night band. Full opacity, pale words: 7:1 or more. */
+.k-footer__base-links .v-btn {
+  opacity: 1 !important;
+
+  .v-btn__content,
+  .v-btn__content * {
+    color: rgba(255, 255, 255, 0.78) !important;
+  }
+}
+
+/* Selldone's "Free shipping" line is Vuetify's green-darken-2: 3.9:1 on
+   Dino's floor. A deeper green reads 4.9:1 (a light green when dark). */
+.-shipping-box.text-green-darken-2 {
+  color: #2e7d32 !important;
+}
+
+/* Selldone's small red notes ("[Invalid]", a field's error) are Vuetify's
+   red-accent #f44336: 3.7:1 on white. A deeper red reads 5.9:1 (a light
+   red when dark). */
+.text-red {
+  color: #c4122f !important;
+}
+
+html.dn-dark {
+  .text-red {
+    color: #ff6b7d !important;
+  }
+
+  .-shipping-box.text-green-darken-2 {
+    color: #4ade80 !important;
+  }
+
+
+  /* ── Light islands ── */
+  .k-header__basket,
+  .d-promo.-yellow,
+  .d-promo.-lav,
+  .d-tile,
+  .d-post {
+    --k-ink: #1e1033;
+    --k-ink-2: #3b2a55;
+    --k-muted: #5d5470;
+    --k-line: #ece6f7;
+    --k-card: #ffffff;
+    --d-link: var(--d-head);
+    --d-deep-ink: var(--d-foot);
+    --tsd-surface-ffffff: initial;
+    --tsd-text-1e1033: initial;
+    --tsd-text-3b2a55: initial;
+    --tsd-text-6b6080: initial;
+    --tsd-text-1f1f1f: initial;
+    --tsd-text-3a3a3a: initial;
+    --tsd-text-5c4700: initial;
+    --tsd-text-1e1033ad: initial;
+    color: #1e1033;
+  }
+
+  /* The product's QR button is a dark line drawing: light on the dark page. */
+  .k-crumbs__tools img {
+    filter: invert(1);
+  }
+
+  /* The 404's aisle chips: each aisle icon (a packshot with a white ground)
+     on its own light disc. */
+  .d-404__aisles img {
+    border-radius: 50%;
+    background: var(--k-well);
+  }
+
+  /* The aisle strip's icons are packshots with a white ground (multiplied
+     away on white): on the dark strip each sits on its own light disc. */
+  .k-strip__ic {
+    border-radius: 50%;
+    background: var(--k-well);
+    mix-blend-mode: normal;
+  }
+
+  .k-strip__link.-on .k-strip__ic {
+    background: #ffffff;
+  }
+}

@@ -75,19 +75,20 @@
           />
 
           <template v-if="!compact">
-            <router-link v-if="user" :to="ordersRoute" class="k-header__link">
+            <router-link v-if="user" :to="ordersRoute" aria-label="Orders" class="k-header__link">
               <v-icon size="20">receipt_long</v-icon>
-              Orders
+              <span class="k-header__word">Orders</span>
             </router-link>
             <component
               :is="user ? 'router-link' : 'button'"
               :to="user ? savedRoute : undefined"
               class="k-header__link"
               :type="user ? undefined : 'button'"
+              aria-label="Saved"
               @click="!user && signIn()"
             >
               <v-icon size="20">favorite_border</v-icon>
-              Saved
+              <span class="k-header__word">Saved</span>
             </component>
           </template>
 
@@ -109,6 +110,15 @@
               <v-icon size="24">person_outline</v-icon>
             </button>
           </template>
+
+          <!-- The visitor's theme: palettes, a free Custom colour and Light /
+               Dark, after the account and just before the cart (the owner's
+               rule, 9 November 2026, on every molino Layout). An icon disc
+               like Orders and Saved; only on molino, the showcase shop. -->
+          <theme-switcher-button :button-class="compact ? 'k-header__icon -theme' : 'k-header__link -theme'">
+            <v-icon :size="compact ? 24 : 22">palette</v-icon>
+            <span v-if="!compact" class="k-header__word">Theme</span>
+          </theme-switcher-button>
 
           <!-- Dino: the cart pill (count and total) opens the cart sheet from
                the right, on a computer as on a phone. -->
@@ -299,6 +309,7 @@ import SStorefrontSearchBox from "@selldone/components-vue/storefront/search/SSt
 import SLanguageSelector from "@selldone/components-vue/storefront/language/selector/SLanguageSelector.vue";
 import UCurrencySelector from "@selldone/components-vue/ui/currency/selector/UCurrencySelector.vue";
 import KalioBasketDrawer from "./KalioBasketDrawer.vue";
+import ThemeSwitcherButton from "../../theme-switcher/ThemeSwitcherButton.vue";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
 import { aisleImage, aisleRoute, aisles, catalogueRoute, dealsRoute, tintFor } from "../kalio-catalog";
 import { basketView } from "../kalio-basket";
@@ -311,6 +322,7 @@ export default {
     SLanguageSelector,
     UCurrencySelector,
     KalioBasketDrawer,
+    ThemeSwitcherButton,
     SHeaderSectionUser: defineAsyncComponent(
       () => import("@selldone/components-vue/storefront/header/section/user/SHeaderSectionUser.vue"),
     ),

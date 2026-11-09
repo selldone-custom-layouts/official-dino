@@ -42,7 +42,7 @@ Selldone's own basket, checkout, payments, vendor offers and orders keep working
 ## Highlights
 
 - **Header:** a violet bar with the dinosaur, a **Get it your way** pill naming the shop's own delivery methods, a big rounded search, round icon buttons and a **yellow cart pill with the count and the total**. Under it, a white strip of aisles, each with its icon, Deals first.
-- **Home:** three rounded promo cards (swiped on a phone), **the aisles as a tile grid**, **today's deals with a countdown to midnight**, the fresh aisle, the sellers as round avatars with four of their groceries, top picks, and how the order reaches you.
+- **Home:** three rounded promo cards (swiped on a phone), **the aisles as a tile grid**, **today's deals** (an "Ends in" clock only when Selldone gives the deals a real end date), the fresh aisle, the sellers as round avatars with four of their groceries, top picks, and how the order reaches you.
 - **Cards:** the packshot large on a lavender square, a yellow saving pill, and a **round yellow "+" on the picture** that turns into a violet "− n +" in place; "Options" for products with sizes; the seller is named under the card.
 - **Aisle, search, Deals, All products:** a sticky column with **every aisle and its icon**, then the filters; the aisle's banner with its icon and numbers; on a phone the aisles become a row of icon tiles you swipe.
 - **Product page:** a rounded picture stage, a brand pill, the price in violet with a yellow saving pill, the delivery methods and the sellers as rounded choice cards, a big yellow **Add to cart**, pill tabs for the details.
@@ -51,7 +51,8 @@ Selldone's own basket, checkout, payments, vendor offers and orders keep working
 - **Seller pages:** a **violet banner** with the seller's mark in a yellow ring, live numbers as pills and their aisles as chips.
 - **Account:** a violet banner with the sections as pills, the overview's tiles in pastel colours, orders as rounded cards.
 - **Pages:** About with the dinosaur and the shop's live numbers, Terms and Privacy with the short version on pastel cards, the journal on rounded cards, and a 404 where the dinosaur asks "?".
-- **Everywhere:** no pop-ups and no phone bottom bar.
+- **Theme (showcase only):** on molino, Dino's showcase shop, a Theme button at the top right of the header offers five tested colour palettes, a free **Custom colour** (any colour, made readable automatically) and Light / Dark. See "Theme and colours" below.
+- **Everywhere:** no pop-ups, no phone bottom bar, no line under any word or icon, and every selection ring drawn inside its own box.
 
 ## Screenshots
 
@@ -76,6 +77,21 @@ Selldone's own basket, checkout, payments, vendor offers and orders keep working
 | Fix a blank page, a rejected upload or an old version showing | [Troubleshooting](https://github.com/selldone-custom-layouts/official-dino/wiki/Troubleshooting) |
 
 The wiki's source is also in [`docs/wiki/`](docs/wiki/).
+
+<!-- THEME:START -->
+### Theme and colours
+
+Choose Dino's colours in one file, `components/dino/dino-theme.settings.ts`:
+
+- `palette`: violet, emerald, blue, teal, orange;
+- or `brandColor`: any `#RRGGBB`, made readable automatically (`textOnBrand: "auto"` keeps a light brand such as yellow, with dark words);
+- `mode`: light or dark;
+- `themeSwitcher`: showcase, on or off.
+
+You can also tell your AI agent "use the yellow theme" or "make it dark": `AGENTS.md` (section "Theme") tells it what to change. Then build and upload. See the wiki page [Theme and colours](https://github.com/selldone-custom-layouts/official-dino/wiki/Theme-and-colours).
+
+The header's Theme button (palettes, Custom colour, Light / Dark) is a showcase feature. It shows only on Dino's own showcase shop (molino, Selldone shop 15645), so when you import Dino into your shop, your shoppers see Dino in its designed colours, with no Theme button. The Layout looks exactly as it does without the switcher, and any stored choice is ignored. To offer the switcher to your shoppers, set `themeSwitcher: "on"` in `components/dino/dino-theme.settings.ts`, then build and upload. `themeSwitcher: "off"` hides it everywhere.
+<!-- THEME:END -->
 
 ## Quick start (developers)
 

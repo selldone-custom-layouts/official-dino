@@ -23,12 +23,12 @@
   }
 }
 
-$violet: #5b21b6;
-$violet-2: #7c3aed;
-$deep: #2e1065;
-$lav: #f3eeff;
-$lav-2: #e9dfff;
-$lav-3: #d9c9ff;
+$violet: var(--d-violet);
+$violet-2: var(--d-violet-2);
+$deep: var(--d-deep);
+$lav: var(--d-lav);
+$lav-2: var(--d-lav-2);
+$lav-3: var(--d-lav-3);
 $yellow: #ffd43b;
 $ink: #1e1033;
 $ok: #16a34a;
@@ -71,10 +71,10 @@ $phone: 760px;
 
     &.-violet {
       background: $violet;
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
 
       .v-icon {
-        color: #fff !important;
+        color: var(--d-on-brand) !important;
       }
 
       &:hover {
@@ -85,7 +85,7 @@ $phone: 760px;
     &.-line {
       background: #fff;
       box-shadow: inset 0 0 0 2px $lav-3;
-      color: $violet !important;
+      color: var(--d-link) !important;
 
       &:hover {
         background: $lav;
@@ -94,7 +94,7 @@ $phone: 760px;
 
     &.-soft {
       background: $lav;
-      color: $deep !important;
+      color: var(--d-deep-ink) !important;
 
       &:hover {
         background: $lav-2;
@@ -106,7 +106,7 @@ $phone: 760px;
     padding-bottom: 0 !important;
 
     a {
-      color: $violet !important;
+      color: var(--d-link) !important;
     }
   }
 
@@ -287,13 +287,16 @@ $phone: 760px;
     padding: 12px;
     border-radius: 26px;
     background: #fff;
-    box-shadow: 0 0 0 1.5px var(--k-line);
+    /* The edge is drawn inside the card: the phone's sideways strip clips
+       anything outside it (the ring rule, 9 November 2026). */
+    box-shadow: inset 0 0 0 1.5px var(--k-line);
   }
 
+  /* The ✕ sits inside the card's corner, so no strip or row can cut it. */
   &__rm {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: 8px;
+    right: 8px;
     z-index: 3;
     display: grid;
     place-items: center;
@@ -308,7 +311,7 @@ $phone: 760px;
 
     &:hover {
       background: $lav;
-      color: $deep !important;
+      color: var(--d-deep-ink) !important;
     }
   }
 
@@ -317,7 +320,7 @@ $phone: 760px;
     display: block;
     aspect-ratio: 1;
     border-radius: 20px;
-    background: $lav;
+    background: var(--k-well);
     overflow: hidden;
 
     img {
@@ -341,7 +344,7 @@ $phone: 760px;
     padding: 0 8px;
     border-radius: 999px;
     background: $yellow;
-    color: $ink;
+    color: var(--d-on-yellow);
     font-family: var(--k-display);
     font-size: 12.5px;
     font-weight: 600;
@@ -349,6 +352,7 @@ $phone: 760px;
 
   &__cp-tx {
     min-width: 0;
+    padding-inline-end: 30px; /* room for the ✕ in the corner */
   }
 
   &__nm {
@@ -362,7 +366,7 @@ $phone: 760px;
     -webkit-box-orient: vertical;
 
     &:hover {
-      color: $violet !important;
+      color: var(--d-link) !important;
     }
   }
 
@@ -388,7 +392,7 @@ $phone: 760px;
   }
 
   &__now {
-    color: $violet;
+    color: var(--d-link);
     font-family: var(--k-display);
     font-size: 22px;
     font-weight: 600;
@@ -409,12 +413,12 @@ $phone: 760px;
       border: 0 !important;
       background: $yellow !important;
       box-shadow: none !important;
-      color: $ink !important;
+      color: var(--d-on-yellow) !important;
       font-size: 15px;
       text-decoration: none !important;
 
       .v-icon {
-        color: $ink !important;
+        color: var(--d-on-yellow) !important;
       }
 
       &:hover {
@@ -424,7 +428,7 @@ $phone: 760px;
       &.-options {
         background: #fff !important;
         box-shadow: inset 0 0 0 2px $lav-3 !important;
-        color: $violet !important;
+        color: var(--d-link) !important;
       }
 
       &.-none {
@@ -437,11 +441,11 @@ $phone: 760px;
       height: 40px;
       border-color: $violet;
       background: $lav;
-      color: $deep;
+      color: var(--d-deep-ink);
 
       button {
         height: 37px;
-        color: $deep !important;
+        color: var(--d-deep-ink) !important;
       }
     }
   }
@@ -474,7 +478,7 @@ $phone: 760px;
     background: $lav;
 
     .v-icon {
-      color: $violet !important;
+      color: var(--d-link) !important;
     }
   }
 
@@ -528,10 +532,13 @@ $phone: 760px;
     }
   }
 
+  /* Rows that differ: no coloured ground (the owner on Digito, 9 November
+     2026: the yellow looked poor and its top edge seemed cut under the sticky
+     picks; the same on every Layout). The dot before the name and the bolder
+     values mark them. */
   &__row.-diff &__c {
-    padding: 8px 12px;
-    border-radius: 14px;
-    background: $lav;
+    font-weight: 700;
+    color: var(--k-ink);
   }
 
   &__both {
@@ -588,12 +595,12 @@ $phone: 760px;
     font-weight: 600;
 
     a {
-      color: $violet !important;
+      color: var(--d-link) !important;
     }
   }
 
   &__stars .v-icon {
-    color: $lav-3 !important;
+    color: var(--k-star-off) !important;
 
     &.-on {
       color: #f5b700 !important;
@@ -724,8 +731,8 @@ $phone: 760px;
     }
 
     &__rm {
-      top: -6px;
-      right: -6px;
+      top: 6px;
+      right: 6px;
       width: 30px;
       height: 30px;
     }
@@ -817,7 +824,7 @@ $phone: 760px;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: $violet;
+    color: var(--d-link);
     font-family: var(--k-display);
     font-size: 16px;
     font-weight: 600;
@@ -832,7 +839,7 @@ $phone: 760px;
     background: $violet;
 
     .v-icon {
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
     }
   }
 
@@ -910,7 +917,7 @@ $phone: 760px;
       }
 
       > .v-icon {
-        color: $violet !important;
+        color: var(--d-link) !important;
       }
     }
   }
@@ -928,7 +935,7 @@ $phone: 760px;
     height: 40px;
     flex: none;
     border-radius: 12px;
-    background: $lav;
+    background: var(--k-well);
     overflow: hidden;
 
     img {

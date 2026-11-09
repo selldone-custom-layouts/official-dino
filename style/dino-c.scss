@@ -6,12 +6,12 @@
    headings, the round "+" on every product picture. */
 
 $t-phone: 760px;
-$d-violet: #5b21b6;
-$d-violet-2: #7c3aed;
-$d-deep: #2e1065;
-$d-lav: #f3eeff;
-$d-lav-2: #e9dfff;
-$d-lav-3: #d9c9ff;
+$d-violet: var(--d-violet);
+$d-violet-2: var(--d-violet-2);
+$d-deep: var(--d-deep);
+$d-lav: var(--d-lav);
+$d-lav-2: var(--d-lav-2);
+$d-lav-3: var(--d-lav-3);
 $d-yellow: #ffd43b;
 $d-yellow-2: #f5c400;
 $d-ink: #1e1033;
@@ -23,7 +23,7 @@ $d-ink: #1e1033;
 .k-seller-shelf .s--product-card {
   .card__img--hover {
     border-radius: 22px !important;
-    background: $d-lav !important;
+    background: var(--k-well) !important;
   }
 
   .discount-percent {
@@ -32,7 +32,7 @@ $d-ink: #1e1033;
     padding: 4px 10px !important;
     border-radius: 999px !important;
     background: $d-yellow !important;
-    color: $d-ink !important;
+    color: var(--d-on-yellow) !important;
     font-family: var(--k-display) !important;
     font-size: 13.5px !important;
     font-weight: 600 !important;
@@ -48,7 +48,7 @@ $d-ink: #1e1033;
 
   .main-price-label:has(.discount-percent) .-price-value,
   .main-price-label:has(.discount-percent) .-price-value * {
-    color: $d-violet !important;
+    color: var(--d-link) !important;
   }
 
   .card__info .font-weight-bold {
@@ -104,7 +104,7 @@ $d-ink: #1e1033;
     border: 0 !important;
     border-radius: 50% !important;
     background: $d-yellow !important;
-    color: $d-ink !important;
+    color: var(--d-on-yellow) !important;
     box-shadow: none !important; /* flat, no 3D lip or drop shadow (owner, 8 Nov 2026) */
     font-size: 0 !important;
 
@@ -116,7 +116,7 @@ $d-ink: #1e1033;
       margin: 0 !important;
       font-size: 21px !important;
       line-height: 1 !important;
-      color: $d-ink !important;
+      color: var(--d-on-yellow) !important;
     }
 
     span {
@@ -128,7 +128,7 @@ $d-ink: #1e1033;
       padding: 0 14px !important;
       border-radius: 999px !important;
       background: #fff !important;
-      color: $d-violet !important;
+      color: var(--d-link) !important;
       font-family: var(--k-display) !important;
       font-size: 14.5px !important;
       box-shadow: 0 10px 20px -10px rgba(46, 16, 101, 0.55) !important;
@@ -170,7 +170,7 @@ $d-ink: #1e1033;
     }
 
     .k-card-step__count {
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
       font-family: var(--k-display) !important;
       font-size: 17px !important;
 
@@ -234,7 +234,7 @@ $d-ink: #1e1033;
 
     &.-on {
       background: $d-violet;
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
 
       .d-aisles__ic {
         background: #fff;
@@ -245,7 +245,7 @@ $d-ink: #1e1033;
       background: #fff4cc;
 
       .v-icon {
-        color: #e0a100 !important;
+        color: #9a6400 !important;
       }
     }
   }
@@ -257,7 +257,7 @@ $d-ink: #1e1033;
     width: 34px;
     height: 34px;
     border-radius: 12px;
-    background: $d-lav;
+    background: var(--k-well);
 
     img {
       width: 28px;
@@ -277,13 +277,18 @@ $d-ink: #1e1033;
   width: 100%;
   border: 0;
   background: none;
-  color: $d-violet !important;
+  color: var(--d-link) !important;
   font-family: inherit;
   text-align: start;
   cursor: pointer;
 
+  /* Its disc holds an icon, not a packshot: the soft tint (dark in dark mode). */
+  .d-aisles__ic {
+    background: var(--d-lav);
+  }
+
   .d-aisles__ic .v-icon {
-    color: $d-violet !important;
+    color: var(--d-link) !important;
   }
 }
 
@@ -323,7 +328,7 @@ $d-ink: #1e1033;
     min-width: 0;
 
     small {
-      color: $d-violet !important;
+      color: var(--d-link) !important;
       font-family: var(--k-display);
     }
 
@@ -340,17 +345,17 @@ $d-ink: #1e1033;
 
     &.-hot {
       background: $d-yellow !important;
-      color: $d-ink !important;
+      color: var(--d-on-yellow) !important;
 
       .v-icon {
-        color: $d-ink !important;
+        color: var(--d-on-yellow) !important;
       }
     }
   }
 }
 
 .t-crumbs a {
-  color: $d-violet !important;
+  color: var(--d-link) !important;
 }
 
 .t-keep__list a,
@@ -362,7 +367,7 @@ $d-ink: #1e1033;
 
   &:hover {
     background: $d-lav !important;
-    color: $d-violet !important;
+    color: var(--d-link) !important;
   }
 }
 
@@ -429,7 +434,7 @@ $d-ink: #1e1033;
 
       &.-on {
         background: none;
-        color: $d-violet !important;
+        color: var(--d-link) !important;
 
         .d-aisles__ic {
           box-shadow: 0 0 0 3px $d-violet;

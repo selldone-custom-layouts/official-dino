@@ -9,12 +9,12 @@
    to cart turning into − n + in place, no pop-ups, the checkout steps).
    Loaded after Kalio's sheets (storefront.scss), so it only overrides. */
 
-$d-violet: #5b21b6;
-$d-violet-2: #7c3aed;
-$d-deep: #2e1065;
-$d-lav: #f3eeff;
-$d-lav-2: #e9dfff;
-$d-lav-3: #d9c9ff;
+$d-violet: var(--d-violet);
+$d-violet-2: var(--d-violet-2);
+$d-deep: var(--d-deep);
+$d-lav: var(--d-lav);
+$d-lav-2: var(--d-lav-2);
+$d-lav-3: var(--d-lav-3);
 $d-yellow: #ffd43b;
 $d-yellow-2: #f5c400;
 $d-ink: #1e1033;
@@ -43,7 +43,7 @@ $d-ink: #1e1033;
 
 .k-btn--solid {
   background: $d-violet !important;
-  color: #fff !important;
+  color: var(--d-on-brand) !important;
 
   &:hover {
     background: $d-violet-2 !important;
@@ -52,14 +52,14 @@ $d-ink: #1e1033;
 
 .k-btn--line {
   background: #fff !important;
-  color: $d-violet !important;
+  color: var(--d-link) !important;
   box-shadow: inset 0 0 0 2px $d-lav-2 !important;
   border-color: transparent !important;
 }
 
 /* ── Header: the violet bar ── */
 .k-header {
-  background: $d-violet !important;
+  background: var(--d-head) !important;
   box-shadow: none !important;
 
   &__bar {
@@ -74,7 +74,7 @@ $d-ink: #1e1033;
   &__brand {
     align-items: center !important;
     gap: 10px !important;
-    color: #fff !important;
+    color: var(--d-on-brand) !important;
     font-family: var(--k-display) !important;
     font-size: 32px !important;
     font-weight: 700 !important;
@@ -94,8 +94,8 @@ $d-ink: #1e1033;
     height: 48px;
     padding: 0 16px 0 9px;
     border-radius: var(--k-pill);
-    background: rgba(255, 255, 255, 0.12);
-    color: #e6dcff;
+    background: rgba(var(--d-on-brand-rgb), 0.12);
+    color: var(--d-on-brand);
     font-size: 12.5px;
     line-height: 1.15;
     white-space: nowrap;
@@ -107,12 +107,12 @@ $d-ink: #1e1033;
       height: 30px;
       border-radius: 50%;
       background: $d-yellow;
-      color: $d-ink !important;
+      color: var(--d-on-yellow) !important;
     }
 
     b {
       display: block;
-      color: #fff;
+      color: var(--d-on-brand);
       font-family: var(--k-display);
       font-size: 15px;
       font-weight: 600;
@@ -120,15 +120,15 @@ $d-ink: #1e1033;
   }
 
   &__icon {
-    color: #fff !important;
-    background: rgba(255, 255, 255, 0.12) !important;
+    color: var(--d-on-brand) !important;
+    background: rgba(var(--d-on-brand-rgb), 0.12) !important;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.22) !important;
+      background: rgba(var(--d-on-brand-rgb), 0.22) !important;
     }
 
     .v-icon {
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
     }
   }
 
@@ -163,18 +163,24 @@ $d-ink: #1e1033;
     justify-content: center;
     border: 0 !important;
     border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.12) !important;
+    background: rgba(var(--d-on-brand-rgb), 0.12) !important;
     color: transparent !important;
     font-size: 0 !important;
     overflow: hidden;
 
     .v-icon {
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
       font-size: 22px !important;
     }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.22) !important;
+      background: rgba(var(--d-on-brand-rgb), 0.22) !important;
+    }
+
+    /* Icon discs: the word stays for screen readers (aria) and tooltips,
+       out of the drawing. */
+    .k-header__word {
+      display: none;
     }
 
     /* Sign in keeps its word: it is a step, not an icon. */
@@ -183,19 +189,19 @@ $d-ink: #1e1033;
       gap: 6px;
       padding: 0 18px 0 14px !important;
       border-radius: var(--k-pill) !important;
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
       font-size: 15px !important;
       font-weight: 700;
     }
   }
 
   &__lang {
-    color: #fff !important;
+    color: var(--d-on-brand) !important;
   }
 
   .v-btn--variant-outlined {
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    color: #fff !important;
+    border-color: rgba(var(--d-on-brand-rgb), 0.4) !important;
+    color: var(--d-on-brand) !important;
   }
 
   /* The cart pill: the count on ink, the total beside it. */
@@ -205,7 +211,7 @@ $d-ink: #1e1033;
     margin-inline-start: 6px !important;
     padding: 0 20px 0 8px !important;
     background: $d-yellow !important;
-    color: $d-ink !important;
+    color: var(--d-on-yellow) !important;
     font-family: var(--k-display) !important;
     font-size: 17px !important;
     font-weight: 600 !important;
@@ -229,7 +235,7 @@ $d-ink: #1e1033;
     span,
     .u--price,
     .u--price * {
-      color: $d-ink !important;
+      color: var(--d-on-yellow) !important;
     }
   }
 
@@ -290,12 +296,12 @@ $d-ink: #1e1033;
 
     &:hover {
       background: $d-lav;
-      color: $d-violet !important;
+      color: var(--d-link) !important;
     }
 
     &.-on {
       background: $d-violet;
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
 
       .k-strip__ic {
         background: #fff;
@@ -309,7 +315,7 @@ $d-ink: #1e1033;
       color: #7a5600 !important;
 
       .v-icon {
-        color: #e0a100 !important;
+        color: #9a6400 !important;
       }
     }
   }
@@ -323,7 +329,7 @@ $d-ink: #1e1033;
 
   &__nudge {
     background: $d-lav !important;
-    color: $d-violet !important;
+    color: var(--d-link) !important;
   }
 }
 
@@ -345,28 +351,28 @@ $d-ink: #1e1033;
   .k-drawer__head {
     flex-wrap: wrap;
     padding: 20px 22px 18px !important;
-    background: $d-violet !important;
-    color: #fff !important;
+    background: var(--d-head) !important;
+    color: var(--d-on-brand) !important;
     border-bottom: 0 !important;
   }
 
   .k-drawer__title {
-    color: #fff !important;
+    color: var(--d-on-brand) !important;
     font-family: var(--k-display) !important;
     font-size: 26px !important;
     font-weight: 600 !important;
 
     small {
-      color: #d9ccff !important;
+      color: rgba(var(--d-on-brand-rgb), 0.84) !important;
     }
   }
 
   .k-header__icon {
-    background: rgba(255, 255, 255, 0.16) !important;
-    color: #fff !important;
+    background: rgba(var(--d-on-brand-rgb), 0.16) !important;
+    color: var(--d-on-brand) !important;
 
     .v-icon {
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
     }
   }
 }
@@ -376,8 +382,8 @@ $d-ink: #1e1033;
   margin-top: 14px;
   padding: 12px 14px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: rgba(var(--d-on-brand-rgb), 0.12);
+  color: var(--d-on-brand);
   font-size: 14px;
 
   p {
@@ -399,7 +405,7 @@ $d-ink: #1e1033;
   height: 10px;
   margin-top: 8px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--d-on-brand-rgb), 0.2);
   overflow: hidden;
 
   i {
@@ -422,7 +428,7 @@ $d-ink: #1e1033;
 
   &__pic {
     border-radius: 18px !important;
-    background: $d-lav !important;
+    background: var(--k-well) !important;
     overflow: hidden;
 
     img {
@@ -432,7 +438,7 @@ $d-ink: #1e1033;
 
   &__price,
   &__price .u--price {
-    color: $d-violet !important;
+    color: var(--d-link) !important;
     font-family: var(--k-display);
   }
 
@@ -440,7 +446,7 @@ $d-ink: #1e1033;
     height: 58px !important;
     border-radius: var(--k-pill) !important;
     background: $d-yellow !important;
-    color: $d-ink !important;
+    color: var(--d-on-yellow) !important;
     font-family: var(--k-display) !important;
     font-size: 18px !important;
     box-shadow: none; /* flat, no 3D lip (owner, 8 Nov 2026) */
@@ -448,14 +454,14 @@ $d-ink: #1e1033;
     .v-icon,
     .u--price,
     .u--price * {
-      color: $d-ink !important;
+      color: var(--d-on-yellow) !important;
     }
   }
 }
 
 .k-drawer__empty-mark {
   background: $d-lav !important;
-  color: $d-violet !important;
+  color: var(--d-link) !important;
 }
 
 /* The phone menu */
@@ -463,10 +469,10 @@ $d-ink: #1e1033;
   border-radius: 0 28px 28px 0 !important;
 
   .k-drawer__head {
-    background: $d-violet !important;
+    background: var(--d-head) !important;
 
     .k-header__brand {
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
     }
   }
 
@@ -481,7 +487,7 @@ $d-ink: #1e1033;
 
   .k-drawer__ring {
     border-radius: 12px !important;
-    background: $d-lav !important;
+    background: var(--k-well) !important;
   }
 }
 
@@ -506,7 +512,7 @@ $d-ink: #1e1033;
 .k-footer__main {
   margin-top: 28px;
   border-radius: 36px 36px 0 0;
-  background: $d-deep !important;
+  background: var(--d-foot) !important;
   color: #cfc3ee !important;
 }
 
@@ -578,7 +584,7 @@ $d-ink: #1e1033;
     height: 36px;
     border-radius: 12px;
     background: $d-violet;
-    color: #fff;
+    color: var(--d-on-brand);
     font-size: 17px;
     font-weight: 600;
   }
@@ -596,7 +602,7 @@ $d-ink: #1e1033;
 
     > span {
       background: $d-yellow;
-      color: $d-ink;
+      color: var(--d-on-yellow);
     }
   }
 }
@@ -619,7 +625,7 @@ $d-ink: #1e1033;
   height: 58px !important;
   border-radius: var(--k-pill) !important;
   background: $d-yellow !important;
-  color: $d-ink !important;
+  color: var(--d-on-yellow) !important;
   font-family: var(--k-display) !important;
   font-size: 18px !important;
   box-shadow: none; /* flat, no 3D lip (owner, 8 Nov 2026) */
@@ -627,7 +633,7 @@ $d-ink: #1e1033;
   .v-icon,
   .u--price,
   .u--price * {
-    color: $d-ink !important;
+    color: var(--d-on-yellow) !important;
   }
 
   &:hover {

@@ -38,9 +38,11 @@
 
   /* Ratings */
   --k-amber: #f5b700;
-  --k-star-off: #e3dcef;
+  --k-star-off: #8f84a3; /* an empty star is an icon: 3.5:1 on white (it was 1.3:1) */
 
-  /* Dino's own */
+  /* Dino's own. The violet and its tints follow the theme switcher's
+     palette (components/dino/dino-theme.ts writes them on <html>); these
+     are the default palette's values. */
   --d-violet: #5b21b6;
   --d-violet-2: #7c3aed;
   --d-violet-3: #8b5cf6;
@@ -51,6 +53,20 @@
   --d-yellow: #ffd43b;
   --d-yellow-2: #f5c400;
   --d-ok: #12a150;
+  --d-link: #5b21b6; /* the action colour as words: lighter in dark mode */
+  --d-deep-ink: #2e1065; /* headings in deep violet: light ink in dark mode */
+  --d-head: #5b21b6; /* the header bar and drawer heads: the palette's light primary in both modes */
+  --d-foot: #2e1065; /* the footer band: the palette's light night shade in both modes */
+  --d-primary-rgb: 91, 33, 182;
+  --d-on-brand: #ffffff; /* words on the action colour (dark on a light brand colour) */
+  --d-on-brand-rgb: 255, 255, 255;
+  --d-ink-bg: #1e1033; /* ink used as a fill; the palette colour when dark */
+  --d-on-yellow: #1e1033; /* words on the yellow press-me and other light grounds: dark in both modes */
+  --d-red-solid: #c4122f; /* badges with white words: the same in light and dark */
+
+  /* White boxes that hold no photo (receipts, empty states, table heads):
+     the switcher darkens these; --k-well and --k-tint stay light. */
+  --k-plain: #ffffff;
 
   /* Type */
   --k-display: "Fredoka", "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -71,9 +87,10 @@
    window, form fields) colour themselves with Vuetify's "primary": Dino's
    violet takes it. */
 :root,
-.v-theme--light {
-  --v-theme-primary: 91, 33, 182 !important;
-  --v-theme-on-primary: 255, 255, 255 !important;
+.v-theme--light,
+.v-theme--dark {
+  --v-theme-primary: var(--d-primary-rgb, 91, 33, 182) !important;
+  --v-theme-on-primary: var(--d-on-brand-rgb, 255, 255, 255) !important;
   --v-theme-secondary: 46, 16, 101 !important;
   --v-theme-on-secondary: 255, 255, 255 !important;
 }
@@ -163,7 +180,7 @@ s:has(> .u--price) {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--k-green);
+  color: var(--d-link);
   margin: 0 0 8px;
 }
 
@@ -213,14 +230,14 @@ s:has(> .u--price) {
 
   &:hover {
     border-color: var(--k-green);
-    color: var(--k-green) !important;
+    color: var(--d-link) !important;
   }
 }
 
 /* On the deep-green board: a white button and an outlined one. */
 .k-btn--light {
   background: #fff;
-  color: var(--k-green-deep) !important;
+  color: var(--d-link) !important;
 
   &:hover {
     background: #eef6fe;
@@ -247,7 +264,7 @@ s:has(> .u--price) {
   font-family: var(--k-body);
   font-size: 15px;
   font-weight: 600;
-  color: var(--k-green) !important;
+  color: var(--d-link) !important;
   text-decoration: none;
 
   &:hover {
@@ -271,7 +288,7 @@ s:has(> .u--price) {
 
   &:hover {
     border-color: var(--k-green);
-    color: var(--k-green);
+    color: var(--d-link);
   }
 
   &:disabled {

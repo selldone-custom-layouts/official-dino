@@ -28,7 +28,7 @@
   text-align: start;
 
   a {
-    color: var(--k-green) !important;
+    color: var(--d-link) !important;
     text-decoration: none;
     font-weight: 500;
 
@@ -38,8 +38,9 @@
     }
   }
 
+  /* An icon, so 3:1 or more in both modes: a line colour was 1.5:1. */
   > .v-icon {
-    color: var(--k-line-strong);
+    color: var(--k-muted);
   }
 
   &__here {
@@ -126,7 +127,7 @@
   }
 
   &__aisle {
-    color: var(--k-green) !important;
+    color: var(--d-link) !important;
   }
 
   &__brand {
@@ -172,7 +173,7 @@
   }
 
   &__rating-link {
-    color: var(--k-green);
+    color: var(--d-link);
     font-weight: 600;
     text-decoration: none;
     border-bottom: 1px solid rgba(0, 113, 220, 0.3);
@@ -238,8 +239,8 @@
 
       .discount-percent {
         padding: 5px 10px !important;
-        background: var(--k-coral) !important;
-        color: #fff !important;
+        background: var(--k-green) !important;
+        color: var(--d-on-brand) !important;
         font-size: 13px !important;
       }
 
@@ -729,7 +730,7 @@
     width: max-content;
     font-size: 13px;
     font-weight: 500;
-    color: var(--k-green) !important;
+    color: var(--d-link) !important;
     text-decoration: none;
 
     &:hover {
@@ -909,7 +910,7 @@
     .v-icon {
       flex: 0 0 auto;
       margin-top: 1px;
-      color: var(--k-green);
+      color: var(--d-link);
     }
 
     &.-cons {
@@ -1034,7 +1035,7 @@
       font-weight: 600;
       line-height: 1;
       letter-spacing: -0.03em;
-      color: var(--k-green-deep);
+      color: var(--d-link);
     }
 
     span {
@@ -1156,7 +1157,7 @@
 
     .v-btn--variant-elevated {
       background: var(--k-green) !important;
-      color: #fff !important;
+      color: var(--d-on-brand) !important;
       box-shadow: none !important;
     }
 
@@ -1211,11 +1212,11 @@
       gap: 8px;
       padding: 14px 18px !important;
       font-weight: 600;
-      color: var(--k-green-deep);
+      color: var(--d-link);
       cursor: pointer;
 
       .v-icon {
-        color: var(--k-green);
+        color: var(--d-link);
       }
     }
 
@@ -1238,7 +1239,7 @@
       .v-btn.bg-primary,
       .v-btn[class*="primary"] {
         background: var(--k-green) !important;
-        color: #fff !important;
+        color: var(--d-on-brand) !important;
       }
     }
 
@@ -1306,7 +1307,7 @@
       margin: 0 !important;
       padding: 0 !important;
       background: none !important;
-      color: var(--k-green) !important;
+      color: var(--d-link) !important;
       font-size: 12.5px !important;
       font-weight: 600;
 
@@ -1372,7 +1373,7 @@
 
       > b {
         font-size: 13px;
-        color: var(--k-green-deep);
+        color: var(--d-link);
       }
 
       .v-avatar {
@@ -1382,7 +1383,7 @@
       }
 
       .v-icon {
-        color: var(--k-green) !important;
+        color: var(--d-link) !important;
       }
 
       p.typo-body {
@@ -1399,7 +1400,7 @@
 .s--product-spec.u--product-spec-table {
   border: 1px solid var(--k-line);
   border-radius: var(--k-radius);
-  background: var(--k-well) !important;
+  background: var(--d-lav) !important;
   overflow: hidden;
 }
 
@@ -1431,7 +1432,7 @@
     transition: background-color 140ms ease;
 
     &:hover {
-      background: var(--k-well);
+      background: var(--d-lav);
 
       .k-aisle-index__go {
         opacity: 1;
@@ -1618,7 +1619,7 @@
       place-items: center;
       height: 100%;
       border-radius: var(--k-pill);
-      color: var(--k-green-deep) !important;
+      color: var(--d-link) !important;
       cursor: pointer;
       transition: background-color 140ms ease;
 
@@ -1703,4 +1704,45 @@
    no shipping notes) kept its 64 px of margin as a hole in the page. */
 .k-pdp-block:empty {
   display: none !important;
+}
+
+/* ▆▆▆▆▆▆▆▆ Gallery: one row of whole thumbnails (9 November 2026) ▆▆▆▆▆▆▆▆
+   The owner on Digito: "how long it gets when the gallery has many
+   pictures". The picture takes the card's width and the thumbnails are one
+   row under it, the same on every Layout. The row shows a whole number of
+   thumbnails (7 on a wide card, 5 on a phone), sized from the row's own
+   width (container units), and any more scroll in sideways: no thumbnail
+   is cut at the edge and the card is as tall as the picture plus one row. */
+.k-pdp__media {
+  .gallery-thumbs {
+    width: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+
+    > .--scroll {
+      container-type: inline-size;
+    }
+
+    .gallery-thumbs-wrap {
+      --per-row: 7;
+      flex-wrap: nowrap !important;
+      justify-content: flex-start !important;
+      gap: 8px !important;
+      width: max-content !important;
+      height: auto !important;
+
+      > div {
+        flex: none;
+        width: calc((100cqw - (var(--per-row) - 1) * 8px) / var(--per-row)) !important;
+        height: auto !important;
+        aspect-ratio: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .k-pdp__media .gallery-thumbs .gallery-thumbs-wrap {
+    --per-row: 5;
+  }
 }
