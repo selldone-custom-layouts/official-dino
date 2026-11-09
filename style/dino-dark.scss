@@ -37,6 +37,12 @@ html .text-red {
 }
 
 html.dn-dark {
+  /* The empty cart's drawing is a dark line SVG (Selldone's baskets.svg):
+     light lines on the dark page. */
+  .k-basket-empty__art {
+    filter: invert(1) hue-rotate(180deg);
+  }
+
   & .text-red {
     color: #ff6b7d !important;
   }
