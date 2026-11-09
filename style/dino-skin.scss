@@ -395,7 +395,7 @@ $d-ink: #1e1033;
 
   .u--price,
   .u--price * {
-    color: $d-yellow !important;
+    color: var(--d-pop) !important;
     font-weight: 700;
   }
 }

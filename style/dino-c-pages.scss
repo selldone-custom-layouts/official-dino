@@ -291,7 +291,7 @@ $d-ok: #12a150;
       font-size: 14px;
 
       .v-icon {
-        color: $d-yellow !important;
+        color: var(--d-pop) !important;
       }
     }
 
@@ -727,9 +727,11 @@ $d-ok: #12a150;
     &.-done {
       color: var(--d-on-yellow) !important;
 
+      /* The tick on the white disc: ink, so it turns light on the dark disc
+         in dark mode (on a phone the disc is yellow; see below). */
       > i {
         background: #fff !important;
-        color: var(--d-on-yellow) !important;
+        color: var(--k-ink) !important;
       }
 
       > span:last-child {
@@ -778,6 +780,7 @@ $d-ok: #12a150;
 
       &.-done > i {
         background: $d-yellow !important;
+        color: var(--d-on-yellow) !important;
         box-shadow: none;
       }
 

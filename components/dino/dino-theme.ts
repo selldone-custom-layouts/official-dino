@@ -56,31 +56,31 @@ export const DINO_THEME: ThemeSwitcherConfig = {
     {
       id: "violet",
       name: "Dino violet",
-      light: { primary: "#5b21b6", deep: "#7c3aed", soft: "#f3eeff", soft2: "#e9dfff", soft3: "#d9c9ff", night: "#2e1065", onPrimary: "#ffffff", text: "#5b21b6" },
+      light: { primary: "#5b21b6", deep: "#7c3aed", soft: "#f3eeff", soft2: "#e9dfff", soft3: "#d9c9ff", night: "#2e1065", onPrimary: "#ffffff", text: "#5b21b6", pop: "#ffd43b" },
       dark: { primary: "#8046ee", deep: "#6d28d9", soft: "#2a1d4d", soft2: "#33245c", soft3: "#45307a", night: "#1d1236", onPrimary: "#ffffff", text: "#c4b5fd" },
     },
     {
       id: "emerald",
       name: "Emerald",
-      light: { primary: "#05664a", deep: "#047857", soft: "#e3f6ee", soft2: "#cdeee0", soft3: "#a7dcc5", night: "#053b2b", onPrimary: "#ffffff", text: "#05664a" },
+      light: { primary: "#05664a", deep: "#047857", soft: "#e3f6ee", soft2: "#cdeee0", soft3: "#a7dcc5", night: "#053b2b", onPrimary: "#ffffff", text: "#05664a", pop: "#ffffff" },
       dark: { primary: "#047857", deep: "#065f46", soft: "#123a30", soft2: "#164a3d", soft3: "#1d5e4d", night: "#0b2a22", onPrimary: "#ffffff", text: "#6ee7b7" },
     },
     {
       id: "blue",
       name: "Ocean blue",
-      light: { primary: "#0a4bd8", deep: "#2563eb", soft: "#e8efff", soft2: "#d6e2ff", soft3: "#b8ccff", night: "#0a2463", onPrimary: "#ffffff", text: "#0a4bd8" },
+      light: { primary: "#0a4bd8", deep: "#2563eb", soft: "#e8efff", soft2: "#d6e2ff", soft3: "#b8ccff", night: "#0a2463", onPrimary: "#ffffff", text: "#0a4bd8", pop: "#ffffff" },
       dark: { primary: "#2563eb", deep: "#1d4ed8", soft: "#16264d", soft2: "#1c2f60", soft3: "#263f7d", night: "#0e1a3d", onPrimary: "#ffffff", text: "#8fb0ff" },
     },
     {
       id: "teal",
       name: "Teal",
-      light: { primary: "#0c6680", deep: "#0e7490", soft: "#e0f4f8", soft2: "#c8ebf3", soft3: "#a1dae8", night: "#083344", onPrimary: "#ffffff", text: "#0c6680" },
+      light: { primary: "#0c6680", deep: "#0e7490", soft: "#e0f4f8", soft2: "#c8ebf3", soft3: "#a1dae8", night: "#083344", onPrimary: "#ffffff", text: "#0c6680", pop: "#ffffff" },
       dark: { primary: "#0e7490", deep: "#155e75", soft: "#123540", soft2: "#16424f", soft3: "#1c5566", night: "#0a2630", onPrimary: "#ffffff", text: "#67e8f9" },
     },
     {
       id: "orange",
       name: "Sunset orange",
-      light: { primary: "#a93a0b", deep: "#c2410c", soft: "#fdeee6", soft2: "#fbdccb", soft3: "#f6bf9f", night: "#4a1a06", onPrimary: "#ffffff", text: "#a93a0b" },
+      light: { primary: "#a93a0b", deep: "#c2410c", soft: "#fdeee6", soft2: "#fbdccb", soft3: "#f6bf9f", night: "#4a1a06", onPrimary: "#ffffff", text: "#a93a0b", pop: "#ffffff" },
       dark: { primary: "#c2410c", deep: "#9a3412", soft: "#3d2215", soft2: "#4a2a19", soft3: "#5e3520", night: "#2a1409", onPrimary: "#ffffff", text: "#fdba74" },
     },
   ],
@@ -98,6 +98,7 @@ export const DINO_THEME: ThemeSwitcherConfig = {
     "--d-deep-ink": "light.night",
     "--d-head": "light.primary",
     "--d-foot": "light.night",
+    "--d-pop": "light.pop", /* the accent words on the header colour: yellow on violet (4.8:1 on the drawer head), white where yellow falls under 4.5 */
     "--d-primary-rgb": "primary:rgb",
     "--d-on-brand": "onPrimary",
     "--d-on-brand-rgb": "onPrimary:rgb",
@@ -171,7 +172,7 @@ export const DINO_THEME: ThemeSwitcherConfig = {
     darkText: "#1e1033",
     extras: (v, mode) =>
       mode === "light"
-        ? { soft2: mix(v.primary, 15, "#ffffff"), soft3: mix(v.primary, 28, "#ffffff"), night: mix(v.primary, 52, "#000000") }
+        ? { soft2: mix(v.primary, 15, "#ffffff"), soft3: mix(v.primary, 28, "#ffffff"), night: mix(v.primary, 52, "#000000"), pop: v.onPrimary }
         : { soft2: mix(v.primary, 24, "#161d2e"), soft3: mix(v.primary, 36, "#161d2e"), night: mix(v.primary, 26, "#0b0f1a") },
   },
 };
