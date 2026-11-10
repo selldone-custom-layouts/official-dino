@@ -28,6 +28,7 @@
 
 <script>
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
+import { currentCurrency } from "../../region-switcher/region";
 import KalioCardStep from "../KalioCardStep.vue";
 import { basketLine, hasSizes, pendingLine, quickAdd, shownCount } from "../kalio-basket";
 import { priceOf, productImage, productSrcset, dropSrcset } from "../kalio-catalog";
@@ -44,7 +45,7 @@ export default {
 
   computed: {
     currency() {
-      return this.GetUserSelectedCurrency().code;
+      return currentCurrency();
     },
     price() {
       return priceOf(this.$store.getters.getShop, this.product, this.currency);

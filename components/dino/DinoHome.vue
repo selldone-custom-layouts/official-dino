@@ -129,7 +129,7 @@
             <b>{{ w.word }}</b>
             <small>{{ w.line }}</small>
             <em v-if="w.free">Free</em>
-            <em v-else-if="w.freeOver">Free over <u-price :amount="w.freeOver" :currency="w.currency" /></em>
+            <em v-else-if="w.freeOver">Free over <span class="u--price">{{ regionMoney(w.freeOver, w.currency, { short: "auto" }) }}</span></em>
           </span>
         </div>
       </div>
@@ -160,6 +160,7 @@
 <script>
 import DinoRow from "./DinoRow.vue";
 import { DEALS_FILTER, findAisle, listProducts, waysOf } from "./dino-home";
+import { money as regionMoney } from "../region-switcher/region";
 import {
   aisleImage,
   aisleRoute,
@@ -276,6 +277,7 @@ export default {
   },
 
   methods: {
+    regionMoney,
     aisleRoute,
     aisleImage,
     sellerRoute,

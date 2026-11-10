@@ -207,6 +207,7 @@
 
 <script>
 import { PriceHelper } from "@selldone/core-js";
+import { currentCurrency, formatMoney } from "../../region-switcher/region";
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
 import KalioCardStep from "../../kalio/KalioCardStep.vue";
 import KalioQuickBuy from "../../kalio/KalioQuickBuy.vue";
@@ -252,7 +253,7 @@ export default {
       return this.$store.getters.getShop;
     },
     currency() {
-      return this.GetUserSelectedCurrency().code;
+      return currentCurrency();
     },
     home() {
       return { name: window.$storefront.routes.SHOP_PAGE };
@@ -527,11 +528,7 @@ export default {
     /** A small amount in full ("$0.10"): u-price shrinks the cents, which
      *  left "$0" big in front of a tiny ".10". */
     money(amount) {
-      try {
-        return new Intl.NumberFormat("en-US", { style: "currency", currency: this.currency || "USD" }).format(amount);
-      } catch {
-        return `${Number(amount).toFixed(2)} ${this.currency || ""}`.trim();
-      }
+      return formatMoney(amount, this.currency);
     },
     productRoute(it) {
       return { name: window.$storefront.routes.PRODUCT_PAGE, params: { product_id: it.product.id } };

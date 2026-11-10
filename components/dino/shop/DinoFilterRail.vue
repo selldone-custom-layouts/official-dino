@@ -151,6 +151,7 @@
 
 <script>
 import UPrice from "@selldone/components-vue/ui/price/UPrice.vue";
+import { currentCurrency, signOf } from "../../region-switcher/region";
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
 import { PriceHelper } from "@selldone/core-js/helper";
 import { SORTS, clone, countOn, groupsOf, picked, sortName, valueLabel, withGroup } from "./dino-filters";
@@ -194,7 +195,7 @@ export default {
       return countOn(this.modelValue);
     },
     currency() {
-      return this.GetUserSelectedCurrency()?.code;
+      return currentCurrency();
     },
     price_rows() {
       return (this.filters?.prices || []).filter((row) => this.rate(row.currency, true));
@@ -221,7 +222,8 @@ export default {
       if (hi - lo < 3) return [];
       const a = Math.round(lo + (hi - lo) / 3);
       const b = Math.round(lo + ((hi - lo) * 2) / 3);
-      const cur = (n) => (this.currency === "USD" ? `$${n}` : `${n}`);
+      const sign = signOf(this.currency);
+      const cur = (n) => `${sign}${n}`;
       return [
         { label: `Under ${cur(a)}`, range: [lo, a] },
         { label: `${cur(a)} – ${cur(b)}`, range: [a, b] },

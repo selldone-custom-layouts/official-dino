@@ -50,6 +50,7 @@
 
 <script>
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
+import { currentCurrency } from "../region-switcher/region";
 import {
   aisleRoute,
   offers,
@@ -101,7 +102,7 @@ export default {
       return this.$store.getters.getShop;
     },
     currency() {
-      return this.GetUserSelectedCurrency().code;
+      return currentCurrency();
     },
   },
 

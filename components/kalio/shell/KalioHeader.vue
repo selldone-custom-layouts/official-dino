@@ -59,20 +59,11 @@
         <v-spacer v-else></v-spacer>
 
         <nav aria-label="Your account" class="k-header__acts">
-          <s-language-selector v-if="!compact" class="k-header__lang" icon-color="#1f1f1f" icon-only></s-language-selector>
-          <u-currency-selector
-            v-if="!compact && $shop.currencies && $shop.currencies.length > 1"
-            :shop="$shop"
-            class="k-header__lang"
-            dense
-            hide-details
-            icon
-            icon-color="#1f1f1f"
-            icon-only
-            single-line
-            small
-            @change="onChangeUserSelectedCurrency"
-          />
+          <!-- Language and currency (the owner's choice B, 10 November 2026):
+               a small pill before the account links, with a panel of chips.
+               It hides itself while the shop has one currency and one
+               language. The phone gets a row in the menu instead. -->
+          <region-switcher-button v-if="!compact" button-class="k-header__link -region" />
 
           <template v-if="!compact">
             <router-link v-if="user" :to="ordersRoute" aria-label="Orders" class="k-header__link">
@@ -121,7 +112,7 @@
             @click="basket = true"
           >
             <em>{{ itemsCount }}</em>
-            <u-price v-if="itemsCount && cartTotal != null && !compact" :amount="cartTotal" :currency="cartCurrency" />
+            <span v-if="itemsCount && cartTotal != null && !compact" class="u--price">{{ money(cartTotal, cartCurrency) }}</span>
             <span v-else-if="!compact">Cart</span>
           </button>
         </nav>
@@ -204,7 +195,7 @@
           <div v-if="freeRule && itemsCount" class="k-drawer__free">
             <p v-if="freeLeft > 0">
               <v-icon size="18">local_shipping</v-icon>
-              <u-price :amount="freeLeft" :currency="freeRule.currency" />&nbsp;more for free shipping
+              <span class="u--price">{{ money(freeLeft, cartCurrency) }}</span>&nbsp;more for free shipping
             </p>
             <p v-else><v-icon size="18">celebration</v-icon> Free shipping unlocked</p>
             <span class="k-drawer__bar"><i :style="{ width: freePct + '%' }"></i></span>
@@ -313,15 +304,9 @@
           </button>
         </template>
 
-        <div class="k-drawer__pickers">
-          <s-language-selector hide-details variant="outlined"></s-language-selector>
-          <u-currency-selector
-            v-if="$shop.currencies && $shop.currencies.length > 1"
-            :shop="$shop"
-            hide-details
-            @change="onChangeUserSelectedCurrency"
-          />
-        </div>
+        <!-- Language and currency: a row like the others, opening a bottom
+             sheet of chips over the menu. -->
+        <region-sheet row-class="k-drawer__link -region" />
       </v-navigation-drawer>
     </teleport>
   </header>
@@ -331,8 +316,9 @@
 import { BRAND } from "../kalio-brand";
 import { defineAsyncComponent } from "vue";
 import SStorefrontSearchBox from "@selldone/components-vue/storefront/search/SStorefrontSearchBox.vue";
-import SLanguageSelector from "@selldone/components-vue/storefront/language/selector/SLanguageSelector.vue";
-import UCurrencySelector from "@selldone/components-vue/ui/currency/selector/UCurrencySelector.vue";
+import RegionSwitcherButton from "../../region-switcher/RegionSwitcherButton.vue";
+import RegionSheet from "../../region-switcher/RegionSheet.vue";
+import { convert, currentCurrency, money } from "../../region-switcher/region";
 import KalioBasketDrawer from "./KalioBasketDrawer.vue";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
 import { aisleImage, aisleRoute, aisles, catalogueRoute, dealsRoute, tintFor } from "../kalio-catalog";
@@ -343,8 +329,8 @@ export default {
   name: "KalioHeader",
   components: {
     SStorefrontSearchBox,
-    SLanguageSelector,
-    UCurrencySelector,
+    RegionSwitcherButton,
+    RegionSheet,
     KalioBasketDrawer,
     SHeaderSectionUser: defineAsyncComponent(
       () => import("@selldone/components-vue/storefront/header/section/user/SHeaderSectionUser.vue"),
@@ -437,17 +423,24 @@ export default {
     },
     cartCurrency() {
       const b = this.cartBasket;
-      return (b && ((b.bill && b.bill.currency) || b.currency)) || this.$shop?.currency;
+      return (b && ((b.bill && b.bill.currency) || b.currency)) || currentCurrency();
     },
     freeRule() {
       return freeShippingFrom(this.$shop);
     },
+    /* The free-shipping threshold in the cart's currency (the delivery way
+       has its own): the meter subtracts in one currency. */
+    freeLimit() {
+      if (!this.freeRule) return null;
+      const c = convert(this.freeRule.amount, this.freeRule.currency || undefined, this.cartCurrency);
+      return c == null ? this.freeRule.amount : c;
+    },
     freeLeft() {
-      return this.freeRule && this.cartTotal != null ? Math.max(0, this.freeRule.amount - this.cartTotal) : 0;
+      return this.freeLimit != null && this.cartTotal != null ? Math.max(0, this.freeLimit - this.cartTotal) : 0;
     },
     freePct() {
       if (!this.freeRule || this.cartTotal == null) return 0;
-      return Math.max(4, Math.min(100, Math.round((this.cartTotal / this.freeRule.amount) * 100)));
+      return Math.max(4, Math.min(100, Math.round((this.cartTotal / this.freeLimit) * 100)));
     },
     drawerOpen() {
       return this.basket || this.menu;
@@ -497,6 +490,7 @@ export default {
   },
 
   methods: {
+    money,
     aisleRoute,
     aisleImage,
     tint: tintFor,

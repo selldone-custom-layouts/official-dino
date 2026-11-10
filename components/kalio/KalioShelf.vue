@@ -107,6 +107,7 @@
 
 <script>
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
+import { currentCurrency } from "../region-switcher/region";
 import KalioQuickBuy from "./KalioQuickBuy.vue";
 import KalioCardStep from "./KalioCardStep.vue";
 import { basketLine, hasSizes, pendingLine, quickAdd, shownCount } from "./kalio-basket";
@@ -152,7 +153,7 @@ export default {
       return this.shop?.title || "Kalio";
     },
     currency() {
-      return this.GetUserSelectedCurrency().code;
+      return currentCurrency();
     },
     catalogueRoute() {
       return catalogueRoute();

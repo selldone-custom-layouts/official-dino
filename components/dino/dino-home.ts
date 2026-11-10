@@ -142,7 +142,7 @@ export function waysOf(shop: any): Way[] {
       line: kind ? kind.line : "Brought to your address",
       free,
       freeOver,
-      currency: t.currency || shop?.currency || null,
+      currency: t.currency || null,
     });
   }
   /* In the order shoppers expect: pickup, delivery, shipping, post. */
@@ -155,11 +155,11 @@ export function waysOf(shop: any): Way[] {
 
 /** The lowest basket total that ships for free, for the promo strip. A
  *  method that is free at any size is pickup-like and not promoted. */
-export function freeShippingFrom(shop: any): { amount: number; currency: string } | null {
+export function freeShippingFrom(shop: any): { amount: number; currency: string | null } | null {
   const paid = (shop?.transportations || []).filter(
     (t: any) => t && t.enable && t.type !== "Pickup" && t.free_shipping && Number(t.free_shipping_limit) > 0,
   );
   if (!paid.length) return null;
   const best = paid.reduce((a: any, b: any) => (Number(b.free_shipping_limit) < Number(a.free_shipping_limit) ? b : a));
-  return { amount: Number(best.free_shipping_limit), currency: best.currency || shop?.currency };
+  return { amount: Number(best.free_shipping_limit), currency: best.currency || null };
 }

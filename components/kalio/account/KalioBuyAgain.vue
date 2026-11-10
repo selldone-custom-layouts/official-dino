@@ -35,6 +35,7 @@
 
 <script>
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
+import { currentCurrency } from "../../region-switcher/region";
 import { basketLine, pendingLine, quickAdd, shownCount } from "../kalio-basket";
 import { offers, priceOf, productImage } from "../kalio-catalog";
 import { account } from "./kalio-account";
@@ -57,7 +58,7 @@ export default {
 
   computed: {
     currency() {
-      return this.GetUserSelectedCurrency()?.code;
+      return currentCurrency();
     },
     products() {
       if (!this.catalogue.size) return [];

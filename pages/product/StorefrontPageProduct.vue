@@ -114,7 +114,7 @@
                 <span
                   ><b>{{ w.word }}</b> — {{ w.line }}.
                   <template v-if="w.free">Free.</template>
-                  <template v-else-if="w.freeOver">Free on orders over <u-price :amount="w.freeOver" :currency="w.currency" />.</template>
+                  <template v-else-if="w.freeOver">Free on orders over <span class="u--price">{{ regionMoney(w.freeOver, w.currency, { short: "auto" }) }}</span>.</template>
                 </span>
               </li>
             </ul>
@@ -170,6 +170,7 @@
 import NotificationService from "@selldone/components-vue/plugins/notification/NotificationService.ts";
 
 import DinoProductOverview from "../../components/dino/product/DinoProductOverview.vue";
+import { money as regionMoney } from "../../components/region-switcher/region";
 import DinoRow from "../../components/dino/DinoRow.vue";
 import { waysOf } from "../../components/dino/dino-home";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
@@ -338,6 +339,7 @@ export default {
   },
 
   methods: {
+    regionMoney,
     askToSignIn() {
       EventBus.$emit("need-login", true);
     },

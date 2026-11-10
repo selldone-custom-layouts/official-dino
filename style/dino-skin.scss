@@ -783,3 +783,46 @@ $d-ink: #1e1033;
 .v-dialog .v-card {
   border-radius: 28px !important;
 }
+
+/* ━━━━━━━━━━━━ Language and currency (components/region-switcher) ━━━━━━━━━━━━
+   The owner's choice B (10 November 2026): a small pill in the header before
+   the account discs, opening a panel of chips; on a phone a row in the menu
+   with a bottom sheet. Dino's tokens feed the package's, so every palette,
+   dark mode and a custom colour follow. */
+:root {
+  --rs-ink: var(--k-ink);
+  --rs-muted: var(--k-muted);
+  --rs-line: var(--k-line);
+  --rs-line-strong: var(--k-line-strong);
+  --rs-surface: var(--k-card);
+  --rs-accent: var(--d-link);
+  --rs-accent-soft: var(--d-lav);
+  --rs-btn: var(--d-violet);
+  --rs-on-btn: var(--d-on-brand);
+  --rs-pill-ink: var(--d-on-brand);
+  --rs-pill-bg: rgba(var(--d-on-brand-rgb), 0.1);
+  --rs-pill-bg-hover: rgba(var(--d-on-brand-rgb), 0.14); /* no more: the bar's words need 4.5:1 */
+  --rs-font: var(--k-body);
+}
+
+/* The pill: a short capsule beside the 48px discs, the same height family. */
+.k-header__acts .rs-pick__btn {
+  height: 40px;
+  padding: 0 12px 0 10px;
+  font-size: 13.5px;
+}
+
+/* The phone menu's row lines up with the aisle rows: its globe in the 34px
+   icon column. */
+.k-drawer.-menu .k-drawer__link.-region {
+  margin-top: 8px;
+  border-top: 1px solid var(--k-line);
+  border-radius: 0 !important;
+}
+
+/* Selldone's tax line repeats "Free shipping (over $200.00)" in the delivery
+   way's own currency, which it cannot convert; Dino's delivery chips beside
+   it already say "Free over …" in the shopper's currency. The repeat hides. */
+.w-pdp .-shipping-box {
+  display: none !important;
+}

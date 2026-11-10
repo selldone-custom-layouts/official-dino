@@ -32,8 +32,8 @@
     </div>
 
     <div class="d-card__price">
-      <u-price :amount="now" :currency="currency" class="d-card__now" />
-      <s v-if="was" class="d-card__was"><u-price :amount="was" :currency="currency" /></s>
+      <u-price :amount="now" :currency="price.currency || currency" class="d-card__now" />
+      <s v-if="was" class="d-card__was"><u-price :amount="was" :currency="price.currency || currency" /></s>
     </div>
     <!-- A real deal clock: only when Selldone gives the deal an end date (dis_end). -->
     <p v-if="ends" class="d-card__ends"><v-icon size="14">timer</v-icon>Ends in {{ left }}</p>
@@ -46,6 +46,7 @@
 
 <script>
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
+import { currentCurrency } from "../region-switcher/region";
 import KalioCardStep from "../kalio/KalioCardStep.vue";
 import KalioSellerLine from "../kalio/KalioSellerLine.vue";
 import { percentOff, priceOf, productImage, productSrcset, dropSrcset } from "../kalio/kalio-catalog";
@@ -69,7 +70,7 @@ export default {
       return this.$store.getters.getShop;
     },
     currency() {
-      return this.GetUserSelectedCurrency().code;
+      return currentCurrency();
     },
     price() {
       return priceOf(this.shop, this.product, this.currency);
