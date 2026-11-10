@@ -2042,21 +2042,19 @@ button.k-compare-fab.s--storefront-products-comparison-circle-progress {
 }
 
 
+/* The chosen option: its tint, bold words and a 2px ring in the action
+   colour drawn inside the chip (3:1 or more on the chip and the page, light
+   and dark). No tick badge in its corner (the owner, 10 November 2026: the
+   colour already shows the choice); Selldone's own tick is hidden too. */
 .s-product-variants__options .var-sel.selected {
   position: relative;
-  box-shadow: 0 0 0 2px rgb(var(--v-theme-primary)) !important;
+  box-shadow: inset 0 0 0 2px var(--d-link) !important;
   font-weight: 700 !important;
+}
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: -7px;
-    right: -7px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--d-ink-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center / 13px no-repeat;
-  }
+.v-application .s-product-variants__options .var-sel.selected::after {
+  display: none !important;
+  content: none !important;
 }
 
 .k-offer.-on .k-offer__name,

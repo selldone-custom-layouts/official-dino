@@ -2055,6 +2055,21 @@ $t-tablet: 1100px;
   }
 }
 
+/* ▆▆▆▆▆▆▆▆ Article: the shared Kalio column (1.0.18) ▆▆▆▆▆▆▆▆
+   The total on "Add all" is Selldone's price, dark grey by default: the
+   button's own words instead. Selldone's sign-in in the comments paints
+   "Continue with Google" #4285f4, 3.56:1 under white words; Google's own
+   filled button blue #1a73e8 reads 4.5:1. */
+.k-post__addall .u--price,
+.k-post__addall .u--price * {
+  color: inherit !important;
+}
+
+.v-btn[style*="66, 133, 244"],
+.v-btn[style*="4285f4" i] {
+  background-color: #1a73e8 !important;
+}
+
 /* ▆▆▆▆▆▆▆▆ Order page B: a paper receipt beside the timeline ▆▆▆▆▆▆▆▆ */
 
 .k-order__side .k-ocard,

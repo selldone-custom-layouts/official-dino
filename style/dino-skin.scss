@@ -197,6 +197,13 @@ $d-ink: #1e1033;
 
   &__lang {
     color: var(--d-on-brand) !important;
+
+    /* The currency picker's code ("USD") is dark grey from Selldone: the
+       bar's words instead. */
+    .mini-name,
+    .v-icon {
+      color: var(--d-on-brand) !important;
+    }
   }
 
   .v-btn--variant-outlined {
