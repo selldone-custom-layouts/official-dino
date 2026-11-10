@@ -2052,7 +2052,9 @@ button.k-compare-fab.s--storefront-products-comparison-circle-progress {
   font-weight: 700 !important;
 }
 
-.v-application .s-product-variants__options .var-sel.selected::after {
+.v-application .s-product-variants__options .var-sel.selected::after,
+.v-overlay-container .s-product-variants__options .var-sel.selected::after,
+.s-product-variants__options .var-sel.selected::after {
   display: none !important;
   content: none !important;
 }
