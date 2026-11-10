@@ -266,8 +266,13 @@
 
         <p class="k-eyebrow k-drawer__label">Aisles</p>
         <router-link :to="dealsRoute" class="k-drawer__link -deals" @click="menu = false"><v-icon size="20">local_offer</v-icon>Deals</router-link>
+        <!-- The first 6 aisles in the shop's order, then "Show N more": the
+             rest open in place under them and the button moves to the end
+             as "Show fewer" (the owner's option A, 10 November 2026). With
+             8 aisles or fewer, all show and there is no button. Each time
+             the menu opens it starts short. -->
         <router-link
-          v-for="aisle in aisleList"
+          v-for="aisle in menuAisles"
           :key="aisle.id"
           :to="aisleRoute(aisle)"
           class="k-drawer__link"
@@ -278,6 +283,35 @@
           </span>
           {{ aisle.title || aisle.name }}
         </router-link>
+        <template v-if="menuMore.length">
+          <div id="k-menu-more" :class="{ '-open': menu_more }" :inert="!menu_more || undefined" class="k-drawer__more">
+            <div>
+              <router-link
+                v-for="(aisle, i) in menuMore"
+                :key="aisle.id"
+                :style="{ transitionDelay: menu_more ? i * 20 + 'ms' : '0ms' }"
+                :to="aisleRoute(aisle)"
+                class="k-drawer__link"
+                @click="menu = false"
+              >
+                <span :style="{ '--k-tint': tint(aisle) }" class="k-drawer__ring">
+                  <img v-if="aisle.icon" :src="aisleImage(aisle, 64)" alt="" height="26" width="26" loading="lazy" />
+                </span>
+                {{ aisle.title || aisle.name }}
+              </router-link>
+            </div>
+          </div>
+          <button
+            :aria-expanded="menu_more ? 'true' : 'false'"
+            aria-controls="k-menu-more"
+            class="k-drawer__link -more"
+            type="button"
+            @click="menu_more = !menu_more"
+          >
+            <span aria-hidden="true" class="k-drawer__ring -more"><v-icon size="22">expand_more</v-icon></span>
+            {{ menu_more ? "Show fewer" : `Show ${menuMore.length} more` }}
+          </button>
+        </template>
 
         <div class="k-drawer__pickers">
           <s-language-selector hide-details variant="outlined"></s-language-selector>
@@ -332,6 +366,7 @@ export default {
       aisles_open: false,
       basket: false,
       menu: false,
+      menu_more: false,
       phone_search: false,
       windowWidth: window.innerWidth,
       strip_more: false,
@@ -417,6 +452,14 @@ export default {
     drawerOpen() {
       return this.basket || this.menu;
     },
+    /* The phone menu's aisles: 6, then "Show N more" for the rest; all of
+       them when there are 8 or fewer. */
+    menuAisles() {
+      return this.aisleList.length > 8 ? this.aisleList.slice(0, 6) : this.aisleList;
+    },
+    menuMore() {
+      return this.aisleList.length > 8 ? this.aisleList.slice(6) : [];
+    },
   },
 
   watch: {
@@ -426,6 +469,9 @@ export default {
     },
     basket(open) {
       basketView.drawerOpen = open;
+    },
+    menu(open) {
+      if (open) this.menu_more = false;
     },
     $route() {
       this.menu = false;
