@@ -805,7 +805,9 @@ $d-ink: #1e1033;
   --rs-font: var(--k-body);
 }
 
-/* The pill: a short capsule beside the 48px discs, the same height family. */
+/* The pill: a short capsule beside the 48px discs, the same height family.
+   Its own class: Dino's .k-header__link draws icon discs with the words
+   hidden (font-size 0), which hid "USD" in 1.0.19. */
 .k-header__acts .rs-pick__btn {
   height: 40px;
   padding: 0 12px 0 10px;

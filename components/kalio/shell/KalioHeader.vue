@@ -63,7 +63,7 @@
                a small pill before the account links, with a panel of chips.
                It hides itself while the shop has one currency and one
                language. The phone gets a row in the menu instead. -->
-          <region-switcher-button v-if="!compact" button-class="k-header__link -region" />
+          <region-switcher-button v-if="!compact" button-class="k-header__region" />
 
           <template v-if="!compact">
             <router-link v-if="user" :to="ordersRoute" aria-label="Orders" class="k-header__link">
