@@ -1,7 +1,8 @@
 /*
- * Dino — the theme switcher's config (the header's "Theme" button: the
- * owner's rule of 9 November 2026, the same on every molino Layout as on
- * Digito and Besti).
+ * Dino — the theme switcher's config (the footer's "Theme" row, just above
+ * the copyright line: the owner, 10 November 2026, after talking with the
+ * Selldone team; it was a header button from 9 November). The same on every
+ * molino Layout as on Digito and Besti.
  *
  * The switcher itself is Layout-agnostic (components/theme-switcher/); this
  * file is everything Dino-specific: the palettes, which Dino and Kalio

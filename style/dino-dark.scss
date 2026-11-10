@@ -1,7 +1,7 @@
 /* ▆▆▆▆▆▆▆▆▆▆▆▆▆▆ Dino — dark mode, and the theme switcher's loose ends ▆▆▆▆▆▆▆▆▆▆▆▆▆▆
 
-   The theme switcher (components/dino/dino-theme.ts, the header's Theme
-   button) turns the page dark by tokens and by the build step that gives
+   The theme switcher (components/dino/dino-theme.ts, the footer's Theme
+   row) turns the page dark by tokens and by the build step that gives
    every fixed colour a dark value (postcss-dark-tokens). What it cannot know
    is which grounds Dino keeps light on purpose. Those are the "light
    islands" below: the yellow press-me, the promo posters, the pastel aisle
@@ -53,11 +53,17 @@ html.dn-dark {
 
 
   /* ── Light islands ── */
+  /* .k-aisle-chip: the empty cart's "Or start with an aisle" chips sit on
+     their aisle's own pastel (tintFor(), written inline as --k-tint), which
+     no dark token reaches; their words followed --k-ink and turned light,
+     1.05:1 (the owner's Walio screenshot, 10 November 2026). Like Dino's
+     other pastel aisle tiles they stay light, with dark words. */
   .k-header__basket,
   .d-promo.-yellow,
   .d-promo.-lav,
   .d-tile,
-  .d-post {
+  .d-post,
+  .k-aisle-chip:not(.-on) {
     --k-ink: #1e1033;
     --k-ink-2: #3b2a55;
     --k-muted: #5d5470;
@@ -74,6 +80,12 @@ html.dn-dark {
     --tsd-text-5c4700: initial;
     --tsd-text-1e1033ad: initial;
     color: #1e1033;
+  }
+
+  /* The chips' aisle icons (packshots with a white ground) keep their
+     light disc. */
+  .k-aisle-chip:not(.-on) img {
+    background: rgba(255, 255, 255, 0.7);
   }
 
   /* The product's QR button is a dark line drawing: light on the dark page. */

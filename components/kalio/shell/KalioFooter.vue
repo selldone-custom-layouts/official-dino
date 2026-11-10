@@ -6,7 +6,8 @@
   the shop's name and its own description, social links and language; the
   aisles; the sellers with their marks; the shop's own footer menu exactly
   as the merchant set it in Selldone (falling back to the standard pages
-  when there is none); and the shopper's account links. The bottom row
+  when there is none); and the shopper's account links. On the showcase
+  shops a Theme strip (palettes, Custom colour, Light / Dark). The bottom row
   keeps the copyright, Selldone's cookie settings and the powered-by mark,
   which follows the shop's own copyright-mark setting.
 
@@ -96,6 +97,16 @@
         </nav>
       </div>
 
+      <!-- The visitor's theme (palettes, Custom colour, Light / Dark) in a
+           strip of its own just above the copyright row: the owner, 10
+           November 2026, after talking with the Selldone team (the header
+           button took room and is not good for every shop). Only on the
+           showcase shops; elsewhere nothing renders and no stored theme
+           applies. -->
+      <div v-if="theme.enabled" class="k-wrap k-footer__theme">
+        <theme-switcher-row />
+      </div>
+
       <div class="k-wrap k-footer__base">
         <span>© {{ year }} {{ shopTitle }}</span>
         <span class="k-footer__base-links">
@@ -117,6 +128,8 @@ import UCurrencySelector from "@selldone/components-vue/ui/currency/selector/UCu
 import SFooterSectionGdpr from "@selldone/components-vue/storefront/footer/section/gdpr/SFooterSectionGdpr.vue";
 import SFooterSectionSelldone from "@selldone/components-vue/storefront/footer/section/selldone/SFooterSectionSelldone.vue";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
+import ThemeSwitcherRow from "../../theme-switcher/ThemeSwitcherRow.vue";
+import { themeState } from "../../theme-switcher/theme-switcher";
 import { aisleRoute, aisles, catalogueRoute, dealsRoute, sellerRoute, vendorImage, vendors } from "../kalio-catalog";
 
 export default {
@@ -127,6 +140,7 @@ export default {
     UCurrencySelector,
     SFooterSectionGdpr,
     SFooterSectionSelldone,
+    ThemeSwitcherRow,
   },
   inject: ["$shop"],
 
@@ -137,6 +151,7 @@ export default {
       aisleList: [],
       sellerList: [],
       year: new Date().getFullYear(),
+      theme: themeState,
     };
   },
 

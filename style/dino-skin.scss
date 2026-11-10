@@ -555,6 +555,27 @@ $d-ink: #1e1033;
   }
 }
 
+/* The visitor's theme (showcase shops only): a strip of its own at the foot
+   of the footer, on the copyright row's edge and hairline, just above it
+   (10 November 2026: out of the header). Light words on the deep footer in
+   both modes: white label, lavender name, a yellow ring on the chosen
+   swatch (the footer links' hover colour), a light edge round each disc and
+   a light outline round the Light / Dark switch. */
+.k-footer__theme {
+  --ts-ink: #fff;
+  --ts-muted: #cfc3ee;
+  --ts-line: rgba(255, 255, 255, 0.48); /* under 0.5: the dark-mode build step keeps white lines on a coloured band; 4.4:1 on the violet footer */
+  --ts-ring: #{$d-yellow};
+  --ts-swatch-edge: rgba(255, 255, 255, 0.42);
+  margin-top: 44px;
+  padding-block: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  + .k-footer__base {
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 760px) {
   .k-footer__main {
     border-radius: 26px 26px 0 0;
