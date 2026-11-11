@@ -1369,7 +1369,7 @@ $t-tablet: 1100px;
     margin-bottom: -1px;
     padding: 12px 16px;
     border: 0;
-    border-bottom: 3px solid transparent;
+    border-radius: var(--k-pill);
     background: none;
     color: var(--k-muted);
     font-size: 15.5px;
@@ -1377,9 +1377,10 @@ $t-tablet: 1100px;
     white-space: nowrap;
     cursor: pointer;
 
+    /* Active tab: a tinted pill, colour and weight; never a bar under the words (the owner's rule, 11 November 2026). */
     &.-on {
-      border-color: var(--k-green);
-      color: var(--k-ink);
+      background: var(--k-green-soft);
+      color: var(--d-link);
     }
   }
 }

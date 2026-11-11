@@ -922,6 +922,14 @@ html[dir="rtl"] {
   padding-inline: 40px 16px !important;
 }
 
+/* Active tabs: pill or tint, never a bar (the owner's rule, 11 November
+   2026). Vuetify's tab slider is hidden everywhere; Dino's own tabs are
+   pills. */
+.v-tab__slider,
+.v-slide-group-item--active > .v-tab__slider {
+  display: none !important;
+}
+
 /* A cart line's old price: the strike ran across the whole price column
    ("$4.49 ————"); the struck block is now as wide as its amount and still
    sits at the line's end. */
