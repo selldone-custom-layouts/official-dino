@@ -154,6 +154,7 @@ import UPrice from "@selldone/components-vue/ui/price/UPrice.vue";
 import { currentCurrency, signOf } from "../../region-switcher/region";
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
 import { PriceHelper } from "@selldone/core-js/helper";
+import { t } from "../../kalio/i18n/kalio-i18n";
 import { SORTS, clone, countOn, groupsOf, picked, sortName, valueLabel, withGroup } from "./dino-filters";
 
 export default {
@@ -224,10 +225,11 @@ export default {
       const b = Math.round(lo + ((hi - lo) * 2) / 3);
       const sign = signOf(this.currency);
       const cur = (n) => `${sign}${n}`;
+      /* The words in the visitor's language ("Menos de $3", "$7 o más"). */
       return [
-        { label: `Under ${cur(a)}`, range: [lo, a] },
+        { label: t("dino.filters.under", "Under {price}", { price: cur(a) }), range: [lo, a] },
         { label: `${cur(a)} – ${cur(b)}`, range: [a, b] },
-        { label: `${cur(b)} & up`, range: [b, hi] },
+        { label: t("dino.filters.andUp", "{price} & up", { price: cur(b) }), range: [b, hi] },
       ];
     },
   },

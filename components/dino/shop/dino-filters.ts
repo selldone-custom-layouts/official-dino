@@ -10,8 +10,15 @@
    and the listing takes a filter in the shape SCategoryFilter emits:
      { only_is_original, only_has_discount, prices: { USD: [lo, hi] } | null,
        brands: [], selected_spec: { Key: [v] }, selected_variants: { volumes: [v] } }
-   Pills in one group are OR, groups are AND (Selldone's own rule). */
+   Pills in one group are OR, groups are AND (Selldone's own rule).
+
+   The record's spec keys and values are the shop's own (English) words and
+   go back to the server as they are; the rail shows them in the visitor's
+   language through shopText() (data/<lang>.json): "Type" / "Fruit" read
+   "Tipo" / "Fruta" in Spanish, and picking "Fruta" sends "Fruit" (ES-06,
+   11 November 2026, as Selldone's own filter panel in the shared patch). */
 import { t } from "../../kalio/i18n/kalio-i18n";
+import { shopText } from "../../kalio/i18n/shop-data";
 
 export interface DinoGroup {
   /** "spec" groups live in selected_spec, "variant" ones in selected_variants. */
@@ -59,7 +66,7 @@ export function groupsOf(filters: any): DinoGroup[] {
   for (const key of Object.keys(filters)) {
     if (RESERVED.includes(key) || VARIANT_LABEL[key]) continue;
     const values = list(filters[key]);
-    if (values.length) out.push({ kind: "spec", key, label: key, values });
+    if (values.length) out.push({ kind: "spec", key, label: shopText(key), values });
   }
   const brands = list(filters.brands);
   if (brands.length > 1) out.push({ kind: "brand", key: "brands", label: t("dino.filters.brand", "Brand"), values: brands });
@@ -117,9 +124,10 @@ export function fromRoute(query: any): DinoFilter | null {
 }
 
 /** A value as the shopper reads it: Selldone stores a variant's picture
- *  after a "|" in the value itself. */
+ *  after a "|" in the value itself; the word in the visitor's language
+ *  (display only: the value itself is what a pick sends). */
 export function valueLabel(value: string): string {
-  return String(value).split("|")[0].trim();
+  return shopText(String(value).split("|")[0].trim());
 }
 
 export const SORTS = [

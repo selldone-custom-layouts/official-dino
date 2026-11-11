@@ -11,6 +11,12 @@
   four newest journal posts as pastel cards. Everything is
   read from the shop: products, prices, savings, aisles, sellers and the
   delivery methods. A section with nothing to show is not drawn.
+
+  The journal's cards are each post in the visitor's language when it has
+  an edition in it (kalio-journal.ts, i18n/data/blog-editions.json; 11
+  November 2026), read again after a language pick; another language's
+  edition is never shown. With no edition named the four newest show, as
+  before.
 -->
 <template>
   <div class="d-home">
@@ -164,7 +170,7 @@
 <script>
 import DinoRow from "./DinoRow.vue";
 import { DEALS_FILTER, findAisle, listProducts, waysOf } from "./dino-home";
-import { money as regionMoney } from "../region-switcher/region";
+import { currentLanguage, money as regionMoney } from "../region-switcher/region";
 import { locale } from "../kalio/i18n/kalio-i18n";
 import {
   aisleImage,
@@ -183,7 +189,7 @@ import {
   vendorImage,
   vendors,
 } from "../kalio/kalio-catalog";
-import { dateParts, journalPage, journalRoute, postRoute } from "../kalio/pages/kalio-journal";
+import { dateParts, editionsActive, journalPage, journalRoute, postRoute } from "../kalio/pages/kalio-journal";
 import { clock, leftText, releaseClock, soonestEnd, useClock } from "../kalio/kalio-clock";
 
 /** Pastel grounds for the aisle tiles, in turn. */
@@ -228,6 +234,10 @@ export default {
     journal() {
       return journalRoute();
     },
+    /* The visitor's language: a pick shows the journal's editions in it. */
+    readerLang() {
+      return currentLanguage();
+    },
     ways() {
       return waysOf(this.$shop);
     },
@@ -253,6 +263,9 @@ export default {
   },
 
   watch: {
+    readerLang() {
+      if (editionsActive()) this.readPosts();
+    },
     fresh: {
       immediate: true,
       handler(aisle) {
@@ -276,10 +289,7 @@ export default {
       .finally(() => (this.deals_ready = true));
     listProducts(null, 6, { sort: "newest" }).then((list) => (this.newList = list.filter((p) => p.icon)));
     useClock();
-    /* The four newest posts; no posts, no section. */
-    journalPage({ limit: 4 })
-      .then(({ articles }) => (this.posts = articles || []))
-      .catch(() => (this.posts = []));
+    this.readPosts();
   },
 
   beforeUnmount() {
@@ -287,6 +297,17 @@ export default {
   },
 
   methods: {
+    /* The four newest posts, each in the visitor's edition; no posts, no section. */
+    readPosts() {
+      const lang = this.readerLang;
+      journalPage({ limit: 4 })
+        .then(({ articles }) => {
+          if (lang === this.readerLang) this.posts = articles || [];
+        })
+        .catch(() => {
+          if (lang === this.readerLang) this.posts = [];
+        });
+    },
     regionMoney,
     aisleRoute,
     aisleImage,
