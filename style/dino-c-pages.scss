@@ -204,7 +204,7 @@ $d-ok: #12a150;
   &::after {
     content: "";
     position: absolute;
-    right: -90px;
+    inset-inline-end: -90px;
     bottom: -150px;
     z-index: -1;
     width: 420px;
@@ -415,17 +415,17 @@ $d-ok: #12a150;
 
     &.-a {
       top: 6%;
-      left: 4%;
+      inset-inline-start: 4%;
     }
 
     &.-b {
-      right: 2%;
+      inset-inline-end: 2%;
       top: 40%;
     }
 
     &.-c {
       bottom: 4%;
-      left: 14%;
+      inset-inline-start: 14%;
     }
   }
 
@@ -505,7 +505,7 @@ $d-ok: #12a150;
     span {
       position: absolute;
       top: -18px;
-      right: -24px;
+      inset-inline-end: -24px;
       color: var(--d-link);
       font-family: var(--k-display);
       font-size: 72px;
@@ -594,8 +594,8 @@ $d-ok: #12a150;
 
     &__art span {
       font-size: 52px;
-      right: auto;
-      left: 140px;
+      inset-inline-end: auto;
+      inset-inline-start: 140px;
     }
   }
 }

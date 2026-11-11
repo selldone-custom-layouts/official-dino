@@ -13,7 +13,7 @@
   <div :style="{ '--k-tint': tint }" class="k-pdp w-pdp">
     <div class="k-pdp__grid">
       <!-- ▆▆▆▆▆▆▆▆ Packshot ▆▆▆▆▆▆▆▆ -->
-      <section v-if="showCover" aria-label="Product images" class="k-pdp__media">
+      <section v-if="showCover" :aria-label="t('dino.pdp.images', 'Product images')" class="k-pdp__media">
         <div class="k-pdp__stage">
           <s-shop-product-slide-show :current-variant="current_variant" :vertical="false" />
         </div>
@@ -25,7 +25,7 @@
           v-if="$product.brand"
           :to="{ name: window.$storefront.routes.SHOP_PAGE, query: { search: $product.brand } }"
           class="w-pdp__brand"
-          >Shop all {{ $product.brand }}</router-link
+          >{{ t("dino.pdp.shopAll", "Shop all {brand}", { brand: $product.brand }) }}</router-link
         >
         <router-link v-else-if="aisle" :to="aisleRoute" class="w-pdp__brand">{{ aisle.title || aisle.name }}</router-link>
 
@@ -85,8 +85,8 @@
 
         <!-- How do you want it? (product page A): the shop's ways, with what each costs -->
         <template v-if="ways.length">
-          <p class="w-pdp__lbl">How do you want it?</p>
-          <div :class="'-n' + ways.length" class="w-ful" role="radiogroup" aria-label="How do you want it?">
+          <p class="w-pdp__lbl">{{ t("dino.pdp.how", "How do you want it?") }}</p>
+          <div :class="'-n' + ways.length" class="w-ful" role="radiogroup" :aria-label="t('dino.pdp.how', 'How do you want it?')">
             <button
               v-for="w in ways"
               :key="w.key"
@@ -100,10 +100,10 @@
               <v-icon size="22">{{ w.icon }}</v-icon>
               <span class="w-ful__tx">
                 <b>{{ w.word }}</b>
-                <span>{{ w.key === "Pickup" ? "At the shop" : w.key === "Delivery" ? "To your door" : "To your address" }}</span>
-                <em v-if="w.free">Free</em>
-                <em v-else-if="w.freeOver">Free over <span class="u--price">{{ regionMoney(w.freeOver, w.currency, { short: "auto" }) }}</span></em>
-                <em v-else class="-n">Price with your address</em>
+                <span>{{ w.key === "Pickup" ? t("dino.pdp.atShop", "At the shop") : w.key === "Delivery" ? t("dino.pdp.toDoor", "To your door") : t("dino.pdp.toAddress", "To your address") }}</span>
+                <em v-if="w.free">{{ t("shipping.free", "Free") }}</em>
+                <em v-else-if="w.freeOver">{{ t("shipping.freeOver", "Free over {amount}", { amount: regionMoney(w.freeOver, w.currency, { short: "auto" }) }) }}</em>
+                <em v-else class="-n">{{ t("dino.pdp.priceAddress", "Price with your address") }}</em>
               </span>
             </button>
           </div>
@@ -215,6 +215,7 @@
 
 <script>
 import KalioProductOverview from "../../kalio/product/KalioProductOverview.vue";
+import { t } from "../../kalio/i18n/kalio-i18n";
 import { waysOf } from "../dino-home";
 import { money as regionMoney } from "../../region-switcher/region";
 
@@ -234,9 +235,9 @@ export default {
     perks() {
       const out = [];
       const ship = this.ways.find((w) => w.freeOver);
-      if (ship) out.push({ icon: "local_shipping", text: `Free ${ship.word.toLowerCase()} on orders over ${regionMoney(ship.freeOver, ship.currency, { short: "auto" })}` });
+      if (ship) out.push({ icon: "local_shipping", text: t("dino.pdp.freeOver", "Free {way} on orders over {amount}", { way: ship.word.toLowerCase(), amount: regionMoney(ship.freeOver, ship.currency, { short: "auto" }) }) });
       const pick = this.ways.find((w) => w.key === "Pickup" && w.free);
-      if (pick) out.push({ icon: "storefront", text: "Free pickup at the shop" });
+      if (pick) out.push({ icon: "storefront", text: t("dino.pdp.freePickup", "Free pickup at the shop") });
       return out;
     },
   },

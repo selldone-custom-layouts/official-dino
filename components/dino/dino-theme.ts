@@ -24,6 +24,7 @@
  * dark card #161d2e; each dark "text" colour on that card — 9.11, 11.03,
  * 7.86, 11.60, 9.97.
  */
+import { t } from "../kalio/i18n/kalio-i18n";
 import type { ThemeSwitcherConfig } from "../theme-switcher/theme-switcher";
 import { THEME_SETTINGS } from "./dino-theme.settings";
 
@@ -56,31 +57,41 @@ export const DINO_THEME: ThemeSwitcherConfig = {
   palettes: [
     {
       id: "violet",
-      name: "Dino violet",
+      get name() {
+        return t("dino.palette.violet", "Dino violet");
+      },
       light: { primary: "#5b21b6", deep: "#7c3aed", soft: "#f3eeff", soft2: "#e9dfff", soft3: "#d9c9ff", night: "#2e1065", onPrimary: "#ffffff", text: "#5b21b6", pop: "#ffd43b" },
       dark: { primary: "#8046ee", deep: "#6d28d9", soft: "#2a1d4d", soft2: "#33245c", soft3: "#45307a", night: "#1d1236", onPrimary: "#ffffff", text: "#c4b5fd" },
     },
     {
       id: "emerald",
-      name: "Emerald",
+      get name() {
+        return t("dino.palette.emerald", "Emerald");
+      },
       light: { primary: "#05664a", deep: "#047857", soft: "#e3f6ee", soft2: "#cdeee0", soft3: "#a7dcc5", night: "#053b2b", onPrimary: "#ffffff", text: "#05664a", pop: "#ffffff" },
       dark: { primary: "#047857", deep: "#065f46", soft: "#123a30", soft2: "#164a3d", soft3: "#1d5e4d", night: "#0b2a22", onPrimary: "#ffffff", text: "#6ee7b7" },
     },
     {
       id: "blue",
-      name: "Ocean blue",
+      get name() {
+        return t("dino.palette.blue", "Ocean blue");
+      },
       light: { primary: "#0a4bd8", deep: "#2563eb", soft: "#e8efff", soft2: "#d6e2ff", soft3: "#b8ccff", night: "#0a2463", onPrimary: "#ffffff", text: "#0a4bd8", pop: "#ffffff" },
       dark: { primary: "#2563eb", deep: "#1d4ed8", soft: "#16264d", soft2: "#1c2f60", soft3: "#263f7d", night: "#0e1a3d", onPrimary: "#ffffff", text: "#8fb0ff" },
     },
     {
       id: "teal",
-      name: "Teal",
+      get name() {
+        return t("dino.palette.teal", "Teal");
+      },
       light: { primary: "#0c6680", deep: "#0e7490", soft: "#e0f4f8", soft2: "#c8ebf3", soft3: "#a1dae8", night: "#083344", onPrimary: "#ffffff", text: "#0c6680", pop: "#ffffff" },
       dark: { primary: "#0e7490", deep: "#155e75", soft: "#123540", soft2: "#16424f", soft3: "#1c5566", night: "#0a2630", onPrimary: "#ffffff", text: "#67e8f9" },
     },
     {
       id: "orange",
-      name: "Sunset orange",
+      get name() {
+        return t("dino.palette.orange", "Sunset orange");
+      },
       light: { primary: "#a93a0b", deep: "#c2410c", soft: "#fdeee6", soft2: "#fbdccb", soft3: "#f6bf9f", night: "#4a1a06", onPrimary: "#ffffff", text: "#a93a0b", pop: "#ffffff" },
       dark: { primary: "#c2410c", deep: "#9a3412", soft: "#3d2215", soft2: "#4a2a19", soft3: "#5e3520", night: "#2a1409", onPrimary: "#ffffff", text: "#fdba74" },
     },
@@ -161,7 +172,35 @@ export const DINO_THEME: ThemeSwitcherConfig = {
 
   metaThemeColor: "light.primary",
   ui: { ink: "var(--k-ink)", muted: "var(--k-muted)", line: "var(--k-line)", surface: "var(--k-card)", font: "var(--k-body)" },
-  labels: { theme: "Theme", palettes: "Colour", mode: "Light or dark", modeTitle: "Mode", light: "Light", dark: "Dark", custom: "Custom colour", adjusted: "Adjusted for readability", brand: "Brand colour" },
+  labels: {
+    get theme() {
+      return t("theme.title", "Theme");
+    },
+    get palettes() {
+      return t("theme.palettes", "Colour");
+    },
+    get mode() {
+      return t("theme.mode", "Light or dark");
+    },
+    get modeTitle() {
+      return t("theme.modeTitle", "Mode");
+    },
+    get light() {
+      return t("theme.light", "Light");
+    },
+    get dark() {
+      return t("theme.dark", "Dark");
+    },
+    get custom() {
+      return t("theme.custom", "Custom colour");
+    },
+    get adjusted() {
+      return t("theme.adjusted", "Adjusted for readability");
+    },
+    get brand() {
+      return t("theme.brand", "Brand colour");
+    },
+  },
 
   /* "Custom colour" (the owner, 9 November 2026): any colour, made readable
      by paletteFromColor(). Dino's header is painted with the light primary

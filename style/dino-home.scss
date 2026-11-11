@@ -669,7 +669,7 @@ $d-ink: #1e1033;
 
   &__blob {
     position: absolute;
-    right: -50px;
+    inset-inline-end: -50px;
     bottom: -80px;
     z-index: 0;
     width: 360px;
@@ -694,7 +694,7 @@ $d-ink: #1e1033;
 
     img {
       position: absolute;
-      right: var(--r);
+      inset-inline-end: var(--r);
       bottom: calc(var(--lift, 0px) - 0.16 * var(--s));
       width: var(--s);
       object-fit: contain;

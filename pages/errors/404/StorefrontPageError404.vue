@@ -22,21 +22,21 @@
         <span>?</span>
       </div>
       <div class="d-404__tx">
-        <span class="d-404__tag">Error 404</span>
-        <h1>Oops, this aisle is empty.</h1>
-        <p>The page moved or never existed. Everything else is right where you left it, your cart included.</p>
+        <span class="d-404__tag">{{ t("dino.404.tag", "Error 404") }}</span>
+        <h1>{{ t("dino.404.title", "Oops, this aisle is empty.") }}</h1>
+        <p>{{ t("dino.404.text", "The page moved or never existed. Everything else is right where you left it, your cart included.") }}</p>
         <div class="d-404__acts">
-          <router-link :to="{ path: '/' }" class="d-btn -yellow -big">Back to the home page</router-link>
-          <router-link :to="catalogue" class="d-btn -outline -big">Browse every product</router-link>
+          <router-link :to="{ path: '/' }" class="d-btn -yellow -big">{{ t("dino.404.home", "Back to the home page") }}</router-link>
+          <router-link :to="catalogue" class="d-btn -outline -big">{{ t("dino.home.browseAll", "Browse every product") }}</router-link>
         </div>
       </div>
     </section>
-    <nav v-if="aisleList.length" aria-label="Aisles" class="d-404__aisles k-wrap">
+    <nav v-if="aisleList.length" :aria-label="t('header.aisles', 'Aisles')" class="d-404__aisles k-wrap">
       <router-link v-for="a in aisleList.slice(0, 10)" :key="a.id" :to="aisleRoute(a)">
         <img v-if="a.icon" :src="aisleImage(a, 64)" alt="" />{{ a.title || a.name }}
       </router-link>
     </nav>
-    <dino-row :filter="{ only_has_discount: true }" :limit="12" :more-to="deals" hot icon="local_fire_department" title="Today's deals" />
+    <dino-row :filter="{ only_has_discount: true }" :limit="12" :more-to="deals" hot icon="local_fire_department" :title="t('header.todaysDeals', 'Today’s deals')" />
   </div>
 </template>
 

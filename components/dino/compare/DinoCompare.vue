@@ -21,32 +21,32 @@
 -->
 <template>
   <div :style="vars" class="d-cmp k-wrap">
-    <nav aria-label="Breadcrumb" class="k-crumbs d-cmp__crumbs">
-      <router-link :to="home">{{ shop?.title || "Home" }}</router-link>
-      <v-icon size="16">chevron_right</v-icon>
-      <span>Compare</span>
+    <nav :aria-label="t('dino.crumbs', 'Breadcrumb')" class="k-crumbs d-cmp__crumbs">
+      <router-link :to="home">{{ shop?.title || t("dino.home", "Home") }}</router-link>
+      <v-icon class="k-flip" size="16">chevron_right</v-icon>
+      <span>{{ t("dino.compare.crumb", "Compare") }}</span>
     </nav>
 
     <div v-if="busy && !items.length" class="d-cmp__wait">
       <v-progress-circular color="primary" indeterminate size="26" width="3" />
-      Getting your picks…
+      {{ t("dino.compare.loading", "Getting your picks…") }}
     </div>
 
     <!-- ▆▆▆▆ Nothing to compare ▆▆▆▆ -->
     <section v-else-if="!items.length" class="d-cmp__empty">
       <img :src="mark" alt="" class="d-cmp__mascot" />
-      <h1>Nothing to compare yet</h1>
-      <p>Tap Compare on a product, or find one here. Up to {{ MAX }} side by side.</p>
+      <h1>{{ t("dino.compare.emptyTitle", "Nothing to compare yet") }}</h1>
+      <p>{{ t("dino.compare.emptyText", "Tap Compare on a product, or find one here. Up to {n} side by side.", { n: MAX }) }}</p>
       <dino-compare-add :max="MAX" :suggestions="suggested" wide @add="add" />
       <router-link :to="catalogue" class="d-cmp__btn -violet">
-        Browse groceries<v-icon size="20">arrow_forward</v-icon>
+        {{ t("dino.compare.browse", "Browse groceries") }}<v-icon class="k-flip" size="20">arrow_forward</v-icon>
       </router-link>
     </section>
 
     <template v-else>
       <div class="d-cmp__top">
         <div>
-          <h1>Compare groceries</h1>
+          <h1>{{ t("dino.compare.title", "Compare groceries") }}</h1>
           <p>{{ summary }}</p>
         </div>
         <div class="d-cmp__tools">
@@ -58,13 +58,13 @@
             type="button"
             @click="diffOnly = !diffOnly"
           >
-            <i></i>Only differences
+            <i></i>{{ t("dino.compare.onlyDiff", "Only differences") }}
           </button>
           <button class="d-cmp__btn -line" type="button" @click="share">
-            <v-icon size="20">{{ copied === "top" ? "check" : "ios_share" }}</v-icon>{{ copied === "top" ? "Link copied" : "Share" }}
+            <v-icon size="20">{{ copied === "top" ? "check" : "ios_share" }}</v-icon>{{ copied === "top" ? t("dino.compare.linkCopied", "Link copied") : t("dino.compare.share", "Share") }}
           </button>
           <button class="d-cmp__btn -soft" type="button" @click="clear">
-            <v-icon size="20">delete_outline</v-icon>Clear
+            <v-icon size="20">delete_outline</v-icon>{{ t("dino.compare.clear", "Clear") }}
           </button>
         </div>
       </div>
@@ -85,10 +85,10 @@
       <div class="d-cmp__strip">
         <div class="d-cmp__scroll" @scroll.passive="sync">
           <div class="d-cmp__g">
-            <div class="d-cmp__hint"><b>Your picks</b>Pinned while you scroll. Remove one with ×.</div>
+            <div class="d-cmp__hint"><b>{{ t("dino.compare.picks", "Your picks") }}</b>{{ t("dino.compare.picksHint", "Pinned while you scroll. Remove one with ×.") }}</div>
 
             <article v-for="it in items" :key="it.key" class="d-cmp__cp">
-              <button :aria-label="`Remove ${it.product.title}`" class="d-cmp__rm" type="button" @click="remove(it)">
+              <button :aria-label="t('dino.compare.remove', 'Remove {name}', { name: it.product.title })" class="d-cmp__rm" type="button" @click="remove(it)">
                 <v-icon size="18">close</v-icon>
               </button>
               <router-link :to="productRoute(it)" aria-hidden="true" class="d-cmp__well" tabindex="-1">
@@ -103,7 +103,7 @@
                   <s v-if="it.price.was"><u-price :amount="it.price.was" :currency="currency" /></s>
                 </div>
                 <div v-if="it.per" class="d-cmp__per">
-                  {{ money(it.per.amount) }} {{ it.per.unit === "each" ? "each" : `/ ${it.per.unit}` }}
+                  {{ it.per.unit === "each" ? t("dino.compare.each", "{price} each", { price: money(it.per.amount) }) : t("dino.compare.perUnit", "{price} / {unit}", { price: money(it.per.amount), unit: it.per.unit }) }}
                 </div>
                 <kalio-card-step
                   :addable="() => it.stock > 0"
@@ -133,13 +133,13 @@
       <section v-for="g in shownGroups" :key="g.title" class="d-cmp__grp">
         <h3>
           <span class="d-cmp__ic"><v-icon size="20">{{ g.icon }}</v-icon></span>{{ g.title }}
-          <span v-if="items.length > 1" class="d-cmp__n">{{ g.diff ? `${g.diff} differ` : "All the same" }}</span>
+          <span v-if="items.length > 1" class="d-cmp__n">{{ g.diff ? t("dino.compare.differ", "{n} differ", { n: g.diff }) : t("dino.compare.allSame", "All the same") }}</span>
         </h3>
         <div class="d-cmp__scroll" @scroll.passive="sync">
           <div v-for="row in g.shown" :key="row.key" :class="{ '-diff': row.diff }" class="d-cmp__g d-cmp__row">
             <div class="d-cmp__k"><i v-if="row.diff"></i>{{ row.key }}</div>
             <div v-if="row.same" class="d-cmp__both">
-              <v-icon size="20">check_circle</v-icon>{{ row.values[0] }}<small>· {{ items.length === 2 ? "both" : `all ${items.length}` }}</small>
+              <v-icon size="20">check_circle</v-icon>{{ row.values[0] }}<small>· {{ items.length === 2 ? t("dino.compare.both", "both") : t("dino.compare.all", "all {n}", { n: items.length }) }}</small>
             </div>
             <template v-else>
               <div v-for="(v, i) in row.values" :key="i" :class="{ '-none': !v }" class="d-cmp__c">{{ v || "—" }}</div>
@@ -150,17 +150,17 @@
       </section>
 
       <section v-if="!diffOnly && hasPros" class="d-cmp__grp">
-        <h3><span class="d-cmp__ic"><v-icon size="20">thumb_up</v-icon></span>Why pick it</h3>
+        <h3><span class="d-cmp__ic"><v-icon size="20">thumb_up</v-icon></span>{{ t("dino.compare.why", "Why pick it") }}</h3>
         <div class="d-cmp__scroll" @scroll.passive="sync">
           <div class="d-cmp__g d-cmp__row -top">
-            <div class="d-cmp__k">Good to know</div>
+            <div class="d-cmp__k">{{ t("dino.compare.good", "Good to know") }}</div>
             <ul v-for="it in items" :key="it.key" class="d-cmp__pros">
               <li v-for="(t, i) in it.pros" :key="i"><v-icon size="20">check_circle</v-icon>{{ t }}</li>
             </ul>
             <div v-if="items.length < MAX" class="d-cmp__sp"></div>
           </div>
           <div v-if="hasCons" class="d-cmp__g d-cmp__row -top">
-            <div class="d-cmp__k">Worth knowing</div>
+            <div class="d-cmp__k">{{ t("dino.compare.worth", "Worth knowing") }}</div>
             <ul v-for="it in items" :key="it.key" class="d-cmp__pros -cons">
               <li v-for="(t, i) in it.cons" :key="i"><v-icon size="20">remove_circle</v-icon>{{ t }}</li>
             </ul>
@@ -170,16 +170,16 @@
       </section>
 
       <section v-if="!diffOnly" class="d-cmp__grp">
-        <h3><span class="d-cmp__ic"><v-icon size="20">star</v-icon></span>Reviews</h3>
+        <h3><span class="d-cmp__ic"><v-icon size="20">star</v-icon></span>{{ t("reviews.title", "Reviews") }}</h3>
         <div class="d-cmp__scroll" @scroll.passive="sync">
           <div class="d-cmp__g d-cmp__row">
-            <div class="d-cmp__k">Rating</div>
+            <div class="d-cmp__k">{{ t("dino.compare.rating", "Rating") }}</div>
             <div v-for="it in items" :key="it.key" class="d-cmp__rev">
-              <span class="d-cmp__stars" :aria-label="it.rateCount ? `${it.rate} out of 5` : 'No reviews yet'">
+              <span class="d-cmp__stars" :aria-label="it.rateCount ? t('dino.compare.outOf5', '{n} out of 5', { n: it.rate }) : t('dino.compare.noReviews', 'No reviews yet')">
                 <v-icon v-for="s in 5" :key="s" :class="{ '-on': it.rateCount && s <= Math.round(it.rate) }" size="18">star</v-icon>
               </span>
-              <template v-if="it.rateCount">{{ it.rate.toFixed(1) }} · {{ it.rateCount }} {{ it.rateCount === 1 ? "review" : "reviews" }}</template>
-              <template v-else>No reviews yet <router-link :to="productRoute(it)">Write one</router-link></template>
+              <template v-if="it.rateCount">{{ formatNumber(it.rate, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) }} · {{ t("dino.compare.reviews", { one: "{n} review", other: "{n} reviews" }, { n: it.rateCount }) }}</template>
+              <template v-else>{{ t("dino.compare.noReviews", "No reviews yet") }} <router-link :to="productRoute(it)">{{ t("dino.compare.writeOne", "Write one") }}</router-link></template>
             </div>
             <div v-if="items.length < MAX" class="d-cmp__sp"></div>
           </div>
@@ -189,13 +189,13 @@
       <section class="d-cmp__share">
         <img :src="mark" alt="" class="d-cmp__mascot" />
         <div>
-          <h3>Share this comparison</h3>
-          <p>Send it to someone you shop with, or keep the link for later.</p>
+          <h3>{{ t("dino.compare.shareTitle", "Share this comparison") }}</h3>
+          <p>{{ t("dino.compare.shareText", "Send it to someone you shop with, or keep the link for later.") }}</p>
         </div>
         <div class="d-cmp__lnk">
           <span>{{ linkShown }}</span>
           <button class="d-cmp__btn -violet" type="button" @click="copy('card')">
-            <v-icon size="18">{{ copied === "card" ? "check" : "content_copy" }}</v-icon>{{ copied === "card" ? "Copied" : "Copy link" }}
+            <v-icon size="18">{{ copied === "card" ? "check" : "content_copy" }}</v-icon>{{ copied === "card" ? t("dino.compare.copied", "Copied") : t("dino.compare.copy", "Copy link") }}
           </button>
         </div>
       </section>
@@ -207,6 +207,7 @@
 
 <script>
 import { PriceHelper } from "@selldone/core-js";
+import { t, formatNumber } from "../../kalio/i18n/kalio-i18n";
 import { currentCurrency, formatMoney } from "../../region-switcher/region";
 import CurrencyMixin from "@selldone/components-vue/mixin/currency/CurrencyMixin.ts";
 import KalioCardStep from "../../kalio/KalioCardStep.vue";
@@ -220,11 +221,11 @@ import { compareListParam, groupIcon, parseCompareList, specGroups, specText, sp
 const MAX = 4;
 /* A variant's own sizes, as rows of their own when a pick is a variant. */
 const VARIANT_KEYS = [
-  ["volume", "Volume"],
-  ["weight", "Weight"],
-  ["pack", "Pack"],
-  ["style", "Style"],
-  ["type", "Type"],
+  ["volume", () => t("dino.compare.volume", "Volume")],
+  ["weight", () => t("dino.compare.weight", "Weight")],
+  ["pack", () => t("dino.compare.pack", "Pack")],
+  ["style", () => t("dino.compare.style", "Style")],
+  ["type", () => t("dino.compare.type", "Type")],
 ];
 const norm = (s) => String(s || "").trim().toLowerCase();
 
@@ -308,8 +309,8 @@ export default {
       };
       const out = [];
       const variantRows = VARIANT_KEYS.filter(([k]) => items.some((it) => it.variant && specText(it.variant[k])))
-        .map(([k, label]) => row(label, items.map((it) => specText(it.variant?.[k]))));
-      if (variantRows.length) out.push({ title: "Your pick", rows: variantRows });
+        .map(([k, label]) => row(label(), items.map((it) => specText(it.variant?.[k]))));
+      if (variantRows.length) out.push({ title: t("dino.compare.yourPick", "Your pick"), rows: variantRows });
       for (const g of specGroups(items.map((it) => it.product))) {
         out.push({ title: g.title, rows: g.keys.map((k) => row(k, items.map((it) => specValue(it.product, k)))) });
       }
@@ -343,11 +344,15 @@ export default {
     },
     summary() {
       const n = this.items.length;
-      if (n < 2) return "Add one more product to see what differs.";
+      if (n < 2) return t("dino.compare.addOne", "Add one more product to see what differs.");
       const cats = new Set(this.items.map((it) => it.product.category_id));
-      const from = cats.size === 1 ? (this.aisleTitle ? ` from ${this.aisleTitle}` : "") : ` from ${cats.size} aisles`;
-      const tail = this.rowCount ? ` · ${this.diffCount} of ${this.rowCount} details differ` : "";
-      return `${n} products${from}${tail}`;
+      const head =
+        cats.size === 1
+          ? this.aisleTitle
+            ? t("dino.compare.sumAisle", "{n} products from {aisle}", { n, aisle: this.aisleTitle })
+            : t("dino.compare.sum", "{n} products", { n })
+          : t("dino.compare.sumAisles", "{n} products from {m} aisles", { n, m: cats.size });
+      return this.rowCount ? t("dino.compare.sumDiff", "{head} · {d} of {r} details differ", { head, d: this.diffCount, r: this.rowCount }) : head;
     },
     suggested() {
       return this.pool.filter((p) => !this.ids.includes(p.id)).slice(0, 3);
@@ -381,7 +386,7 @@ export default {
   },
 
   created() {
-    this.setPageTitle("Compare groceries");
+    this.setPageTitle(t("dino.compare.title", "Compare groceries"));
     this.read();
     aisleIndex().then((map) => {
       this.aisles = map;
@@ -487,7 +492,7 @@ export default {
 
     share() {
       if (navigator.share && window.matchMedia("(max-width: 760px)").matches) {
-        navigator.share({ title: "Compare groceries", url: this.link }).catch(() => {});
+        navigator.share({ title: t("dino.compare.title", "Compare groceries"), url: this.link }).catch(() => {});
         return;
       }
       this.copy("top");

@@ -18,6 +18,7 @@
  *
  * Nothing here names a product, a price or a seller.
  */
+import { t } from "../kalio/i18n/kalio-i18n";
 
 declare const window: any;
 
@@ -100,16 +101,20 @@ export const DEALS_FILTER = JSON.stringify({ only_has_discount: true });
 /* ━━━━━━━━━━━━ Ways to get it ━━━━━━━━━━━━
    Selldone's transportation types, grouped as a shopper says them. A type
    not listed here is shown under its own title, as "Delivery". */
-const WAYS: { types: string[]; word: string; icon: string; line: string }[] = [
-  { types: ["Pickup"], word: "Pickup", icon: "storefront", line: "Order online, collect at the shop" },
-  { types: ["Motorbike", "Bicycle"], word: "Delivery", icon: "two_wheeler", line: "A courier brings it to your door" },
-  { types: ["CargoSmall", "Cargo", "Truck"], word: "Shipping", icon: "local_shipping", line: "Shipped to your address" },
-  { types: ["Post", "PostFast"], word: "By post", icon: "local_post_office", line: "Sent to your address by post" },
-  { types: ["Airplane", "Global"], word: "Worldwide", icon: "public", line: "Shipped wherever you are" },
+/* `id` stays English (logic and order compare it); the words are drawn in
+   the visitor's language. */
+const WAYS: { types: string[]; id: string; icon: string; word: () => string; line: () => string }[] = [
+  { types: ["Pickup"], id: "Pickup", icon: "storefront", word: () => t("dino.way.pickup", "Pickup"), line: () => t("dino.way.pickupLine", "Order online, collect at the shop") },
+  { types: ["Motorbike", "Bicycle"], id: "Delivery", icon: "two_wheeler", word: () => t("dino.way.delivery", "Delivery"), line: () => t("dino.way.deliveryLine", "A courier brings it to your door") },
+  { types: ["CargoSmall", "Cargo", "Truck"], id: "Shipping", icon: "local_shipping", word: () => t("dino.way.shipping", "Shipping"), line: () => t("dino.way.shippingLine", "Shipped to your address") },
+  { types: ["Post", "PostFast"], id: "By post", icon: "local_post_office", word: () => t("dino.way.post", "By post"), line: () => t("dino.way.postLine", "Sent to your address by post") },
+  { types: ["Airplane", "Global"], id: "Worldwide", icon: "public", word: () => t("dino.way.worldwide", "Worldwide"), line: () => t("dino.way.worldwideLine", "Shipped wherever you are") },
 ];
 
 export interface Way {
   key: string;
+  /** The kind's short word, in the visitor's language ("Pickup", "Delivery"). */
+  label: string;
   word: string;
   icon: string;
   line: string;
@@ -123,11 +128,11 @@ export interface Way {
 /** The shop's enabled delivery methods, one card per kind. */
 export function waysOf(shop: any): Way[] {
   const out: Way[] = [];
-  for (const t of (shop?.transportations || []).filter((t: any) => t && t.enable)) {
-    const kind = WAYS.find((w) => w.types.includes(t.type));
-    const key = kind ? kind.word : t.type;
-    const free = !!t.free_shipping && !(Number(t.free_shipping_limit) > 0);
-    const freeOver = t.free_shipping && Number(t.free_shipping_limit) > 0 ? Number(t.free_shipping_limit) : null;
+  for (const tr of (shop?.transportations || []).filter((x: any) => x && x.enable)) {
+    const kind = WAYS.find((w) => w.types.includes(tr.type));
+    const key = kind ? kind.id : tr.type;
+    const free = !!tr.free_shipping && !(Number(tr.free_shipping_limit) > 0);
+    const freeOver = tr.free_shipping && Number(tr.free_shipping_limit) > 0 ? Number(tr.free_shipping_limit) : null;
     const known = out.find((w) => w.key === key);
     if (known) {
       /* Two methods of one kind: the more generous free rule wins. */
@@ -137,17 +142,18 @@ export function waysOf(shop: any): Way[] {
     }
     out.push({
       key,
-      word: t.title || (kind ? kind.word : "Delivery"),
+      word: tr.title || (kind ? kind.word() : t("dino.way.delivery", "Delivery")),
+      label: kind ? kind.word() : tr.title || t("dino.way.delivery", "Delivery"),
       icon: kind ? kind.icon : "local_shipping",
-      line: kind ? kind.line : "Brought to your address",
+      line: kind ? kind.line() : t("dino.way.otherLine", "Brought to your address"),
       free,
       freeOver,
-      currency: t.currency || null,
+      currency: tr.currency || null,
     });
   }
   /* In the order shoppers expect: pickup, delivery, shipping, post. */
   const rank = (way: Way) => {
-    const at = WAYS.findIndex((w) => w.word === way.key);
+    const at = WAYS.findIndex((w) => w.id === way.key);
     return at === -1 ? WAYS.length : at;
   };
   return out.sort((a, b) => rank(a) - rank(b));

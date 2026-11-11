@@ -70,8 +70,12 @@
   --k-plain: #ffffff;
 
   /* Type */
-  --k-display: "Fredoka", "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --k-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* The script faces (Arabic, Gurmukhi) come after the Latin one: a glyph
+     Figtree or Fredoka lacks falls through to them. kalio-i18n loads each
+     only when its language is picked. */
+  --k-scripts: "Noto Sans Arabic", "Noto Sans Gurmukhi", "Noto Sans Devanagari";
+  --k-display: "Fredoka", "Figtree", var(--k-scripts), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --k-body: "Figtree", var(--k-scripts), system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Geometry: rounded and chunky */
   --k-radius: 18px;
@@ -133,8 +137,8 @@ s:has(> .u--price) {
     content: "";
     position: absolute;
     top: 55%;
-    right: -1px;
-    left: -1px;
+    inset-inline-end: -1px;
+    inset-inline-start: -1px;
     height: 1.5px;
     border-radius: 1px;
     background: currentColor;

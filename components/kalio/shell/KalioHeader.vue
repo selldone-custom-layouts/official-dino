@@ -21,7 +21,7 @@
       <div class="k-header__row k-wrap">
         <button
           v-if="compact"
-          aria-label="Menu"
+          :aria-label="t('header.menu', 'Menu')"
           class="k-header__icon"
           type="button"
           @click="menu = true"
@@ -29,7 +29,7 @@
           <v-icon size="24">menu</v-icon>
         </button>
 
-        <router-link :to="homeRoute" class="k-header__brand -logo" :aria-label="`${shopTitle} home`">
+        <router-link :to="homeRoute" class="k-header__brand -logo" :aria-label="t('header.home', '{shop} home', { shop: shopTitle })">
           <img :src="BRAND.mark" alt="" class="k-brand-mark" height="34" width="34" />{{ shopTitle }}
         </router-link>
 
@@ -37,7 +37,7 @@
              methods (the aisles are in the strip below and on the home). -->
         <span v-if="!compact && wayNames.length" class="k-header__eta">
           <v-icon size="18">bolt</v-icon>
-          <span><b>Get it your way</b>{{ wayNames.join(" · ") }}</span>
+          <span><b>{{ t("dino.header.yourWay", "Get it your way") }}</b>{{ wayNames.join(" · ") }}</span>
         </span>
 
         <div v-if="showSearch && !compact" class="k-header__search">
@@ -58,46 +58,46 @@
         </div>
         <v-spacer v-else></v-spacer>
 
-        <nav aria-label="Your account" class="k-header__acts">
-          <!-- Language and currency (the owner's choice B, 10 November 2026):
-               a small pill before the account links, with a panel of chips.
-               It hides itself while the shop has one currency and one
-               language. The phone gets a row in the menu instead. -->
+        <nav :aria-label="t('header.yourAccount', 'Your account')" class="k-header__acts">
+          <!-- Language and currency: one small pill ("EN · DKK"), as on
+               Walmart and Amazon (the owner's choice B, 10 November 2026);
+               on a phone it is a row in the menu. Hidden while the shop has
+               one currency and one language. -->
           <region-switcher-button v-if="!compact" button-class="k-header__region" />
 
           <template v-if="!compact">
-            <router-link v-if="user" :to="ordersRoute" aria-label="Orders" class="k-header__link">
+            <router-link v-if="user" :to="ordersRoute" :aria-label="t('header.orders', 'Orders')" class="k-header__link">
               <v-icon size="20">receipt_long</v-icon>
-              <span class="k-header__word">Orders</span>
+              <span class="k-header__word">{{ t("header.orders", "Orders") }}</span>
             </router-link>
             <component
               :is="user ? 'router-link' : 'button'"
               :to="user ? savedRoute : undefined"
               class="k-header__link"
               :type="user ? undefined : 'button'"
-              aria-label="Saved"
+              :aria-label="t('header.saved', 'Saved')"
               @click="!user && signIn()"
             >
               <v-icon size="20">favorite_border</v-icon>
-              <span class="k-header__word">Saved</span>
+              <span class="k-header__word">{{ t("header.saved", "Saved") }}</span>
             </component>
           </template>
 
           <s-header-section-user v-if="user && !compact"></s-header-section-user>
           <button v-else-if="!user && !busyUser && !compact" class="k-header__link -signin" type="button" @click="signIn">
             <v-icon size="20">person_outline</v-icon>
-            Sign in
+            {{ t("common.signIn", "Sign in") }}
           </button>
 
           <!-- Phone: the account beside the basket. The bottom bar that
                held it is gone (6 November 2026); orders and the rest are
                in the menu. -->
           <template v-if="compact">
-            <router-link v-if="user" :to="profileRoute" aria-label="My account" class="k-header__icon -me">
+            <router-link v-if="user" :to="profileRoute" :aria-label="t('header.myAccount', 'My account')" class="k-header__icon -me">
               <img v-if="user.id && !avatar_failed" :src="getUserAvatar(user.id)" alt="" height="30" width="30" @error="avatar_failed = true" />
               <v-icon v-else size="24">person_outline</v-icon>
             </router-link>
-            <button v-else-if="!busyUser" aria-label="Sign in" class="k-header__icon -me" type="button" @click="signIn">
+            <button v-else-if="!busyUser" :aria-label="t('common.signIn', 'Sign in')" class="k-header__icon -me" type="button" @click="signIn">
               <v-icon size="24">person_outline</v-icon>
             </button>
           </template>
@@ -105,7 +105,7 @@
           <!-- Dino: the cart pill (count and total) opens the cart sheet from
                the right, on a computer as on a phone. -->
           <button
-            :aria-label="'Cart, ' + itemsCount + ' items'"
+            :aria-label="t('header.basketAria', { one: 'Basket, {n} item', other: 'Basket, {n} items' }, { n: itemsCount })"
             :class="{ '-full': itemsCount }"
             class="k-header__basket"
             type="button"
@@ -113,7 +113,7 @@
           >
             <em>{{ itemsCount }}</em>
             <span v-if="itemsCount && cartTotal != null && !compact" class="u--price">{{ money(cartTotal, cartCurrency) }}</span>
-            <span v-else-if="!compact">Cart</span>
+            <span v-else-if="!compact">{{ t("header.basket", "Basket") }}</span>
           </button>
         </nav>
       </div>
@@ -139,24 +139,24 @@
         />
         <button v-else class="k-header__search-pill" type="button" @click="phone_search = true">
           <v-icon size="20">search</v-icon>
-          Search milk, bread, berries…
+          {{ t("header.searchPill", "Search milk, bread, berries…") }}
         </button>
       </div>
     </div>
 
     <!-- ▆▆▆▆▆▆▆▆ Aisle strip ▆▆▆▆▆▆▆▆ -->
-    <nav v-if="!compact && aisleList.length" aria-label="Aisles" class="k-strip">
+    <nav v-if="!compact && aisleList.length" :aria-label="t('header.aisles', 'Aisles')" class="k-strip">
       <!-- (5 November 2026) A row longer than the window shows a "›" at
            its end and turns the mouse wheel sideways: at 1024 px seven
            aisles sat past the edge with only a fade to hint at them. -->
       <div :class="{ '-more': strip_more, '-back': strip_back }" class="k-strip__frame k-wrap">
-      <button v-if="strip_back" aria-label="Earlier aisles" class="k-strip__nudge -back" tabindex="-1" type="button" @click="stripNudge(-1)">
+      <button v-if="strip_back" :aria-label="t('header.strip.earlier', 'Earlier aisles')" class="k-strip__nudge -back" tabindex="-1" type="button" @click="stripNudge(-1)">
         <v-icon class="k-flip" size="20">chevron_left</v-icon>
       </button>
       <div ref="strip" class="k-strip__row" @scroll.passive="stripMeasure" @wheel="stripWheel">
         <router-link :to="dealsRoute" class="k-strip__link -deals">
           <v-icon size="18">local_offer</v-icon>
-          Deals
+          {{ t("header.deals", "Deals") }}
         </router-link>
         <router-link
           v-for="aisle in aisleList"
@@ -169,7 +169,7 @@
           {{ aisle.title || aisle.name }}
         </router-link>
       </div>
-      <button v-if="strip_more" aria-label="More aisles" class="k-strip__nudge -on" tabindex="-1" type="button" @click="stripNudge(1)">
+      <button v-if="strip_more" :aria-label="t('header.strip.more', 'More aisles')" class="k-strip__nudge -on" tabindex="-1" type="button" @click="stripNudge(1)">
         <v-icon class="k-flip" size="20">chevron_right</v-icon>
       </button>
       </div>
@@ -186,18 +186,18 @@
       >
         <div class="k-drawer__head">
           <p class="k-drawer__title">
-            Your cart<small v-if="basketUnits">{{ basketUnits }} {{ basketUnits === 1 ? "item" : "items" }}</small>
+            {{ t("cart.title", "Your basket") }}<small v-if="basketUnits">{{ t("cart.units", { one: "{n} item", other: "{n} items" }, { n: basketUnits }) }}</small>
           </p>
-          <button aria-label="Close" class="k-header__icon" type="button" @click="basket = false">
+          <button :aria-label="t('common.close', 'Close')" class="k-header__icon" type="button" @click="basket = false">
             <v-icon>close</v-icon>
           </button>
           <!-- Dino: how far free shipping is, from the shop's own rule. -->
           <div v-if="freeRule && itemsCount" class="k-drawer__free">
             <p v-if="freeLeft > 0">
               <v-icon size="18">local_shipping</v-icon>
-              <span class="u--price">{{ money(freeLeft, cartCurrency) }}</span>&nbsp;more for free shipping
+              {{ t("dino.cart.freeLeft", "{amount} more for free shipping", { amount: money(freeLeft, cartCurrency) }) }}
             </p>
-            <p v-else><v-icon size="18">celebration</v-icon> Free shipping unlocked</p>
+            <p v-else><v-icon size="18">celebration</v-icon> {{ t("dino.cart.freeUnlocked", "Free shipping unlocked") }}</p>
             <span class="k-drawer__bar"><i :style="{ width: freePct + '%' }"></i></span>
           </div>
         </div>
@@ -205,15 +205,15 @@
              nowhere to go; Kalio's offers the way back to the shelves. -->
         <div v-if="!itemsCount" class="k-drawer__empty">
           <span aria-hidden="true" class="k-drawer__empty-mark"><v-icon size="30">shopping_bag</v-icon></span>
-          <p class="k-drawer__empty-title">Your cart is empty</p>
-          <p class="k-drawer__empty-text">Pick something from the aisles and it will wait for you here.</p>
+          <p class="k-drawer__empty-title">{{ t("cart.empty.title", "Your basket is empty") }}</p>
+          <p class="k-drawer__empty-text">{{ t("cart.empty.text", "Pick something from the aisles and it will wait for you here.") }}</p>
           <div class="k-drawer__empty-ctas">
-            <router-link :to="dealsRoute" class="k-btn k-btn--solid" @click="basket = false">Shop today’s deals</router-link>
-            <router-link :to="catalogueRoute" class="k-btn k-btn--line" @click="basket = false">Browse every product</router-link>
+            <router-link :to="dealsRoute" class="k-btn k-btn--solid" @click="basket = false">{{ t("cart.empty.deals", "Shop today’s deals") }}</router-link>
+            <router-link :to="catalogueRoute" class="k-btn k-btn--line" @click="basket = false">{{ t("cart.empty.browse", "Browse every product") }}</router-link>
           </div>
           <template v-if="aisleList.length">
-            <p class="k-eyebrow k-drawer__empty-label">Or start with an aisle</p>
-            <nav aria-label="Aisles" class="k-drawer__empty-aisles">
+            <p class="k-eyebrow k-drawer__empty-label">{{ t("cart.empty.aisles", "Or start with an aisle") }}</p>
+            <nav :aria-label="t('header.aisles', 'Aisles')" class="k-drawer__empty-aisles">
               <router-link
                 v-for="aisle in aisleList.slice(0, 8)"
                 :key="aisle.id"
@@ -241,27 +241,26 @@
       >
         <div class="k-drawer__head">
           <router-link :to="homeRoute" class="k-header__brand -logo" @click="menu = false"><img :src="BRAND.mark" alt="" class="k-brand-mark" height="30" width="30" />{{ shopTitle }}</router-link>
-          <button aria-label="Close" class="k-header__icon" type="button" @click="menu = false">
+          <button :aria-label="t('common.close', 'Close')" class="k-header__icon" type="button" @click="menu = false">
             <v-icon>close</v-icon>
           </button>
         </div>
 
         <div class="k-drawer__account">
           <template v-if="user">
-            <router-link :to="profileRoute" class="k-drawer__link" @click="menu = false"><v-icon size="20">person_outline</v-icon>My account</router-link>
-            <router-link :to="ordersRoute" class="k-drawer__link" @click="menu = false"><v-icon size="20">receipt_long</v-icon>Orders</router-link>
-            <router-link :to="savedRoute" class="k-drawer__link" @click="menu = false"><v-icon size="20">favorite_border</v-icon>Saved</router-link>
+            <router-link :to="profileRoute" class="k-drawer__link" @click="menu = false"><v-icon size="20">person_outline</v-icon>{{ t("header.myAccount", "My account") }}</router-link>
+            <router-link :to="ordersRoute" class="k-drawer__link" @click="menu = false"><v-icon size="20">receipt_long</v-icon>{{ t("header.orders", "Orders") }}</router-link>
+            <router-link :to="savedRoute" class="k-drawer__link" @click="menu = false"><v-icon size="20">favorite_border</v-icon>{{ t("header.saved", "Saved") }}</router-link>
           </template>
-          <button v-else class="k-btn k-btn--solid" type="button" @click="menu = false; signIn()">Sign in</button>
+          <button v-else class="k-btn k-btn--solid" type="button" @click="menu = false; signIn()">{{ t("common.signIn", "Sign in") }}</button>
         </div>
 
-        <p class="k-eyebrow k-drawer__label">Aisles</p>
-        <router-link :to="dealsRoute" class="k-drawer__link -deals" @click="menu = false"><v-icon size="20">local_offer</v-icon>Deals</router-link>
-        <!-- The first 6 aisles in the shop's order, then "Show N more": the
-             rest open in place under them and the button moves to the end
-             as "Show fewer" (the owner's option A, 10 November 2026). With
-             8 aisles or fewer, all show and there is no button. Each time
-             the menu opens it starts short. -->
+        <p class="k-eyebrow k-drawer__label">{{ t("header.aisles", "Aisles") }}</p>
+        <router-link :to="dealsRoute" class="k-drawer__link -deals" @click="menu = false"><v-icon size="20">local_offer</v-icon>{{ t("header.deals", "Deals") }}</router-link>
+        <!-- The first six aisles in the shop's order, then "Show N more"
+             (the owner's option A, 10 November 2026). Eight or fewer: all,
+             no button. The rest open inline under the six; the button
+             moves to the end and reads "Show fewer". -->
         <router-link
           v-for="aisle in menuAisles"
           :key="aisle.id"
@@ -300,7 +299,7 @@
             @click="menu_more = !menu_more"
           >
             <span aria-hidden="true" class="k-drawer__ring -more"><v-icon size="22">expand_more</v-icon></span>
-            {{ menu_more ? "Show fewer" : `Show ${menuMore.length} more` }}
+            {{ menu_more ? t("menu.showFewer", "Show fewer") : t("menu.showMore", "Show {n} more", { n: menuMore.length }) }}
           </button>
         </template>
 
@@ -408,7 +407,7 @@ export default {
     },
     /** The shop's delivery methods, as the header's pill says them. */
     wayNames() {
-      return waysOf(this.$shop).map((w) => w.key);
+      return waysOf(this.$shop).map((w) => w.label);
     },
     /** The groceries basket (the physical one). */
     cartBasket() {

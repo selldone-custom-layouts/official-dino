@@ -31,7 +31,7 @@
         <slot name="header" :center="true"></slot>
 
         <!-- ⬬⬬⬬⬬ Breadcrumb, admin shortcut, QR ⬬⬬⬬⬬ -->
-        <nav aria-label="Breadcrumb" class="k-crumbs">
+        <nav :aria-label="t('pdp.breadcrumb', 'Breadcrumb')" class="k-crumbs">
           <router-link :to="{ name: window.$storefront.routes.SHOP_PAGE }">{{ $shop.title }}</router-link>
           <template v-if="product && product.category">
             <v-icon aria-hidden="true" class="k-flip" size="16">chevron_right</v-icon>
@@ -71,23 +71,23 @@
       <!-- ▁▁▁▁▁▁ 🞇 Walio (product page A): "About this item" in tabs 🞇 ▁▁▁▁▁▁ -->
       <div :style="{ order: getOrder('spec') }">
         <section aria-labelledby="w-about" class="w-about k-wrap">
-          <h2 id="w-about" class="w-about__h">About this item</h2>
+          <h2 id="w-about" class="w-about__h">{{ t("dino.pdp.aboutItem", "About this item") }}</h2>
           <div class="w-tabs" role="tablist">
             <button
-              v-for="t in tabs"
-              :key="t.key"
-              :aria-selected="tab === t.key"
-              :class="{ '-on': tab === t.key }"
+              v-for="tb in tabs"
+              :key="tb.key"
+              :aria-selected="tab === tb.key"
+              :class="{ '-on': tab === tb.key }"
               role="tab"
               type="button"
-              @click="tab = t.key"
+              @click="tab = tb.key"
             >
-              {{ t.label }}
+              {{ tb.label }}
             </button>
           </div>
           <div v-show="tab === 'details'" class="w-about__details" role="tabpanel">
             <div v-if="highlight_rows.length">
-              <h4>Highlights</h4>
+              <h4>{{ t("pdp.highlights", "Highlights") }}</h4>
               <ul class="w-hl">
                 <li v-for="h in highlight_rows" :key="h.key">
                   <v-icon aria-hidden="true" size="20">check_circle</v-icon><span><b>{{ h.key }}:</b> {{ h.value }}</span>
@@ -113,8 +113,8 @@
                 <v-icon aria-hidden="true">{{ w.icon }}</v-icon>
                 <span
                   ><b>{{ w.word }}</b> — {{ w.line }}.
-                  <template v-if="w.free">Free.</template>
-                  <template v-else-if="w.freeOver">Free on orders over <span class="u--price">{{ regionMoney(w.freeOver, w.currency, { short: "auto" }) }}</span>.</template>
+                  <template v-if="w.free">{{ t("dino.pdp.freeDot", "Free.") }}</template>
+                  <template v-else-if="w.freeOver">{{ t("dino.pdp.freeOnOrders", "Free on orders over {amount}.", { amount: regionMoney(w.freeOver, w.currency, { short: "auto" }) }) }}</template>
                 </span>
               </li>
             </ul>
@@ -141,7 +141,7 @@
       <!-- ▅▅▅▅▅▅▅▅▅▅ Reviews ▅▅▅▅▅▅▅▅▅▅ -->
       <div :style="{ order: getOrder('comments') }">
         <section aria-labelledby="k-reviews" class="k-pdp-block k-reviews">
-          <h2 id="k-reviews" class="k-pdp-block__title">Ratings &amp; reviews</h2>
+          <h2 id="k-reviews" class="k-pdp-block__title">{{ t("dino.pdp.ratings", "Ratings & reviews") }}</h2>
           <kalio-reviews></kalio-reviews>
         </section>
       </div>
@@ -157,7 +157,7 @@
             name: window.$storefront.routes.SHOP_CATEGORY_PAGE,
             params: { category_name: product.category.name },
           }"
-          :title="'More in ' + (product.category.title || product.category.name)"
+          :title="t('dino.pdp.moreIn', 'More in {aisle}', { aisle: product.category.title || product.category.name })"
           lazy
           sort="bestselling"
         />
@@ -171,6 +171,7 @@ import NotificationService from "@selldone/components-vue/plugins/notification/N
 
 import DinoProductOverview from "../../components/dino/product/DinoProductOverview.vue";
 import { money as regionMoney } from "../../components/region-switcher/region";
+import { t } from "../../components/kalio/i18n/kalio-i18n";
 import DinoRow from "../../components/dino/DinoRow.vue";
 import { waysOf } from "../../components/dino/dino-home";
 import { EventBus } from "@selldone/components-vue/utils/events/EventBus.ts";
@@ -294,9 +295,9 @@ export default {
     },
     tabs() {
       return [
-        { key: "details", label: "Details" },
-        { key: "spec", label: "Specifications" },
-        { key: "ship", label: "Shipping & returns" },
+        { key: "details", label: t("dino.pdp.tabDetails", "Details") },
+        { key: "spec", label: t("dino.pdp.tabSpec", "Specifications") },
+        { key: "ship", label: t("dino.pdp.tabShip", "Shipping & returns") },
       ];
     },
     /* Highlights: the merchant's pros, else the spec's first group. */

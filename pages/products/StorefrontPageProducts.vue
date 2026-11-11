@@ -135,9 +135,9 @@
 
         <!-- ▆▆▆▆▆▆▆▆ Under the grid ▆▆▆▆▆▆▆▆ -->
         <template v-if="!vendor_id">
-          <dino-row v-if="catalogue && search_query" :limit="12" lazy sort="bestselling" title="Popular right now" />
+          <dino-row v-if="catalogue && search_query" :limit="12" lazy sort="bestselling" :title="t('dino.listing.popular', 'Popular right now')" />
           <section v-if="more_aisles.length" class="t-keep">
-            <h2 class="t-keep__h">Keep shopping</h2>
+            <h2 class="t-keep__h">{{ t("dino.listing.keep", "Keep shopping") }}</h2>
             <div class="t-keep__list">
               <router-link v-for="a in more_aisles" :key="a.id" :to="aisleTo(a)">{{ a.title || a.name }}</router-link>
             </div>

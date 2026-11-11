@@ -13,11 +13,11 @@
   phone's swipe row keeps every aisle.
 -->
 <template>
-  <nav v-if="list.length" :class="{ '-open': open }" aria-label="Aisles" class="d-aisles">
-    <p class="d-aisles__h">Aisles</p>
+  <nav v-if="list.length" :class="{ '-open': open }" :aria-label="t('header.aisles', 'Aisles')" class="d-aisles">
+    <p class="d-aisles__h">{{ t("header.aisles", "Aisles") }}</p>
     <router-link :class="{ '-on': deals }" :to="dealsTo" class="d-aisles__a -deals">
       <span class="d-aisles__ic"><v-icon size="20">local_fire_department</v-icon></span>
-      Deals
+      {{ t("header.deals", "Deals") }}
     </router-link>
     <router-link
       v-for="(a, i) in list"
@@ -31,7 +31,7 @@
     </router-link>
     <button v-if="hidden" :aria-expanded="open" class="d-aisles__a d-aisles__more" type="button" @click="open = !open">
       <span class="d-aisles__ic"><v-icon size="20">{{ open ? "expand_less" : "expand_more" }}</v-icon></span>
-      {{ open ? "Fewer aisles" : `${hidden} more ${hidden === 1 ? "aisle" : "aisles"}` }}
+      {{ open ? t("dino.aisles.fewer", "Fewer aisles") : t("dino.aisles.more", { one: "{n} more aisle", other: "{n} more aisles" }, { n: hidden }) }}
     </button>
   </nav>
 </template>

@@ -6,6 +6,7 @@
   The address is Selldone's own: ?list=p713727_p713728v55 (p = product id,
   v = variant id), so a link copied from Selldone's table still opens here.
 */
+import { t } from "../../kalio/i18n/kalio-i18n";
 
 export interface CompareRef {
   p: number;
@@ -32,8 +33,8 @@ export function compareListParam(list: CompareRef[]): string {
 export function specText(value: any): string {
   if (value === null || value === undefined) return "";
   if (Array.isArray(value)) return value.map(specText).filter(Boolean).join(", ");
-  if (value === true || value === "true") return "Yes";
-  if (value === false || value === "false") return "No";
+  if (value === true || value === "true") return t("dino.compare.yes", "Yes");
+  if (value === false || value === "false") return t("dino.compare.no", "No");
   if (typeof value === "object") return "";
   return String(value).trim();
 }
@@ -76,7 +77,7 @@ export function specGroups(products: any[]): SpecGroup[] {
   for (const product of products) {
     const spec = product?.spec;
     if (!spec) continue;
-    let current = "Details";
+    let current = t("dino.compare.details", "Details");
     if (Array.isArray(spec)) {
       for (const row of spec) {
         if (!row) continue;

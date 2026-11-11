@@ -15,31 +15,35 @@
 <template>
   <div class="d-home">
     <!-- ▆▆▆▆ Promo cards ▆▆▆▆ -->
-    <section class="d-promos k-wrap" aria-label="This week">
+    <section class="d-promos k-wrap" :aria-label="t('dino.home.thisWeek', 'This week')">
       <router-link :to="catalogue" class="d-promo -violet">
-        <span class="d-promo__tick"><v-icon size="16">bolt</v-icon>{{ waysLine || "Groceries, delivered" }}</span>
-        <h1>Groceries at your door, in a few taps.</h1>
+        <span class="d-promo__tick"><v-icon size="16">bolt</v-icon>{{ waysLine || t("dino.home.delivered", "Groceries, delivered") }}</span>
+        <h1>{{ t("dino.home.hero", "Groceries at your door, in a few taps.") }}</h1>
         <p>
-          {{ aisleList.length ? `${aisleList.length} aisles` : "Every aisle" }}<template v-if="sellerList.length > 1"> from {{ sellerList.length }} independent sellers</template>, one cart and one checkout.
+          {{
+            sellerList.length > 1
+              ? t("dino.home.lineSellers", { one: "{n} aisle from {sellers} independent sellers, one cart and one checkout.", other: "{n} aisles from {sellers} independent sellers, one cart and one checkout." }, { n: aisleList.length, sellers: sellerList.length })
+              : t("dino.home.line", { one: "{n} aisle, one cart and one checkout.", other: "{n} aisles, one cart and one checkout." }, { n: aisleList.length })
+          }}
         </p>
-        <span class="d-btn -yellow -big">Start shopping<v-icon size="20">arrow_forward</v-icon></span>
+        <span class="d-btn -yellow -big">{{ t("pages.startShopping", "Start shopping") }}<v-icon class="k-flip" size="20">arrow_forward</v-icon></span>
         <span aria-hidden="true" class="d-promo__blob"></span>
         <span aria-hidden="true" class="d-promo__packs -three">
           <img v-for="p in heroPacks" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="(max-width: 760px) 270px, 350px" @error="dropSrcset" />
         </span>
       </router-link>
       <router-link v-if="dealList.length" :to="deals" class="d-promo -yellow">
-        <h3>{{ best_off ? `Up to ${best_off}% off this week` : "This week's deals" }}</h3>
-        <p>Savings on {{ dealList.length }}{{ dealList.length >= 12 ? "+" : "" }} groceries.</p>
-        <span class="d-btn -violet">See deals</span>
+        <h3>{{ best_off ? t("dino.home.upTo", "Up to {n}% off this week", { n: best_off }) : t("dino.home.weekDeals", "This week's deals") }}</h3>
+        <p>{{ dealList.length >= 12 ? t("dino.home.savingsMany", "Savings on {n}+ groceries.", { n: dealList.length }) : t("dino.home.savings", { one: "Savings on {n} grocery.", other: "Savings on {n} groceries." }, { n: dealList.length }) }}</p>
+        <span class="d-btn -violet">{{ t("dino.home.seeDeals", "See deals") }}</span>
         <span aria-hidden="true" class="d-promo__packs">
           <img v-for="p in dealList.slice(3, 5)" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="(max-width: 760px) 270px, 350px" @error="dropSrcset" />
         </span>
       </router-link>
       <router-link v-if="fresh" :to="aisleRoute(fresh)" class="d-promo -lav">
-        <h3>Fresh from {{ fresh.title || fresh.name }}</h3>
-        <p>Picked for this week.</p>
-        <span class="d-btn -white">Shop {{ (fresh.title || fresh.name).toLowerCase() }}</span>
+        <h3>{{ t("dino.home.freshFrom", "Fresh from {aisle}", { aisle: fresh.title || fresh.name }) }}</h3>
+        <p>{{ t("dino.home.picked", "Picked for this week.") }}</p>
+        <span class="d-btn -white">{{ t("dino.home.shopAisle", "Shop {aisle}", { aisle: (fresh.title || fresh.name).toLowerCase() }) }}</span>
         <span aria-hidden="true" class="d-promo__packs">
           <img v-for="p in freshList.slice(0, 2)" :key="p.id" :src="image(p)" :srcset="srcset(p)" alt="" sizes="(max-width: 760px) 270px, 350px" @error="dropSrcset" />
         </span>
@@ -49,8 +53,8 @@
     <!-- ▆▆▆▆ The aisles, as tiles ▆▆▆▆ -->
     <section v-if="aisleList.length" class="d-sec k-wrap">
       <header class="d-sec__head">
-        <h2><span class="d-sec__ic"><v-icon size="22">grid_view</v-icon></span>Shop by aisle</h2>
-        <router-link :to="catalogue" class="d-sec__more">Everything<v-icon size="20">chevron_right</v-icon></router-link>
+        <h2><span class="d-sec__ic"><v-icon size="22">grid_view</v-icon></span>{{ t("header.shopByAisle", "Shop by aisle") }}</h2>
+        <router-link :to="catalogue" class="d-sec__more">{{ t("dino.home.everything", "Everything") }}<v-icon class="k-flip" size="20">chevron_right</v-icon></router-link>
       </header>
       <div class="d-tiles">
         <router-link
@@ -72,11 +76,11 @@
       :items="deals_ready ? dealList : null"
       :more-to="deals"
       icon="local_fire_department"
-      title="Today's deals"
+      :title="t('header.todaysDeals', 'Today’s deals')"
       hot
     >
       <template v-if="dealEndsAt" #badge>
-        <span class="d-count"><v-icon size="16">timer</v-icon>Ends in {{ dealLeft }}</span>
+        <span class="d-count"><v-icon size="16">timer</v-icon>{{ t("dino.home.endsIn", "Ends in {time}", { time: dealLeft }) }}</span>
       </template>
     </dino-row>
 
@@ -85,7 +89,7 @@
       :dir="fresh.name"
       :limit="12"
       :more-to="aisleRoute(fresh)"
-      :title="`Fresh from ${fresh.title || fresh.name}`"
+      :title="t('dino.home.freshFrom', 'Fresh from {aisle}', { aisle: fresh.title || fresh.name })"
       icon="eco"
       lazy
       sort="bestselling"
@@ -94,15 +98,15 @@
     <!-- ▆▆▆▆ The sellers ▆▆▆▆ -->
     <section v-if="sellerList.length" class="d-sec k-wrap">
       <header class="d-sec__head">
-        <h2><span class="d-sec__ic"><v-icon size="22">storefront</v-icon></span>Meet the sellers</h2>
+        <h2><span class="d-sec__ic"><v-icon size="22">storefront</v-icon></span>{{ t("dino.home.sellers", "Meet the sellers") }}</h2>
       </header>
       <div class="d-sellers">
         <router-link v-for="v in sellerList" :key="v.id" :to="sellerRoute(v)" class="d-seller">
           <span class="d-seller__av"><img v-if="vendorImage(v)" :src="vendorImage(v)" alt="" /><b v-else>{{ v.name[0] }}</b></span>
           <span class="d-seller__who">
             <b>{{ v.name }}</b>
-            <small>An independent seller on {{ $shop.title }}</small>
-            <em>Visit shop<v-icon size="18">chevron_right</v-icon></em>
+            <small>{{ t("dino.home.sellerOn", "An independent seller on {shop}", { shop: $shop.title }) }}</small>
+            <em>{{ t("dino.home.visitShop", "Visit shop") }}<v-icon class="k-flip" size="18">chevron_right</v-icon></em>
           </span>
           <span aria-hidden="true" class="d-seller__packs">
             <span v-for="p in (shelfOf.get(v.id) || []).filter((x) => x.icon).slice(0, 4)" :key="p.id"><img :src="image(p)" :srcset="srcset(p)" alt="" sizes="80px" @error="dropSrcset" /></span>
@@ -111,16 +115,16 @@
       </div>
     </section>
 
-    <dino-row :limit="12" icon="favorite" lazy sort="bestselling" spread title="Top picks for you" />
+    <dino-row :limit="12" icon="favorite" lazy sort="bestselling" spread :title="t('dino.home.topPicks', 'Top picks for you')" />
 
     <div class="d-home__end k-wrap">
-      <router-link :to="catalogue" class="d-btn -violet -big">Browse every product<v-icon size="20">arrow_forward</v-icon></router-link>
+      <router-link :to="catalogue" class="d-btn -violet -big">{{ t("dino.home.browseAll", "Browse every product") }}<v-icon class="k-flip" size="20">arrow_forward</v-icon></router-link>
     </div>
 
     <!-- ▆▆▆▆ How it reaches you ▆▆▆▆ -->
     <section v-if="ways.length" class="d-sec k-wrap">
       <header class="d-sec__head">
-        <h2><span class="d-sec__ic"><v-icon size="22">local_shipping</v-icon></span>How you get it</h2>
+        <h2><span class="d-sec__ic"><v-icon size="22">local_shipping</v-icon></span>{{ t("dino.home.howYouGetIt", "How you get it") }}</h2>
       </header>
       <div class="d-ways">
         <div v-for="w in ways" :key="w.key" class="d-way">
@@ -128,8 +132,8 @@
           <span>
             <b>{{ w.word }}</b>
             <small>{{ w.line }}</small>
-            <em v-if="w.free">Free</em>
-            <em v-else-if="w.freeOver">Free over <span class="u--price">{{ regionMoney(w.freeOver, w.currency, { short: "auto" }) }}</span></em>
+            <em v-if="w.free">{{ t("shipping.free", "Free") }}</em>
+            <em v-else-if="w.freeOver">{{ t("shipping.freeOver", "Free over {amount}", { amount: regionMoney(w.freeOver, w.currency, { short: "auto" }) }) }}</em>
           </span>
         </div>
       </div>
@@ -139,8 +143,8 @@
          section (owner, 8 November 2026) ▆▆▆▆ -->
     <section v-if="posts.length" class="d-sec d-blog k-wrap">
       <header class="d-sec__head">
-        <h2><span class="d-sec__ic"><v-icon size="22">menu_book</v-icon></span>From the journal</h2>
-        <router-link :to="journal" class="d-sec__more">All articles<v-icon size="20">chevron_right</v-icon></router-link>
+        <h2><span class="d-sec__ic"><v-icon size="22">menu_book</v-icon></span>{{ t("dino.home.journal", "From the journal") }}</h2>
+        <router-link :to="journal" class="d-sec__more">{{ t("dino.home.allArticles", "All articles") }}<v-icon class="k-flip" size="20">chevron_right</v-icon></router-link>
       </header>
       <div class="d-blog__track">
         <router-link v-for="(a, i) in posts" :key="a.id" :style="{ background: POST_TINTS[i % POST_TINTS.length] }" :to="postRoute(a)" class="d-post">
@@ -149,7 +153,7 @@
             <small v-if="dateParts(a.created_at).full" class="d-post__date"><v-icon size="15">event</v-icon>{{ dateParts(a.created_at).full }}</small>
             <b class="d-post__title">{{ a.title }}</b>
             <span v-if="a.description" class="d-post__desc">{{ a.description }}</span>
-            <em class="d-post__go">Read<v-icon size="18">arrow_forward</v-icon></em>
+            <em class="d-post__go">{{ t("dino.home.read", "Read") }}<v-icon class="k-flip" size="18">arrow_forward</v-icon></em>
           </span>
         </router-link>
       </div>
@@ -161,6 +165,7 @@
 import DinoRow from "./DinoRow.vue";
 import { DEALS_FILTER, findAisle, listProducts, waysOf } from "./dino-home";
 import { money as regionMoney } from "../region-switcher/region";
+import { locale } from "../kalio/i18n/kalio-i18n";
 import {
   aisleImage,
   aisleRoute,
@@ -227,7 +232,12 @@ export default {
       return waysOf(this.$shop);
     },
     waysLine() {
-      return this.ways.map((w) => w.key).join(", ").replace(/, ([^,]*)$/, " or $1");
+      const words = this.ways.map((w) => w.label);
+      try {
+        return new Intl.ListFormat(locale(), { type: "disjunction" }).format(words);
+      } catch {
+        return words.join(" · ");
+      }
     },
     best_off() {
       return this.dealList.reduce((max, p) => Math.max(max, this.percent(p)), 0);

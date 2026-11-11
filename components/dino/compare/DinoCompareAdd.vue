@@ -9,7 +9,7 @@
   <div :class="{ '-wide': wide }" class="d-cmp-add">
     <div class="d-cmp-add__top">
       <span class="d-cmp-add__plus"><v-icon size="22">add</v-icon></span>
-      Add a product
+      {{ t("dino.compare.addProduct", "Add a product") }}
     </div>
 
     <label class="d-cmp-add__field">
@@ -18,24 +18,24 @@
     </label>
 
     <ul v-if="q.trim().length > 1" class="d-cmp-add__res">
-      <li v-if="searching && !results.length" class="-note">Looking…</li>
-      <li v-else-if="!results.length" class="-note">Nothing found for “{{ q.trim() }}”</li>
+      <li v-if="searching && !results.length" class="-note">{{ t("dino.compare.looking", "Looking…") }}</li>
+      <li v-else-if="!results.length" class="-note">{{ t("dino.compare.nothing", "Nothing found for “{q}”", { q: q.trim() }) }}</li>
       <li v-for="p in results" :key="p.id">
         <button :disabled="exclude.includes(p.id)" type="button" @click="pick(p)">
           <span class="d-cmp-add__pic"><img v-if="p.icon" :src="thumb(p)" alt="" /></span>
           <span class="d-cmp-add__nm">{{ p.title }}</span>
-          <small v-if="exclude.includes(p.id)" class="d-cmp-add__in">Added</small>
+          <small v-if="exclude.includes(p.id)" class="d-cmp-add__in">{{ t("dino.compare.added", "Added") }}</small>
           <v-icon v-else size="22">add_circle</v-icon>
         </button>
       </li>
     </ul>
 
     <div v-if="suggestions.length" class="d-cmp-add__sug">
-      <button v-for="p in suggestions" :key="p.id" :aria-label="`Add ${p.title}`" :title="`Add ${p.title}`" type="button" @click="pick(p)">
+      <button v-for="p in suggestions" :key="p.id" :aria-label="t('dino.compare.add', 'Add {name}', { name: p.title })" :title="t('dino.compare.add', 'Add {name}', { name: p.title })" type="button" @click="pick(p)">
         <img v-if="p.icon" :src="thumb(p)" alt="" />
       </button>
     </div>
-    <small>Up to {{ max }} side by side</small>
+    <small>{{ t("dino.compare.upTo", "Up to {n} side by side", { n: max }) }}</small>
   </div>
 </template>
 

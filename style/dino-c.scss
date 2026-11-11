@@ -60,8 +60,8 @@ $d-ink: #1e1033;
   .k-card-step-host {
     position: absolute !important;
     top: calc(100cqw - 56px) !important;
-    right: 10px !important;
-    left: 10px !important;
+    inset-inline-end: 10px !important;
+    inset-inline-start: 10px !important;
     z-index: 4 !important;
     margin: 0 !important;
     padding: 0 !important;

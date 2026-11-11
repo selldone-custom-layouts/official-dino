@@ -36,10 +36,10 @@
       <s v-if="was" class="d-card__was"><u-price :amount="was" :currency="price.currency || currency" /></s>
     </div>
     <!-- A real deal clock: only when Selldone gives the deal an end date (dis_end). -->
-    <p v-if="ends" class="d-card__ends"><v-icon size="14">timer</v-icon>Ends in {{ left }}</p>
+    <p v-if="ends" class="d-card__ends"><v-icon size="14">timer</v-icon>{{ t("dino.home.endsIn", "Ends in {time}", { time: left }) }}</p>
 
     <router-link :to="to" class="d-card__name">{{ product.title }}</router-link>
-    <p v-if="product.unit" class="d-card__unit">per {{ product.unit }}</p>
+    <p v-if="product.unit" class="d-card__unit">{{ t("dino.card.per", "per {unit}", { unit: product.unit }) }}</p>
     <kalio-seller-line :sellers="sellers" class="d-card__by" />
   </article>
 </template>

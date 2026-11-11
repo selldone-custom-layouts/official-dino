@@ -17,21 +17,21 @@
         <v-icon v-else size="44">storefront</v-icon>
       </span>
       <div class="d-scard__who">
-        <span class="d-scard__tag"><v-icon size="16">verified</v-icon>Independent seller on {{ $shop.title }}</span>
+        <span class="d-scard__tag"><v-icon size="16">verified</v-icon>{{ t("dino.seller.on", "Independent seller on {shop}", { shop: $shop.title }) }}</span>
         <h1>{{ vendor ? vendor.name : "" }}</h1>
         <p>
-          <template v-if="sells_line">{{ sells_line.charAt(0).toUpperCase() + sells_line.slice(1) }}, in</template><template v-else>In</template>
-          the same cart as every other seller.
+          <template v-if="sells_line">{{ t("dino.seller.sellsIn", "{sells}, in the same cart as every other seller.", { sells: sells_line.charAt(0).toUpperCase() + sells_line.slice(1) }) }}</template>
+          <template v-else>{{ t("dino.seller.sameCart", "In the same cart as every other seller.") }}</template>
         </p>
         <div class="d-scard__facts">
-          <span><b>{{ total !== null ? total.toLocaleString() : "–" }}</b> products</span>
-          <span v-if="on_sale"><v-icon size="16">local_offer</v-icon><b>{{ on_sale.toLocaleString() }}</b> on sale</span>
-          <span><b>{{ tiles.length }}</b> aisles</span>
+          <span>{{ total !== null ? t("dino.seller.products", { one: "{n} product", other: "{n} products" }, { n: total }) : "–" }}</span>
+          <span v-if="on_sale"><v-icon size="16">local_offer</v-icon>{{ t("dino.seller.saleCount", "{n} on sale", { n: on_sale }) }}</span>
+          <span>{{ t("dino.seller.aisles", { one: "{n} aisle", other: "{n} aisles" }, { n: tiles.length }) }}</span>
         </div>
       </div>
     </div>
-    <nav aria-label="The seller's aisles" class="d-scard__nav">
-      <router-link :class="{ '-on': !$route.params.category_name }" :to="sellerTo">Everything <span>{{ total ?? "" }}</span></router-link>
+    <nav :aria-label="t('dino.seller.nav', 'The seller\'s aisles')" class="d-scard__nav">
+      <router-link :class="{ '-on': !$route.params.category_name }" :to="sellerTo">{{ t("dino.home.everything", "Everything") }} <span>{{ total ?? "" }}</span></router-link>
       <router-link
         v-for="a in tiles"
         :key="a.aisle.id"

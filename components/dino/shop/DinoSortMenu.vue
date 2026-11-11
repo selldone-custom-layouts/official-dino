@@ -6,7 +6,7 @@
   <v-menu location="bottom end" offset="6">
     <template v-slot:activator="{ props }">
       <button class="w-sort" type="button" v-bind="props">
-        Sort by: <b>{{ sortName(modelValue, fallback) }}</b><v-icon size="20">expand_more</v-icon>
+        {{ t("dino.sort.by", "Sort by:") }} <b>{{ sortName(modelValue, fallback) }}</b><v-icon size="20">expand_more</v-icon>
       </button>
     </template>
     <div class="t-dd -sort">

@@ -39,8 +39,9 @@ import "@selldone/components-vue/style/fonts/material-design-fonts/material-desi
 import "@selldone/components-vue/style/fonts/lang/fa/lang-fa-iransans.css";
 import { bootThemeSwitcher } from "./components/theme-switcher/theme-switcher";
 import { DINO_THEME } from "./components/dino/dino-theme";
-import { bootRegion, defineMessages } from "./components/region-switcher/region";
-import { DINO_MESSAGES } from "./components/dino/i18n";
+import { bootRegion } from "./components/region-switcher/region";
+import { EN as KALIO_EN, LOADERS as KALIO_LANGUAGES } from "./components/kalio/i18n";
+import { bootI18n, i18nGlobals } from "./components/kalio/i18n/kalio-i18n";
 import "./components/kalio/kalio-fonts"; // Kalio typefaces, loaded by the app so they reach production
 import { PageHyper } from "@selldone/page-builder/PageHyperService.ts";
 import {SetupPageBuilder} from "@selldone/page-builder/page-builder.ts";
@@ -88,6 +89,7 @@ window.OverrideShopLanguagePacks = {};
 //█████████████████████████████████████████████████████████████
 // @ts-ignore
 const app = createApp(StorefrontApp);
+Object.assign(app.config.globalProperties, i18nGlobals); // t(), formatNumber(), formatDate() in every template
 
 const components = createComponents({});
 app.use(components);
@@ -98,9 +100,8 @@ app.use(components);
 
 // ━━━ Storefront SDK (xapi) ━━━
 StorefrontSDK.Setup(); // Set up the Shop SDK.
-// Language and currency (the header pill and the phone menu's sheet): Selldone's own state.
-defineMessages(DINO_MESSAGES);
-bootRegion(store);
+bootRegion(store); // language + currency: the header pill and the phone menu's sheet
+bootI18n(KALIO_EN, KALIO_LANGUAGES); // the Layout's own words in the visitor's language; <html lang dir>
 
 // ━━━ Community SDK (capi) ━━━
 CapiCommunity.Setup(); // Setup community.
