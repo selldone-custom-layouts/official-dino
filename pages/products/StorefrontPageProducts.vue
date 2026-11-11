@@ -102,7 +102,7 @@
             <dino-seller-main v-if="vendor_id" :key="'sm' + vendor_id" :vendor-id="vendor_id" />
             <div class="w-tools">
               <span v-if="catalogue_total !== null">
-                <b>{{ catalogue_total.toLocaleString() }} {{ catalogue_total === 1 ? "product" : "products" }}</b>
+                <b>{{ t("dino.seller.products", { one: "{n} product", other: "{n} products" }, { n: catalogue_total }) }}</b>
                 <span class="w-tools__in">{{ where_line }}</span>
               </span>
               <dino-filter-rail
@@ -155,6 +155,7 @@
 import SProductsListing from "@selldone/components-vue/storefront/products/listing/SProductsListing.vue";
 import TemplateMixin from "@selldone/components-vue/mixin/template/TemplateMixin.ts";
 import DinoHome from "../../components/dino/DinoHome.vue";
+import { t } from "../../components/kalio/i18n/kalio-i18n";
 import DinoShelfTop from "../../components/dino/shop/DinoShelfTop.vue";
 import DinoFilterRail from "../../components/dino/shop/DinoFilterRail.vue";
 import DinoRow from "../../components/dino/DinoRow.vue";
@@ -241,9 +242,9 @@ export default {
 
     /* "in Dairy & Eggs", "for “milk”", "from Mason". */
     where_line() {
-      if (this.vendor_id) return "from this seller";
-      if (this.category_name) return `in ${this.listing_parent?.title || this.category_name}`;
-      if (this.search_query) return `for “${this.search_query}”`;
+      if (this.vendor_id) return t("dino.listing.fromSeller", "from this seller");
+      if (this.category_name) return t("dino.listing.inAisle", "in {aisle}", { aisle: this.listing_parent?.title || this.category_name });
+      if (this.search_query) return t("dino.listing.for", "for “{q}”", { q: this.search_query });
       return "";
     },
 

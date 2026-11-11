@@ -282,6 +282,9 @@ const ar: Record<string, string> = {
   "dino.way.shippingLine": "يُشحن إلى عنوانك",
   "dino.way.worldwide": "حول العالم",
   "dino.way.worldwideLine": "يُشحن إليك أينما كنت",
+  "dino.listing.fromSeller": "من هذا البائع",
+  "dino.listing.inAisle": "في {aisle}",
+  "dino.listing.for": "عن «{q}»",
 };
 
 export default ar;

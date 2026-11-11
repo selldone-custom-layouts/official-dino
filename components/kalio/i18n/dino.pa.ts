@@ -234,6 +234,9 @@ const pa: Record<string, string> = {
   "dino.way.shippingLine": "ਤੁਹਾਡੇ ਪਤੇ 'ਤੇ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ",
   "dino.way.worldwide": "ਦੁਨੀਆ ਭਰ ਵਿੱਚ",
   "dino.way.worldwideLine": "ਤੁਸੀਂ ਜਿੱਥੇ ਵੀ ਹੋ, ਉੱਥੇ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ",
+  "dino.listing.fromSeller": "ਇਸ ਵਿਕਰੇਤਾ ਵੱਲੋਂ",
+  "dino.listing.inAisle": "{aisle} ਵਿੱਚ",
+  "dino.listing.for": "“{q}” ਲਈ",
 };
 
 export default pa;

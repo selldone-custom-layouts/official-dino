@@ -63,7 +63,9 @@
                Walmart and Amazon (the owner's choice B, 10 November 2026);
                on a phone it is a row in the menu. Hidden while the shop has
                one currency and one language. -->
-          <region-switcher-button v-if="!compact" button-class="k-header__region" />
+          <!-- Keyed by a translated word: the region package keeps its words outside Vue's reactivity, so the pill
+               and the sheet redraw when the picked language's words arrive. -->
+          <region-switcher-button v-if="!compact" :key="t('region.title', 'Language & currency')" button-class="k-header__region" />
 
           <template v-if="!compact">
             <router-link v-if="user" :to="ordersRoute" :aria-label="t('header.orders', 'Orders')" class="k-header__link">
@@ -305,7 +307,7 @@
 
         <!-- Language and currency: a row like the others, opening a bottom
              sheet of chips over the menu. -->
-        <region-sheet row-class="k-drawer__link -region" />
+        <region-sheet :key="t('region.title', 'Language & currency')" row-class="k-drawer__link -region" />
       </v-navigation-drawer>
     </teleport>
   </header>

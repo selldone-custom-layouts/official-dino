@@ -234,6 +234,9 @@ const es: Record<string, string> = {
   "dino.way.shippingLine": "Te lo enviamos a tu dirección",
   "dino.way.worldwide": "Internacional",
   "dino.way.worldwideLine": "Te lo enviamos estés donde estés",
+  "dino.listing.fromSeller": "de este vendedor",
+  "dino.listing.inAisle": "en {aisle}",
+  "dino.listing.for": "para «{q}»",
 };
 
 export default es;
