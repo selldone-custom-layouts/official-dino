@@ -930,6 +930,15 @@ html[dir="rtl"] {
   display: none !important;
 }
 
+/* The journal's and the aisle header's tab rows scroll sideways, which cut
+   off the active pill's start (it reaches 12px past its words). The rows
+   get that room inside them; the words stay in line with the column. */
+.k-journal__tabs,
+.k-shelf-head__tabs {
+  margin-inline: -12px;
+  padding-inline: 12px;
+}
+
 /* A cart line's old price: the strike ran across the whole price column
    ("$4.49 ————"); the struck block is now as wide as its amount and still
    sits at the line's end. */
