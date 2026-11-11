@@ -922,6 +922,14 @@ html[dir="rtl"] {
   padding-inline: 40px 16px !important;
 }
 
+/* A cart line's old price: the strike ran across the whole price column
+   ("$4.49 ————"); the struck block is now as wide as its amount and still
+   sits at the line's end. */
+.k-lines__price s {
+  width: fit-content;
+  margin-inline-start: auto;
+}
+
 /* Direction-bound backgrounds, mirrored right to left (Walio's lesson): the
    glows on the dark sign-in panel and banner follow the words to the right,
    and an order trail's current step fills green from its start. */
