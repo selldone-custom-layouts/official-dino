@@ -184,8 +184,9 @@ export function formatMoney(amount: number, code: string = currentCurrency(), op
   const n = Number(amount) || 0;
   const short = options.short === "auto" ? Math.abs(n - Math.round(n)) < 0.005 : !!options.short;
   const floats = short ? 0 : ((Currency as any)[code]?.floats ?? 2);
+  let s: string;
   try {
-    return new Intl.NumberFormat(locale(), {
+    s = new Intl.NumberFormat(locale(), {
       style: "currency",
       currency: code,
       currencyDisplay: opts.currencyDisplay,
@@ -193,8 +194,13 @@ export function formatMoney(amount: number, code: string = currentCurrency(), op
       maximumFractionDigits: floats,
     }).format(n);
   } catch {
-    return `${code} ${n.toFixed(floats)}`;
+    s = `${code} ${n.toFixed(floats)}`;
   }
+  // Dino 1.0.26: on a right-to-left page Intl's Arabic "‏3.59 US$" showed as
+  // "$US 3.59" (and a minus slipped to the far end). The amount is wrapped in
+  // left-to-right isolate marks, so it keeps its order inside an Arabic
+  // sentence too, where CSS cannot reach. Left-to-right languages are untouched.
+  return isRtl(state.language || (window as any).$language?.code || "en") ? `⁦${s}⁩` : s;
 }
 
 /** THE money helper: `amount` is in `from` (default: the shop's base

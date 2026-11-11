@@ -910,7 +910,45 @@ html[dir="rtl"] {
 /* Signed numbers read left to right on an Arabic page: "-20%" stayed "20%-"
    and "+3" became "3+" (Walio's lesson). The badge or range keeps its own
    order; where it sits still follows the page. */
-:is(.d-card__off, .d-cmp__off, .w-rail__prices, .k-board__thumb.-more, .k-mosaic__sticker, .t-opt__n) {
+:is(.d-card__off, .d-cmp__off, .w-rail__prices, .k-board__thumb.-more, .k-mosaic__sticker, .t-opt__n, .discount-percent, .k-cart__row.-save > span:last-child) {
   direction: ltr;
   unicode-bidi: isolate;
+}
+
+/* The checkout steps on an Arabic page: the pill's room for the disc was a
+   left padding, so the word slid under the disc ("ملة" for "السلة"). */
+.w-stepper__s > span:last-child {
+  padding: 0 !important;
+  padding-inline: 40px 16px !important;
+}
+
+/* Direction-bound backgrounds, mirrored right to left (Walio's lesson): the
+   glows on the dark sign-in panel and banner follow the words to the right,
+   and an order trail's current step fills green from its start. */
+[dir="rtl"] {
+  .k-signin__brand {
+    background:
+      radial-gradient(360px 260px at 100% 110%, rgba(59, 170, 92, 0.32), transparent 70%),
+      radial-gradient(300px 220px at -10% -10%, rgba(255, 255, 255, 0.08), transparent 70%),
+      var(--k-green-deep);
+  }
+
+  .k-hero {
+    background:
+      radial-gradient(520px 340px at 92% 108%, rgba(59, 170, 92, 0.28), transparent 70%),
+      radial-gradient(420px 300px at 4% -10%, rgba(255, 255, 255, 0.07), transparent 70%),
+      var(--k-green-deep);
+  }
+
+  .k-ocardx__trail li.-now .k-ocardx__seg {
+    background: linear-gradient(270deg, var(--k-green) 50%, var(--k-line) 50%);
+  }
+
+  .k-ahome__steps li.-now::before {
+    background: linear-gradient(270deg, var(--k-green) 0 14px, var(--k-line) 14px);
+  }
+
+  .k-order__step.-now::before {
+    background: linear-gradient(270deg, var(--k-green) 0 13px, var(--k-line) 13px);
+  }
 }
