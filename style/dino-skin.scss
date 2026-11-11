@@ -828,3 +828,24 @@ $d-ink: #1e1033;
 .w-pdp .-shipping-box {
   display: none !important;
 }
+
+/* ━━━━━━━━━━━━ Joined scripts (Arabic, Gurmukhi) ━━━━━━━━━━━━
+   Letter-spacing pulls Arabic letters apart (it breaks the joins) and the
+   tight Latin line height of the display face crowds the marks; on the promo
+   cards the taller lines also ran into the packshots. */
+html[lang="ar"] *,
+html[lang="pa"] * {
+  letter-spacing: 0 !important;
+}
+
+html[lang="ar"],
+html[lang="pa"] {
+  .d-promo h1,
+  .d-promo h3 {
+    line-height: 1.25;
+  }
+
+  .d-promo h1 {
+    font-size: clamp(28px, 2.5vw, 36px);
+  }
+}
