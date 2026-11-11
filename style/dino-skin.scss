@@ -849,3 +849,60 @@ html[lang="pa"] {
     font-size: clamp(28px, 2.5vw, 36px);
   }
 }
+
+/* ━━━━━━━━━━━━ Merchant text keeps its own direction ━━━━━━━━━━━━
+   On an Arabic page, English merchant data (product and aisle names,
+   descriptions, brands, sellers, journal titles, cart lines) would take the
+   page's direction and show a full stop at the wrong end (".Milk"). Each such
+   element takes its direction from its own first strong letter (plaintext);
+   blocks stay aligned with the page (right in RTL). Dino's own Arabic words are
+   untouched. (The kit's lesson from Senso 1.0.11.) */
+html[dir="rtl"] {
+  :is(
+      .d-card__name,
+      .k-pdp__title,
+      .k-pdp__sub,
+      .w-banner h1,
+      .w-banner p,
+      .d-post__title,
+      .d-post__desc,
+      .k-post__head h1,
+      .k-post__lede,
+      .k-post__body,
+      .k-post__cardtitle,
+      .k-pdp .s-product-article,
+      .k-mini__name,
+      .w-match b,
+      .d-seller__who b,
+      .k-footer__lede,
+      .d-cmp__nm,
+      .k-bdrawer__name,
+      .k-lines__title,
+      .w-sall
+    ) {
+    unicode-bidi: plaintext;
+    text-align: right;
+  }
+
+  :is(
+      .d-tile span,
+      .k-strip__link,
+      .k-drawer__link,
+      .k-aisle-chip,
+      .d-aisles__a,
+      .t-inaisles__a,
+      .k-footer__col a,
+      .k-footer__seller,
+      .d-404__aisles a,
+      .k-crumbs a,
+      .k-crumbs span,
+      .t-crumbs a,
+      .t-crumbs span,
+      .w-pdp__brand,
+      .d-scard__who h1,
+      .d-sec__head h2,
+      .t-sec__title
+    ) {
+    unicode-bidi: plaintext;
+  }
+}
