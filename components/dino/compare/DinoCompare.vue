@@ -93,7 +93,7 @@
               </button>
               <router-link :to="productRoute(it)" aria-hidden="true" class="d-cmp__well" tabindex="-1">
                 <span v-if="it.off > 0" class="d-cmp__off">-{{ it.off }}%</span>
-                <img v-if="it.image" :src="it.image" :srcset="it.srcset" alt="" sizes="(max-width: 760px) 72px, 112px" @error="dropSrcset" />
+                <img v-if="it.image" :src="it.image" :srcset="it.srcset" alt="" sizes="(max-width: 960px) 72px, 112px" @error="dropSrcset" />
               </router-link>
               <div class="d-cmp__cp-tx">
                 <router-link :to="productRoute(it)" class="d-cmp__nm">{{ it.product.title }}</router-link>
