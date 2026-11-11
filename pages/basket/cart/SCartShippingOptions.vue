@@ -468,7 +468,7 @@ export default defineComponent({
   },
 
   methods: {
-    regionMoney,
+    money,
     getShopTransportationObject(type) {
       return ShopTransportations[type];
     },
