@@ -906,3 +906,11 @@ html[dir="rtl"] {
     unicode-bidi: plaintext;
   }
 }
+
+/* Signed numbers read left to right on an Arabic page: "-20%" stayed "20%-"
+   and "+3" became "3+" (Walio's lesson). The badge or range keeps its own
+   order; where it sits still follows the page. */
+:is(.d-card__off, .d-cmp__off, .w-rail__prices, .k-board__thumb.-more, .k-mosaic__sticker, .t-opt__n) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
